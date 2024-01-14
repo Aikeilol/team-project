@@ -1,17 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import App from './pages/App'
-import ErrorBoundary from './pages/ErrorPage'
-import Profile from './pages/Profile'
-import SignIn from './pages/SignIn'
-import SignUp from './pages/SignUp'
-import Main from './pages/Main'
-import Game from './pages/Game'
-import LeaderBord from './pages/LeaderBord'
-import Forum from './pages/Forum'
-import Topic from './pages/Forum/Topic'
-import NewTopic from './pages/Forum/NewTopic'
+import { createBrowserRouter } from 'react-router-dom'
+import App from '../pages/App'
+import ErrorBoundary from '../pages/ErrorPage'
+import Profile from '../pages/Profile'
+import SignIn from '../pages/SignIn'
+import SignUp from '../pages/SignUp'
+import Main from '../pages/Main'
+import Game from '../pages/Game'
+import LeaderBord from '../pages/LeaderBord'
+import Forum from '../pages/Forum'
+import Topic from '../pages/Forum/Topic'
+import NewTopic from '../pages/Forum/NewTopic'
 
 const router = createBrowserRouter([
   {
@@ -63,8 +61,4 @@ const router = createBrowserRouter([
   },
 ])
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-)
+export default router
