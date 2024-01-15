@@ -1,9 +1,15 @@
 import { FC } from 'react'
 import Auth from '../../components/Auth'
 import { Container, CssBaseline } from '@mui/material'
+import {
+  AuthFooterInfo,
+  AuthInput,
+  IAuthData,
+  IFormData,
+} from '../../components/Auth/types'
 
 const SignIn: FC = () => {
-  const dataInputs = [
+  const dataInputs: Array<AuthInput> = [
     {
       id: 'login',
       label: 'Логин',
@@ -18,10 +24,21 @@ const SignIn: FC = () => {
     },
   ]
 
-  const footerInfo = {
+  const formData: IFormData = {
+    dataInputs: dataInputs,
+    buttonText: 'Войти',
+  }
+
+  const footerInfo: AuthFooterInfo = {
     text: 'Нет аккаунта?',
     textLink: 'Зарегистрироваться',
     route: '/sign-up',
+  }
+
+  const data: IAuthData = {
+    title: 'Авторизация',
+    formData: formData,
+    footerInfo: footerInfo,
   }
 
   return (
@@ -35,11 +52,7 @@ const SignIn: FC = () => {
         minHeight: '100vh',
       }}>
       <CssBaseline />
-      <Auth
-        title="Авторизация"
-        dataInputs={dataInputs}
-        footerInfo={footerInfo}
-      />
+      <Auth data={data} />
     </Container>
   )
 }

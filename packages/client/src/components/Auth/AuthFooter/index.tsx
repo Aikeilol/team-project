@@ -1,10 +1,10 @@
 import { Grid, Link, Typography } from '@mui/material'
 import { FC } from 'react'
-import { FooterInfo } from '../types'
+import { AuthFooterInfo } from '../types'
 import { Link as RouterLink } from 'react-router-dom'
 
 interface IProps {
-  footerInfo: FooterInfo
+  footerInfo: AuthFooterInfo
 }
 
 const AuthFooter: FC<IProps> = ({ footerInfo }) => {
