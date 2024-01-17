@@ -1,5 +1,15 @@
+import Slytherin from '../../slytherin'
+import './style.css'
+
 function Game() {
-  return <h1>Game</h1>
+  return (
+    <div className="game">
+      <h1>Управление стрелками, Space - пауза</h1>
+      <div className="game-board">
+        <Slytherin />
+      </div>
+    </div>
+  )
 }
 
 export default Game

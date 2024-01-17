@@ -8,6 +8,6 @@ global.fetch = jest.fn(() =>
 
 test('Example test', async () => {
   const result = render(<App />)
-  const app = result.container.querySelector('#App')
+  const app = result.container.querySelector('.App')
   expect(app).toBeDefined()
 })
