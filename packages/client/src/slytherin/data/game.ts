@@ -21,11 +21,11 @@ export class Game {
   snake = new Snake()
 
   setCanvas = (canvas: HTMLCanvasElement) => {
-    this.canvasWidth = canvas.width
-    this.canvasHeight = canvas.height
-    console.log(canvas, canvas.getBoundingClientRect())
     this.resizeCanvasToDisplaySize(canvas)
     this.context = canvas.getContext('2d')!
+
+    this.canvasWidth = canvas.width
+    this.canvasHeight = canvas.height
   }
 
   draw = () => {
