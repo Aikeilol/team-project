@@ -1,24 +1,23 @@
 import { Paper } from '@mui/material'
 import { FC } from 'react'
-import { FooterInfo, Input } from './types'
+import { IAuthData } from './types'
 import AuthForm from './AuthForm'
 import AuthHeader from './AuthHeader'
 import AuthFooter from './AuthFooter'
 
 interface IProps {
-  title: string
-  dataInputs: Array<Input>
-  footerInfo: FooterInfo
+  data: IAuthData
 }
 
-const Auth: FC<IProps> = ({ title, dataInputs, footerInfo }) => {
+const Auth: FC<IProps> = ({ data }) => {
+  const { title, formData, footerInfo } = data
   return (
     <Paper
       variant="outlined"
       sx={{ p: { xs: 2, md: 3 }, maxWidth: '520px', width: '100%' }}>
       <AuthHeader title={title} />
 
-      <AuthForm dataInputs={dataInputs} />
+      <AuthForm formData={formData} />
 
       <AuthFooter footerInfo={footerInfo} />
     </Paper>

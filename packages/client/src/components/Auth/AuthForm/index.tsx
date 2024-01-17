@@ -1,16 +1,18 @@
 import { Box, Button, TextField } from '@mui/material'
 import { ChangeEvent, FC, FormEvent, useState } from 'react'
-import { Input } from '../types'
+import { IFormData } from '../types'
 
 interface IProps {
-  dataInputs: Array<Input>
+  formData: IFormData
 }
 
 interface IFormState {
   [name: string]: string
 }
 
-const AuthForm: FC<IProps> = ({ dataInputs }) => {
+const AuthForm: FC<IProps> = ({ formData }) => {
+  const { dataInputs, buttonText } = formData
+
   const [inputs, setInputs] = useState<IFormState>(() => {
     const data: IFormState = {}
 
@@ -66,7 +68,7 @@ const AuthForm: FC<IProps> = ({ dataInputs }) => {
         fullWidth
         variant="contained"
         sx={{ mt: 23, mb: 2, maxWidth: '320px', width: '100%' }}>
-        Войти
+        {buttonText}
       </Button>
     </Box>
   )
