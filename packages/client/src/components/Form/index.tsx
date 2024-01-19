@@ -21,7 +21,7 @@ export const Form: FC<IProps> = props => {
   const { dataInputs, buttonText } = props.formData
   return (
     <CustomForm<FormValues>>
-      {({ register, formState: { errors, isDirty, isValid } }) => (
+      {({ register, formState: { errors, isValid } }) => (
         <>
           {dataInputs &&
             Array.isArray(dataInputs) &&
@@ -39,7 +39,7 @@ export const Form: FC<IProps> = props => {
             })}
           <Button
             type="submit"
-            disabled={!isDirty || !isValid}
+            disabled={!isValid}
             fullWidth
             variant="contained"
             sx={{ mt: 23, mb: 2, maxWidth: '320px', width: '100%' }}>
