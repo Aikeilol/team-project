@@ -54,7 +54,7 @@ export const getUser = async () => {
     return (await yandexApi
       .get('/auth/user', config)
       .then(res => res)) as AxiosResponse<IUser>
-  } catch (error: any) {
+  } catch (error) {
     console.log(error)
   }
 }
