@@ -1,6 +1,13 @@
 import showAlert from '../showAlert'
-import { IUser, SignInRequest, SignUpRequest, UserId } from './types'
+import {
+  IUser,
+  SignInRequest,
+  SignUpRequest,
+  UserId,
+  YandexApiError,
+} from './types'
 import axios, {
+  AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
@@ -25,8 +32,9 @@ export const signUp = async (data: SignUpRequest) => {
       data,
       config
     )) as AxiosResponse<UserId>
-  } catch (error: any) {
-    const message = error.response.data.reason
+  } catch (err) {
+    const error = err as AxiosError<YandexApiError>
+    const message = error.response?.data.reason as string
     showAlert(message, 'error')
   }
 }
@@ -34,8 +42,9 @@ export const signUp = async (data: SignUpRequest) => {
 export const signIn = async (data: SignInRequest) => {
   try {
     return (await yandexApi.post('/auth/signin', data, config)) as AxiosResponse
-  } catch (error: any) {
-    const message = error.response.data.reason
+  } catch (err) {
+    const error = err as AxiosError<YandexApiError>
+    const message = error.response?.data.reason as string
     showAlert(message, 'error')
   }
 }
