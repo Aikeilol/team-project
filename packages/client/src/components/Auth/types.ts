@@ -1,9 +1,20 @@
+import { RegisterOptions } from 'react-hook-form'
+
 export type AuthInput = {
   id: string
   label: string
   type: string
-  name: string
+  name: InputName
+  rules?: RegisterOptions
 }
+
+export type InputName =
+  | 'first_name'
+  | 'second_name'
+  | 'login'
+  | 'email'
+  | 'phone'
+  | 'password'
 
 export type AuthFooterInfo = {
   text: string

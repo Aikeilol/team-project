@@ -10,6 +10,9 @@ import LeaderBord from '../pages/LeaderBord'
 import Forum from '../pages/Forum'
 import Topic from '../pages/Forum/Topic'
 import NewTopic from '../pages/Forum/NewTopic'
+import { getUserLoader } from './loaders'
+import { signInAction, signUpAction } from './actions'
+import ProtectedRoute from '../components/ProtectedRoute'
 
 const router = createBrowserRouter([
   {
@@ -22,40 +25,51 @@ const router = createBrowserRouter([
         element: <Main />,
         children: [
           {
-            path: 'profile',
-            element: <Profile />,
-          },
-          {
-            path: 'game',
-            element: <Game />,
-          },
-          {
-            path: 'leaderboard',
-            element: <LeaderBord />,
-          },
-          {
-            path: 'topics',
-            element: <Forum />,
+            path: '/',
+            element: <ProtectedRoute />,
+            loader: () => getUserLoader(false),
             children: [
               {
-                path: ':topicId',
-                element: <Topic />,
+                path: 'profile',
+                element: <Profile />,
               },
               {
-                path: 'new',
-                element: <NewTopic />,
+                path: 'game',
+                element: <Game />,
+              },
+              {
+                path: 'leaderboard',
+                element: <LeaderBord />,
+              },
+              {
+                path: 'topics',
+                element: <Forum />,
+                children: [
+                  {
+                    path: ':topicId',
+                    element: <Topic />,
+                  },
+                  {
+                    path: 'new',
+                    element: <NewTopic />,
+                  },
+                ],
               },
             ],
           },
         ],
       },
       {
-        path: 'sign-in',
+        path: '/sign-in',
         element: <SignIn />,
+        loader: () => getUserLoader(true),
+        action: signInAction,
       },
       {
-        path: 'sign-up',
+        path: '/sign-up',
         element: <SignUp />,
+        loader: () => getUserLoader(true),
+        action: signUpAction,
       },
     ],
   },
