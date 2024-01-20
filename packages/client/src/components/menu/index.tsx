@@ -5,13 +5,13 @@ import Container from '@mui/material/Container'
 import Toolbar from '@mui/material/Toolbar'
 
 const pages = [
-  { url: '/', title: 'Main' },
-  { url: '/profile', title: 'Profile' },
-  { url: '/game', title: 'Game' },
-  { url: '/leaderboard', title: 'Leaderboard' },
-  { url: '/topics', title: 'Forum' },
-  { url: '/sign-in', title: 'Sign In' },
-  { url: '/sign-up', title: 'Sign Up' },
+  { url: '/', title: 'Главная' },
+  { url: '/profile', title: 'Профиль' },
+  { url: '/game', title: 'Игра' },
+  { url: '/leaderboard', title: 'Лидерборд' },
+  { url: '/topics', title: 'Форум' },
+  { url: '/sign-in', title: 'Авторизация' },
+  { url: '/sign-up', title: 'Регистрация' },
 ]
 
 function Menu() {
