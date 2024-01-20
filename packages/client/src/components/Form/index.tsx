@@ -19,6 +19,7 @@ interface IProps {
 
 export const Form: FC<IProps> = props => {
   const { dataInputs, buttonText } = props.formData
+
   return (
     <CustomForm<FormValues>>
       {({ register, formState: { errors, isValid } }) => (

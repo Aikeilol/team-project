@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, FormControl } from '@mui/material'
 import {
   FieldValues,
   SubmitHandler,
@@ -21,15 +21,17 @@ const CustomForm = <TFormValues extends FieldValues>({
     <Box
       component={Form}
       method="post"
-      replace
       noValidate
+      autoComplete="off"
       sx={{
         mt: 4,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-      {children(methods)}
+      <FormControl sx={{ maxWidth: '320px', width: '100%' }}>
+        {children(methods)}
+      </FormControl>
     </Box>
   )
 }

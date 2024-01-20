@@ -13,7 +13,6 @@ export const CustomInput = forwardRef<HTMLInputElement, InputProps>(
       name,
       autoFocus,
       value,
-      onChange,
       type,
       label,
       id,
@@ -34,7 +33,6 @@ export const CustomInput = forwardRef<HTMLInputElement, InputProps>(
         name={name}
         autoFocus={autoFocus}
         value={value}
-        onChange={onChange}
         error={error}
         helperText={helperText}
         sx={{ maxWidth: '320px', width: '100%' }}
