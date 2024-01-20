@@ -27,7 +27,7 @@ function ErrorPage() {
       <Typography variant="h6" sx={{ p: 1 }}>
         {message}
       </Typography>
-      <Link href="/">Назад</Link>
+      <Link href="/">На главную</Link>
     </Box>
   )
 }
