@@ -57,8 +57,9 @@ function Intro() {
               href="/game"
               variant="contained"
               color="primary"
-              size="large">
-              НАЧАТЬ ИГРУ
+              size="large"
+              sx={{ textTransform: 'uppercase' }}>
+              Начать игру
             </Button>
           </Grid>
           <Grid item sm={12} md={5}>
