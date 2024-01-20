@@ -1,7 +1,0 @@
-.menu {
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: start;
-  gap: 20px;
-  padding-bottom: 20px;
-}
