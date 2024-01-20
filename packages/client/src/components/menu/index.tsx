@@ -1,7 +1,5 @@
-import React from 'react'
 import Link from '@mui/material/Link'
 import AppBar from '@mui/material/AppBar'
-import Container from '@mui/material/Container'
 import Toolbar from '@mui/material/Toolbar'
 
 const pages = [

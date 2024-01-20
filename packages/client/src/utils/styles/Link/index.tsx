@@ -5,7 +5,7 @@ import {
   NavLinkProps as RouterLinkProps,
 } from 'react-router-dom'
 
-const StyledRouterLink = styled(RouterLink)(({ theme }) => ({
+const StyledRouterLink = styled(RouterLink)(() => ({
   '&.active': {
     textDecoration: 'none',
   },
