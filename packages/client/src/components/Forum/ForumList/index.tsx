@@ -12,7 +12,7 @@ export default function ForumList<T extends { id: number }>(props: IProps<T>) {
 
   return (
     <>
-      {!!data.length && (
+      {!!data?.length && (
         <List
           sx={{
             overflow: 'auto',
@@ -26,7 +26,7 @@ export default function ForumList<T extends { id: number }>(props: IProps<T>) {
         </List>
       )}
 
-      {!data.length && (
+      {!data?.length && (
         <Typography variant="h3" sx={{ textAlign: 'center' }}>
           Нет данных
         </Typography>

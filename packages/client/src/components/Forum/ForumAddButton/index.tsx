@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { Fab, FabTypeMap, Tooltip } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
 
 interface IProps {
   click: () => void
@@ -10,13 +11,8 @@ interface IProps {
 const ForumAddButton: FC<IProps> = ({ click, size = 'small', tooltip }) => {
   return (
     <Tooltip title={tooltip}>
-      <Fab
-        color="primary"
-        aria-label="add"
-        size={size}
-        sx={{ fontSize: '40px' }}
-        onClick={click}>
-        +
+      <Fab color="primary" aria-label="add" size={size} onClick={click}>
+        <AddIcon />
       </Fab>
     </Tooltip>
   )

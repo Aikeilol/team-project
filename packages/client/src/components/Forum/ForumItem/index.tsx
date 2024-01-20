@@ -1,13 +1,13 @@
 import ListItem from '@mui/material/ListItem'
 import { Link } from 'react-router-dom'
 import {
-  Avatar,
-  ListItemAvatar,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   Typography,
 } from '@mui/material'
 import DialogWithInput, { DialogProps } from '../ForumDialogWithInput'
+import CommentIcon from '@mui/icons-material/Comment'
 
 interface IProps<T> {
   to: string
@@ -51,9 +51,9 @@ const ForumItem = <T extends object>({
         }}
         component={Link}
         to={to}>
-        <ListItemAvatar>
-          <Avatar sx={{ bgcolor: 'transparent', fontSize: '24px' }}>✎</Avatar>
-        </ListItemAvatar>
+        <ListItemIcon sx={{ justifyContent: 'center' }}>
+          <CommentIcon sx={{ color: 'gray' }} />
+        </ListItemIcon>
 
         <ListItemText
           primary={

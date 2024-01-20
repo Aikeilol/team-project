@@ -8,6 +8,8 @@ import { Box, ListItem } from '@mui/material'
 import { Message } from '../../../pages/Forum/types'
 
 const ForumMessageItem: FC<Message> = ({ author, message, createDateTime }) => {
+  const date = new Date(createDateTime).toLocaleDateString()
+
   return (
     <ListItem>
       <Card sx={{ width: '100%' }}>
@@ -42,7 +44,7 @@ const ForumMessageItem: FC<Message> = ({ author, message, createDateTime }) => {
               {author}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {new Date(createDateTime).toLocaleDateString()}
+              {date}
             </Typography>
           </Box>
 
