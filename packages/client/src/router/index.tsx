@@ -22,12 +22,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Main />,
+        element: <ProtectedRoute />,
+        loader: () => getUserLoader(false),
         children: [
           {
             path: '/',
-            element: <ProtectedRoute />,
-            loader: () => getUserLoader(false),
+            element: <Main />,
             children: [
               {
                 path: 'profile',
