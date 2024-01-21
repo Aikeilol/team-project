@@ -7,9 +7,10 @@ import SignUp from '../pages/SignUp'
 import Main from '../pages/Main'
 import Game from '../pages/Game'
 import LeaderBord from '../pages/LeaderBord'
+import Forums from '../pages/Forum/Forums'
+import Messages from '../pages/Forum/Messages'
+import Topics from '../pages/Forum/Topics'
 import Forum from '../pages/Forum'
-import Topic from '../pages/Forum/Topic'
-import NewTopic from '../pages/Forum/NewTopic'
 import Intro from '../components/Intro'
 
 const router = createBrowserRouter([
@@ -39,16 +40,20 @@ const router = createBrowserRouter([
             element: <LeaderBord />,
           },
           {
-            path: 'topics',
+            path: 'forum',
             element: <Forum />,
             children: [
               {
-                path: ':topicId',
-                element: <Topic />,
+                index: true,
+                element: <Forums />,
               },
               {
-                path: 'new',
-                element: <NewTopic />,
+                path: ':forumId/topics',
+                element: <Topics />,
+              },
+              {
+                path: ':forumId/topics/:topicId/messages',
+                element: <Messages />,
               },
             ],
           },

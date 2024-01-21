@@ -7,7 +7,7 @@ const pages = [
   { url: '/profile', title: 'Профиль' },
   { url: '/game', title: 'Игра' },
   { url: '/leaderboard', title: 'Лидерборд' },
-  { url: '/topics', title: 'Форум' },
+  { url: '/forum', title: 'Форум' },
   { url: '/sign-in', title: 'Авторизация' },
   { url: '/sign-up', title: 'Регистрация' },
 ]

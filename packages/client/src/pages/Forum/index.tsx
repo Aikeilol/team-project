@@ -1,16 +1,12 @@
-import { Link } from 'react-router-dom'
-
+import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
+import ForumLayout from '../../components/Forum/ForumLayout'
 
-function Forum() {
+export const Forum: FC<object> = () => {
   return (
-    <>
-      <h1>Forum</h1>
-      <Link to="/topics/new">New Topic</Link>
-      <br />
-      <Link to="/topics/123">Some Topic</Link>
+    <ForumLayout>
       <Outlet />
-    </>
+    </ForumLayout>
   )
 }
 
