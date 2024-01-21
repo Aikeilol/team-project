@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from '../pages/App'
-import ErrorBoundary from '../pages/ErrorPage'
+import Error from '../components/Error'
 import Profile from '../pages/Profile'
 import SignIn from '../pages/SignIn'
 import SignUp from '../pages/SignUp'
@@ -11,17 +11,22 @@ import Forums from '../pages/Forum/Forums'
 import Messages from '../pages/Forum/Messages'
 import Topics from '../pages/Forum/Topics'
 import Forum from '../pages/Forum'
+import Intro from '../components/Intro'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <ErrorBoundary />,
+    errorElement: <Error />,
     children: [
       {
         path: '/',
         element: <Main />,
         children: [
+          {
+            index: true,
+            element: <Intro />,
+          },
           {
             path: 'profile',
             element: <Profile />,

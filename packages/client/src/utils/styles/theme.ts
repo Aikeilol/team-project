@@ -1,4 +1,6 @@
 import { createTheme } from '@mui/material'
+import { LinkProps } from '@mui/material/Link'
+import { LinkBehavior } from './Link'
 
 const theme = createTheme({
   palette: {
@@ -14,6 +16,16 @@ const theme = createTheme({
           },
         },
       ],
+    },
+    MuiLink: {
+      defaultProps: {
+        component: LinkBehavior,
+      } as LinkProps,
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        LinkComponent: LinkBehavior,
+      },
     },
   },
 })
