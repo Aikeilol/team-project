@@ -6,25 +6,8 @@ import {
   Card,
   CardContent,
 } from '@mui/material'
-import TurnSharpLeftOutlinedIcon from '@mui/icons-material/TurnSharpLeftOutlined'
-import ExpandOutlinedIcon from '@mui/icons-material/ExpandOutlined'
-import OpenWithIcon from '@mui/icons-material/OpenWith'
 import gameScreen from './images/game-screen.jpg'
-
-const sectionItems = [
-  {
-    icon: <OpenWithIcon sx={{ fontSize: 100 }} color="primary" />,
-    title: 'Управляй стрелками на клавиатуре',
-  },
-  {
-    icon: <ExpandOutlinedIcon sx={{ fontSize: 100 }} color="primary" />,
-    title: 'Ешь яблоки, чтобы вырасти',
-  },
-  {
-    icon: <TurnSharpLeftOutlinedIcon sx={{ fontSize: 100 }} color="primary" />,
-    title: 'Не врезайся в стенки и самого себя',
-  },
-]
+import features from './features'
 
 function Intro() {
   return (
@@ -67,7 +50,7 @@ function Intro() {
           </Grid>
         </Grid>
         <Grid container spacing={5}>
-          {sectionItems.map(({ icon, title }, index) => (
+          {features.map(({ icon, title }, index) => (
             <Grid item xs={12} sm={12} md={4} key={index} alignItems="stretch">
               <Card sx={{ height: '100%' }}>
                 <CardContent
