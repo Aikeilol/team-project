@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import Auth from '../../components/Auth'
-import { Container, CssBaseline } from '@mui/material'
+import { Container } from '@mui/material'
 import {
   IFormData,
   AuthInput,
@@ -75,7 +75,6 @@ const SignUp: FC = () => {
         alignItems: 'center',
         minHeight: '100vh',
       }}>
-      <CssBaseline />
       <Auth data={data} />
     </Container>
   )
