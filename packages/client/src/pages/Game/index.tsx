@@ -12,12 +12,12 @@ function Game() {
     context.fillStyle = 'grey'
     const deltaX = coordX % 800
     const deltaY = coordY % 800
-    context.fillRect(10 + deltaX, 10 + deltaY, 10, 10)
+    context.fillRect(deltaX, deltaY, 10, 10)
   }
 
   return (
     <div className="game-body">
-      <Canvas draw={draw} width="1000" height="800" />
+      <Canvas draw={draw} width="100%" height="100%" />
     </div>
   )
 }
