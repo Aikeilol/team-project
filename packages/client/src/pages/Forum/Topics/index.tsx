@@ -24,12 +24,19 @@ const Topics: FC<object> = () => {
   }
 
   useEffect(() => {
-    if (forumId) {
-      forumService.getTopics(+forumId).then(data => {
-        setTitle(data.title)
-        setTopics(data.items)
-      })
+    async function getTopics() {
+      try {
+        const data = !!forumId && (await forumService.getTopics(+forumId))
+        if (data && data?.items) {
+          setTitle(data.title)
+          setTopics(data.items)
+        }
+      } catch (err) {
+        console.log(err)
+      }
     }
+
+    getTopics()
   }, [])
 
   return (

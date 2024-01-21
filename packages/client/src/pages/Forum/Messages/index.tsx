@@ -20,12 +20,19 @@ const Messages: FC<object> = () => {
   }
 
   useEffect(() => {
-    if (topicId) {
-      forumService.getMessages(+topicId).then(data => {
-        setTitle(data.title)
-        setMessages(data.items)
-      })
+    async function getMessages() {
+      try {
+        const data = !!topicId && (await forumService.getMessages(+topicId))
+        if (data && data?.items) {
+          setTitle(data.title)
+          setMessages(data.items)
+        }
+      } catch (err) {
+        console.log(err)
+      }
     }
+
+    getMessages()
   }, [])
 
   return (

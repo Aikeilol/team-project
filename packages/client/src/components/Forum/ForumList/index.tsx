@@ -16,8 +16,8 @@ export default function ForumList<T extends { id: number }>(props: IProps<T>) {
         <List
           sx={{
             overflow: 'auto',
-            width: '100%',
             maxWidth: 1400,
+            maxHeight: 'calc(100vh - 330px)',
             bgcolor: 'background.paper',
             padding: '0 30px',
             boxSizing: 'content-box',

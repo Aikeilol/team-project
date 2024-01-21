@@ -14,8 +14,19 @@ const Forums: FC<object> = () => {
   }
 
   useEffect(() => {
-    forumService.getForums().then(data => setForums(data.items))
-  }, [])
+    async function getForums() {
+      try {
+        const data = await forumService.getForums()
+        if (data?.items) {
+          setForums(data.items)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    getForums()
+  })
 
   return (
     <>

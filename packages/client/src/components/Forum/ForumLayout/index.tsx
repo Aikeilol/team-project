@@ -8,14 +8,12 @@ interface IProps {
 
 const ForumLayout: FC<IProps> = ({ children }) => {
   return (
-    <Container fixed sx={{}}>
+    <Container fixed sx={{ height: '100%' }}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          padding: '0 20px 58px 20px',
-          minHeight: 'calc(100vh - 44px)',
-          height: 'calc(100vh - 44px)',
+          padding: '20px 20px 58px',
         }}>
         {children}
       </Box>

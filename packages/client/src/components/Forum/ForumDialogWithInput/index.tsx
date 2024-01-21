@@ -58,10 +58,23 @@ const ForumDialogWithInput = <T extends object>({
   }
 
   const handleConfirm = () => {
-    addRequest(itemId, text).then(item => {
-      onConfirm(item)
-      handleClose()
-    })
+    if (text === '') {
+      return
+    }
+
+    async function addReq() {
+      try {
+        const data = await addRequest(itemId, text)
+        if (data) {
+          onConfirm(data)
+          handleClose()
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    addReq()
   }
 
   return (

@@ -10,7 +10,7 @@ const ForumHeader: FC<IProps> = ({ children }) => {
   return (
     <Typography
       sx={{
-        padding: '5px 0',
+        padding: '5px 0 20px',
         fontSize: '24px',
       }}
       variant="h1">
