@@ -1,0 +1,77 @@
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogProps,
+  DialogTitle,
+} from '@mui/material'
+import React, { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
+import ReplayIcon from '@mui/icons-material/Replay'
+import MenuIcon from '@mui/icons-material/Menu'
+
+export interface IProps {
+  score: number
+  record: number
+  startAgain: () => void
+}
+
+const GameEndDialog: FC<IProps> = ({ startAgain, score, record }) => {
+  const [open, setOpen] = React.useState(true)
+  const navigate = useNavigate()
+
+  const handleClose: DialogProps['onClose'] = (_, reason) => {
+    if (reason && reason === 'backdropClick') {
+      return
+    }
+
+    setOpen(false)
+  }
+
+  const handleStartAgain = () => {
+    startAgain()
+    setOpen(false)
+  }
+
+  const handleToMainMenu = () => {
+    navigate('/')
+    setOpen(false)
+  }
+
+  return (
+    <>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent sx={{ padding: '15px', background: 'transparent' }}>
+          <DialogTitle align="center" variant="h5">
+            Игра завершена
+          </DialogTitle>
+          <DialogContentText sx={{ textAlign: 'center' }}>
+            Набрано очков: {score}
+          </DialogContentText>
+          <DialogContentText
+            sx={{ textAlign: 'center', paddingBottom: '10px' }}>
+            Рекорд: {record}
+          </DialogContentText>
+          <DialogActions sx={{ gap: '16px' }}>
+            <Button
+              sx={{ display: 'flex', gap: '5px' }}
+              variant="contained"
+              onClick={handleStartAgain}>
+              <ReplayIcon /> Начать заново
+            </Button>
+            <Button
+              sx={{ display: 'flex', gap: '5px' }}
+              variant="contained"
+              onClick={handleToMainMenu}>
+              <MenuIcon /> На главную
+            </Button>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+
+export default GameEndDialog
