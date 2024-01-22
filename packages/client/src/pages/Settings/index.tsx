@@ -1,11 +1,10 @@
 import { FC } from 'react'
+import { ISettingsData, ISettingsFormData, SettingsInput } from '../../components/Settings/types'
 import { Container, CssBaseline } from '@mui/material'
-import ProfileIndex from '../../components/Profile'
-import { IProfileData, IProfileFormData, ProfileInput } from '../../components/Profile/types'
-
-
-const Profile: FC = () => {
-  const dataInputs: Array<ProfileInput> = [
+import SettingsIndex from '../../components/Settings'
+import './style.css'
+const Settings: FC = () => {
+  const dataInputs: Array<SettingsInput> = [
     {
       id: 'first_name',
       label: 'Имя',
@@ -43,10 +42,10 @@ const Profile: FC = () => {
       type: 'tel',
     }
   ]
-  const formData: IProfileFormData = {
+  const formData: ISettingsFormData = {
     dataInputs: dataInputs
   }
-  const data: IProfileData = {
+  const data: ISettingsData = {
     formData: formData
   }
   return (
@@ -61,9 +60,9 @@ const Profile: FC = () => {
       }}
     >
       <CssBaseline />
-      <ProfileIndex data={data} />
+      <SettingsIndex data={data} />
     </Container>
   )
 }
 
-export default Profile
+export default Settings

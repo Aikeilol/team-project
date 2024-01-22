@@ -1,0 +1,8 @@
+.inputCustom .MuiInputBase-root::before,
+.inputCustom .MuiInputBase-root::after,
+.inputCustom .MuiInputBase-root:hover:not(.Mui-disabled, .Mui-error):before {
+   border-bottom: 0;
+}
+.inputCustom input {
+    text-align: end;
+}

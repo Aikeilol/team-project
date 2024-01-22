@@ -10,6 +10,8 @@ import LeaderBord from '../pages/LeaderBord'
 import Forum from '../pages/Forum'
 import Topic from '../pages/Forum/Topic'
 import NewTopic from '../pages/Forum/NewTopic'
+import Settings from '../pages/Settings'
+import PasswordEdit from '../pages/PasswordEdit'
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
           {
             path: 'profile',
             element: <Profile />,
+          },
+          {
+            path: 'settings',
+            element: <Settings />
+          },
+          {
+            path: 'password-edit',
+            element: <PasswordEdit />
           },
           {
             path: 'game',
