@@ -4,7 +4,6 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogProps,
   DialogTitle,
 } from '@mui/material'
 import React, { FC } from 'react'
@@ -22,14 +21,6 @@ const GameEndDialog: FC<IProps> = ({ startAgain, score, record }) => {
   const [open, setOpen] = React.useState(true)
   const navigate = useNavigate()
 
-  const handleClose: DialogProps['onClose'] = (_, reason) => {
-    if (reason && reason === 'backdropClick') {
-      return
-    }
-
-    setOpen(false)
-  }
-
   const handleStartAgain = () => {
     startAgain()
     setOpen(false)
@@ -41,36 +32,33 @@ const GameEndDialog: FC<IProps> = ({ startAgain, score, record }) => {
   }
 
   return (
-    <>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogContent sx={{ padding: '15px', background: 'transparent' }}>
-          <DialogTitle align="center" variant="h5">
-            Игра завершена
-          </DialogTitle>
-          <DialogContentText sx={{ textAlign: 'center' }}>
-            Набрано очков: {score}
-          </DialogContentText>
-          <DialogContentText
-            sx={{ textAlign: 'center', paddingBottom: '10px' }}>
-            Рекорд: {record}
-          </DialogContentText>
-          <DialogActions sx={{ gap: '16px' }}>
-            <Button
-              sx={{ display: 'flex', gap: '5px' }}
-              variant="contained"
-              onClick={handleStartAgain}>
-              <ReplayIcon /> Начать заново
-            </Button>
-            <Button
-              sx={{ display: 'flex', gap: '5px' }}
-              variant="contained"
-              onClick={handleToMainMenu}>
-              <MenuIcon /> На главную
-            </Button>
-          </DialogActions>
-        </DialogContent>
-      </Dialog>
-    </>
+    <Dialog open={open}>
+      <DialogContent sx={{ padding: '15px', background: 'transparent' }}>
+        <DialogTitle align="center" variant="h5">
+          Игра завершена
+        </DialogTitle>
+        <DialogContentText sx={{ textAlign: 'center' }}>
+          Набрано очков: {score}
+        </DialogContentText>
+        <DialogContentText sx={{ textAlign: 'center', paddingBottom: '10px' }}>
+          Рекорд: {record}
+        </DialogContentText>
+        <DialogActions sx={{ gap: '16px' }}>
+          <Button
+            sx={{ display: 'flex', gap: '5px' }}
+            variant="contained"
+            onClick={handleStartAgain}>
+            <ReplayIcon /> Начать заново
+          </Button>
+          <Button
+            sx={{ display: 'flex', gap: '5px' }}
+            variant="contained"
+            onClick={handleToMainMenu}>
+            <MenuIcon /> На главную
+          </Button>
+        </DialogActions>
+      </DialogContent>
+    </Dialog>
   )
 }
 
