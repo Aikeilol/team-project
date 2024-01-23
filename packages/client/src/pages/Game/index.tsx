@@ -3,8 +3,6 @@ import './style.css'
 import { getRandomInt } from './utils/getRandomInt'
 
 function Game() {
-  // переменная нужна для корректной работы в строгом режиме реакта
-  let isReady = false
   // Поле, на котором всё будет происходить, — тоже как бы переменная
   const ref = useRef<HTMLCanvasElement | null>(null)
   // Классическая змейка — двухмерная, сделаем такую же
@@ -68,8 +66,7 @@ function Game() {
       }
     })
 
-    if (ref.current && !isReady) {
-      isReady = true
+    if (ref.current) {
       requestId = requestAnimationFrame(loop)
     }
     return () => {
@@ -77,6 +74,7 @@ function Game() {
         'keydown',
         event as unknown as EventListenerOrEventListenerObject
       )
+
       cancelAnimationFrame(requestId)
     }
   }, [])
