@@ -39,42 +39,13 @@ function Game() {
 
   useEffect(() => {
     let requestId = 0
-    const event = document.addEventListener('keydown', function (e) {
-      // Дополнительно проверяем такой момент: если змейка движется, например, влево, то ещё одно нажатие влево или вправо ничего не поменяет — змейка продолжит двигаться в ту же сторону, что и раньше. Это сделано для того, чтобы не разворачивать весь массив со змейкой на лету и не усложнять код игры.
-      // Стрелка влево
-      // Если нажата стрелка влево, и при этом змейка никуда не движется по горизонтали…
-      if (e.which === 37 && snake.dx === 0) {
-        // то даём ей движение по горизонтали, влево, а вертикальное — останавливаем
-        // Та же самая логика будет и в остальных кнопках
-        snake.dx = -grid
-        snake.dy = 0
-      }
-      // Стрелка вверх
-      else if (e.which === 38 && snake.dy === 0) {
-        snake.dy = -grid
-        snake.dx = 0
-      }
-      // Стрелка вправо
-      else if (e.which === 39 && snake.dx === 0) {
-        snake.dx = grid
-        snake.dy = 0
-      }
-      // Стрелка вниз
-      else if (e.which === 40 && snake.dy === 0) {
-        snake.dy = grid
-        snake.dx = 0
-      }
-    })
+    document.addEventListener('keydown', setSnakeControllers)
 
     if (ref.current) {
       requestId = requestAnimationFrame(loop)
     }
     return () => {
-      document.removeEventListener(
-        'keydown',
-        event as unknown as EventListenerOrEventListenerObject
-      )
-
+      document.removeEventListener('keydown', setSnakeControllers)
       cancelAnimationFrame(requestId)
     }
   }, [])
@@ -149,9 +120,37 @@ function Game() {
           // Ставим яблочко в случайное место
           apple.x = getRandomInt(0, 50) * grid
           apple.y = getRandomInt(0, 50) * grid
+          break
         }
       }
     })
+  }
+
+  function setSnakeControllers(e: KeyboardEvent) {
+    // Дополнительно проверяем такой момент: если змейка движется, например, влево, то ещё одно нажатие влево или вправо ничего не поменяет — змейка продолжит двигаться в ту же сторону, что и раньше. Это сделано для того, чтобы не разворачивать весь массив со змейкой на лету и не усложнять код игры.
+    // Стрелка влево
+    // Если нажата стрелка влево, и при этом змейка никуда не движется по горизонтали…
+    if (e.which === 37 && snake.dx === 0) {
+      // то даём ей движение по горизонтали, влево, а вертикальное — останавливаем
+      // Та же самая логика будет и в остальных кнопках
+      snake.dx = -grid
+      snake.dy = 0
+    }
+    // Стрелка вверх
+    else if (e.which === 38 && snake.dy === 0) {
+      snake.dy = -grid
+      snake.dx = 0
+    }
+    // Стрелка вправо
+    else if (e.which === 39 && snake.dx === 0) {
+      snake.dx = grid
+      snake.dy = 0
+    }
+    // Стрелка вниз
+    else if (e.which === 40 && snake.dy === 0) {
+      snake.dy = grid
+      snake.dx = 0
+    }
   }
 
   return (
