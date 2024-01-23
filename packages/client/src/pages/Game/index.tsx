@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import './style.css'
+import { getRandomInt } from './utils/getRandomInt'
 
 function Game() {
   // переменная нужна для корректной работы в строгом режиме реакта
@@ -39,6 +40,7 @@ function Game() {
   }
 
   useEffect(() => {
+    let requestId = 0
     const event = document.addEventListener('keydown', function (e) {
       // Дополнительно проверяем такой момент: если змейка движется, например, влево, то ещё одно нажатие влево или вправо ничего не поменяет — змейка продолжит двигаться в ту же сторону, что и раньше. Это сделано для того, чтобы не разворачивать весь массив со змейкой на лету и не усложнять код игры.
       // Стрелка влево
@@ -68,13 +70,14 @@ function Game() {
 
     if (ref.current && !isReady) {
       isReady = true
-      requestAnimationFrame(loop)
+      requestId = requestAnimationFrame(loop)
     }
     return () => {
       document.removeEventListener(
         'keydown',
         event as unknown as EventListenerOrEventListenerObject
       )
+      cancelAnimationFrame(requestId)
     }
   }, [])
 
@@ -87,7 +90,7 @@ function Game() {
     // Дальше будет хитрая функция, которая замедляет скорость игры с 60 кадров в секунду до 15. Для этого она пропускает три кадра из четырёх, то есть срабатывает каждый четвёртый кадр игры. Было 60 кадров в секунду, станет 15.
     requestAnimationFrame(loop)
     // Игровой код выполнится только один раз из четырёх, в этом и суть замедления кадров, а пока переменная count меньше четырёх, код выполняться не будет.
-    if (++count < 8) {
+    if (++count < 4) {
       return
     }
     // Обнуляем переменную скорости
@@ -146,20 +149,16 @@ function Game() {
           snake.dx = grid
           snake.dy = 0
           // Ставим яблочко в случайное место
-          apple.x = getRandomInt(0, 25) * grid
-          apple.y = getRandomInt(0, 25) * grid
+          apple.x = getRandomInt(0, 50) * grid
+          apple.y = getRandomInt(0, 50) * grid
         }
       }
     })
   }
 
-  function getRandomInt(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min)) + min
-  }
-
   return (
     <div className="game-body">
-      <canvas ref={ref} width="700" height="700"></canvas>
+      <canvas ref={ref} width="800" height="800"></canvas>
     </div>
   )
 }
