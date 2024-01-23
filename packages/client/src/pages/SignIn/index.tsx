@@ -7,22 +7,10 @@ import {
   IAuthData,
   IFormData,
 } from '../../components/Auth/types'
+import { LoginInput, PasswordInput } from '../../components/Form/data'
 
 const SignIn: FC = () => {
-  const dataInputs: Array<AuthInput> = [
-    {
-      id: 'login',
-      label: 'Логин',
-      type: 'text',
-      name: 'login',
-    },
-    {
-      id: 'password',
-      label: 'Пароль',
-      name: 'password',
-      type: 'password',
-    },
-  ]
+  const dataInputs: Array<AuthInput> = [LoginInput, PasswordInput]
 
   const formData: IFormData = {
     dataInputs: dataInputs,

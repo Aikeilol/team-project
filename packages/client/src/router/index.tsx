@@ -12,6 +12,9 @@ import Messages from '../pages/Forum/Messages'
 import Topics from '../pages/Forum/Topics'
 import Forum from '../pages/Forum'
 import Intro from '../components/Intro'
+import { getUserLoader } from './loaders'
+import { signInAction, signUpAction } from './actions'
+import ProtectedRoute from '../components/ProtectedRoute'
 
 const router = createBrowserRouter([
   {
@@ -21,51 +24,62 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Main />,
+        element: <ProtectedRoute />,
+        loader: () => getUserLoader(false),
         children: [
           {
-            index: true,
-            element: <Intro />,
-          },
-          {
-            path: 'profile',
-            element: <Profile />,
-          },
-          {
-            path: 'game',
-            element: <Game />,
-          },
-          {
-            path: 'leaderboard',
-            element: <LeaderBord />,
-          },
-          {
-            path: 'forum',
-            element: <Forum />,
+            path: '/',
+            element: <Main />,
             children: [
               {
                 index: true,
-                element: <Forums />,
+                element: <Intro />,
               },
               {
-                path: ':forumId/topics',
-                element: <Topics />,
+                path: 'profile',
+                element: <Profile />,
               },
               {
-                path: ':forumId/topics/:topicId/messages',
-                element: <Messages />,
+                path: 'game',
+                element: <Game />,
+              },
+              {
+                path: 'leaderboard',
+                element: <LeaderBord />,
+              },
+              {
+                path: 'forum',
+                element: <Forum />,
+                children: [
+                  {
+                    index: true,
+                    element: <Forums />,
+                  },
+                  {
+                    path: ':forumId/topics',
+                    element: <Topics />,
+                  },
+                  {
+                    path: ':forumId/topics/:topicId/messages',
+                    element: <Messages />,
+                  },
+                ],
               },
             ],
           },
         ],
       },
       {
-        path: 'sign-in',
+        path: '/sign-in',
         element: <SignIn />,
+        loader: () => getUserLoader(true),
+        action: signInAction,
       },
       {
-        path: 'sign-up',
+        path: '/sign-up',
         element: <SignUp />,
+        loader: () => getUserLoader(true),
+        action: signUpAction,
       },
     ],
   },

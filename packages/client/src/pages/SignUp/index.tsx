@@ -7,45 +7,23 @@ import {
   AuthFooterInfo,
   IAuthData,
 } from '../../components/Auth/types'
+import {
+  EmailInput,
+  FirstNameInput,
+  LoginInput,
+  PasswordInput,
+  PhoneInput,
+  SecondNameInput,
+} from '../../components/Form/data'
 
 const SignUp: FC = () => {
   const dataInputs: Array<AuthInput> = [
-    {
-      id: 'first_name',
-      label: 'Имя',
-      name: 'first_name',
-      type: 'text',
-    },
-    {
-      id: 'second_name',
-      label: 'Фамилия',
-      name: 'second_name',
-      type: 'text',
-    },
-    {
-      id: 'login',
-      label: 'Логин',
-      type: 'text',
-      name: 'login',
-    },
-    {
-      id: 'email',
-      label: 'Почта',
-      type: 'email',
-      name: 'email',
-    },
-    {
-      id: 'phone',
-      label: 'Телефон',
-      name: 'phone',
-      type: 'tel',
-    },
-    {
-      id: 'password',
-      label: 'Пароль',
-      name: 'password',
-      type: 'password',
-    },
+    FirstNameInput,
+    SecondNameInput,
+    LoginInput,
+    EmailInput,
+    PhoneInput,
+    PasswordInput,
   ]
 
   const formData: IFormData = {
