@@ -59,7 +59,7 @@ function Game() {
     // Дальше будет хитрая функция, которая замедляет скорость игры с 60 кадров в секунду до 15. Для этого она пропускает три кадра из четырёх, то есть срабатывает каждый четвёртый кадр игры. Было 60 кадров в секунду, станет 15.
     requestAnimationFrame(gameLoop)
     // Игровой код выполнится только один раз из четырёх, в этом и суть замедления кадров, а пока переменная count меньше четырёх, код выполняться не будет.
-    if (++count < 4) {
+    if (++count < 8) {
       return
     }
     // Обнуляем переменную скорости
@@ -69,7 +69,6 @@ function Game() {
     checkMapEnd(canvas)
     moveSnakeBody()
     makeApple(context)
-    context.fillStyle = 'yellow'
     checkCollisions(context)
   }
 
@@ -120,35 +119,39 @@ function Game() {
   }
 
   function checkCollisions(context: CanvasRenderingContext2D) {
-    snake.cells.forEach(function (cell, index) {
-      // Чтобы создать эффект клеточек, делаем квадратики меньше на один пиксель, чтобы вокруг них образовалась чёрная граница
-      context.fillRect(cell.x, cell.y, grid - 1, grid - 1)
-      // Если змейка добралась до яблока...
-      if (cell.x === apple.x && cell.y === apple.y) {
-        // увеличиваем длину змейки
-        snake.maxCells++
-        // Рисуем новое яблочко
+    for (let i = 0; i < snake.cells.length; i++) {
+      const isFirstCoord = i === 0
+      const isCurrentCoordEqvLastCoord =
+        snake.cells[i].y === snake.y && snake.cells[i].x === snake.x
+
+      if (!isFirstCoord && isCurrentCoordEqvLastCoord) {
+        snake.x = 160
+        snake.y = 160
+        snake.cells = []
+        snake.maxCells = 4
+        snake.dx = grid
+        snake.dy = 0
+        // Ставим яблочко в случайное место
         apple.x = getRandomInt(0, 50) * grid
         apple.y = getRandomInt(0, 50) * grid
+        break
       }
-      // Проверяем, не столкнулась ли змея сама с собой
-      // Для этого перебираем весь массив и смотрим, есть ли у нас в массиве змейки две клетки с одинаковыми координатами
-      for (let i = index + 1; i < snake.cells.length; i++) {
-        // Если такие клетки есть — начинаем игру заново
-        if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-          // Задаём стартовые параметры основным переменным
-          snake.x = 160
-          snake.y = 160
-          snake.cells = []
-          snake.maxCells = 4
-          snake.dx = grid
-          snake.dy = 0
-          // Ставим яблочко в случайное место
-          apple.x = getRandomInt(0, 50) * grid
-          apple.y = getRandomInt(0, 50) * grid
-          break
-        }
-      }
+    }
+
+    const isSameCoordWithApple = snake.x === apple.x && snake.y === apple.y
+
+    if (isSameCoordWithApple) {
+      // увеличиваем длину змейки
+      snake.maxCells++
+      // Рисуем новое яблочко
+      apple.x = getRandomInt(0, 50) * grid
+      apple.y = getRandomInt(0, 50) * grid
+    }
+
+    snake.cells.forEach(function (cell) {
+      // Чтобы создать эффект клеточек, делаем квадратики меньше на один пиксель, чтобы вокруг них образовалась чёрная граница
+      context.fillStyle = 'yellow'
+      context.fillRect(cell.x, cell.y, grid - 1, grid - 1)
     })
   }
   return (
