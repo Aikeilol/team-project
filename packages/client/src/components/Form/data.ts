@@ -5,6 +5,22 @@ const FirstNameInput: AuthInput = {
   label: 'Имя',
   name: 'first_name',
   type: 'text',
+  value: '',
+  rules: {
+    pattern: {
+      value: /^[A-ZА-Я]{1}[a-zа-я-]*$/,
+      message:
+        'Первая буква должна быть заглавной, без пробелов и без цифр, допустим дефис',
+    },
+    required: 'Поле не может быть пустым'
+  },
+}
+
+const SecondNameInput: AuthInput = {
+  id: 'second_name',
+  label: 'Фамилия',
+  name: 'second_name',
+  type: 'text',
   rules: {
     pattern: {
       value: /^[A-ZА-Я]{1}[a-zа-я-]*$/,
@@ -15,10 +31,10 @@ const FirstNameInput: AuthInput = {
   },
 }
 
-const SecondNameInput: AuthInput = {
-  id: 'second_name',
-  label: 'Фамилия',
-  name: 'second_name',
+const DisplayNameInput: AuthInput = {
+  id: 'display_name',
+  label: 'Имя в чате',
+  name: 'display_name',
   type: 'text',
   rules: {
     pattern: {
@@ -89,6 +105,35 @@ const PasswordInput: AuthInput = {
     required: 'Поле не может быть пустым',
   },
 }
+const NewPasswordInput: AuthInput = {
+  id: 'newPassword',
+  label: 'Новый пароль',
+  name: 'newPassword',
+  type: 'password',
+  rules: {
+    pattern: {
+      value: /^(?=.*[A-Z])(?=.*[0-9]).{8,40}$/,
+      message:
+        'Поле может содержать от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра',
+    },
+    required: 'Поле не может быть пустым',
+  },
+}
+
+const OldPasswordInput: AuthInput = {
+  id: 'oldPassword',
+  label: 'Старый Пароль',
+  name: 'oldPassword',
+  type: 'password',
+  rules: {
+    pattern: {
+      value: /^(?=.*[A-Z])(?=.*[0-9]).{8,40}$/,
+      message:
+        'Поле может содержать от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра',
+    },
+    required: 'Поле не может быть пустым',
+  },
+}
 
 export {
   FirstNameInput,
@@ -97,4 +142,7 @@ export {
   EmailInput,
   PhoneInput,
   PasswordInput,
+  DisplayNameInput,
+  NewPasswordInput,
+  OldPasswordInput
 }

@@ -1,12 +1,6 @@
-export type ProfileInput = {
-  id: string
-  label: string
-  type: string
-  name: string
-}
-
+import { IUser } from '../../utils/scripts/api/types'
 export interface IProfileFormData {
-  dataInputs: Array<ProfileInput>
+  dataInputs: Array<IUser>
 }
 export interface IProfileData {
   formData: IProfileFormData

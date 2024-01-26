@@ -1,52 +1,39 @@
-import { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Container, CssBaseline } from '@mui/material'
 import ProfileIndex from '../../components/Profile'
-import { IProfileData, IProfileFormData, ProfileInput } from '../../components/Profile/types'
-
+import { IProfileData, IProfileFormData } from '../../components/Profile/types'
+import { IUser } from '../../utils/scripts/api/types'
+import { getUser } from '../../utils/scripts/api/yandexApi'
 
 const Profile: FC = () => {
-  const dataInputs: Array<ProfileInput> = [
-    {
-      id: 'first_name',
-      label: 'Имя',
-      name: 'first_name',
-      type: 'text',
-    },
-    {
-      id: 'second_name',
-      label: 'Фамилия',
-      name: 'second_name',
-      type: 'text',
-    },
-    {
-      id: 'display_name',
-      label: 'Имя в чате',
-      name: 'display_name',
-      type: 'text',
-    },
-    {
-      id: 'login',
-      label: 'Логин',
-      type: 'text',
-      name: 'login',
-    },
-    {
-      id: 'email',
-      label: 'Почта',
-      type: 'email',
-      name: 'email',
-    },
-    {
-      id: 'phone',
-      label: 'Телефон',
-      name: 'phone',
-      type: 'tel',
-    }
+  const [userData, setUserData] = useState<IUser>({
+    avatar: '',
+    display_name: '',
+    email: '',
+    first_name: '',
+    id: 0,
+    login: '',
+    phone: '',
+    second_name: ''
+  })
+
+  useEffect(() => {
+    getUser().then(
+      response => {
+        if (response?.data) {
+          setUserData(response.data)
+        }
+      }
+    )
+  }, [])
+
+  const userArr = [
+    userData
   ]
   const formData: IProfileFormData = {
-    dataInputs: dataInputs
+    dataInputs: userArr
   }
-  const data: IProfileData = {
+  const dataObject: IProfileData = {
     formData: formData
   }
   return (
@@ -60,8 +47,7 @@ const Profile: FC = () => {
         minHeight: '100vh'
       }}
     >
-      <CssBaseline />
-      <ProfileIndex data={data} />
+      <ProfileIndex data={dataObject} />
     </Container>
   )
 }

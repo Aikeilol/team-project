@@ -11,6 +11,7 @@ type FormValues = {
   email: string
   phone: string
   password: string
+  display_name: string
 }
 
 interface IProps {
@@ -26,13 +27,14 @@ export const Form: FC<IProps> = props => {
         <>
           {dataInputs &&
             Array.isArray(dataInputs) &&
-            dataInputs.map(({ id, name, rules, ...props }, index) => {
+            dataInputs.map(({ id, name, defaultValue, rules, ...props }, index) => {
               return (
                 <CustomInput
                   key={id}
                   autoFocus={index === 0}
                   error={!!errors[name]}
                   helperText={errors[name]?.message}
+                  defaultValue={defaultValue}
                   {...props}
                   {...(register && register(name, rules))}
                 />

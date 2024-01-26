@@ -1,33 +1,21 @@
 import { FC } from 'react'
-import { IPwdEditData, IPwdEditFormData, PwdEditInput } from '../../components/PasswordEdit/types'
-import { Container, CssBaseline } from '@mui/material'
+import { Container } from '@mui/material'
 import PasswordEditIndex from '../../components/PasswordEdit'
+import { AuthInput, IAuthData, IFormData } from '../../components/Auth/types'
+import { NewPasswordInput, OldPasswordInput } from '../../components/Form/data'
+import ForumBackButton from '../../components/Forum/ForumBackButton'
 
 const PasswordEdit: FC = () => {
-  const dataInputs: Array<PwdEditInput> = [
-    {
-      id: 'oldPassword',
-      label: 'Старый пароль',
-      name: 'oldPassword',
-      type: 'password',
-    },
-    {
-      id: 'newPassword',
-      label: 'Новый пароль',
-      name: 'newPassword',
-      type: 'password',
-    },
-    {
-      id: 'newPassword',
-      label: 'Повторите новый пароль',
-      name: 'newPassword',
-      type: 'password',
-    },
+  const dataInputs: Array<AuthInput> = [
+    OldPasswordInput,
+    NewPasswordInput
   ]
-  const formData: IPwdEditFormData = {
-    dataInputs: dataInputs
+  const formData: IFormData = {
+    dataInputs: dataInputs,
+    buttonText: 'Сохранить'
   }
-  const data: IPwdEditData = {
+  const data: IAuthData = {
+    title: 'Изменить пароль',
     formData: formData
   }
   return (
@@ -41,7 +29,7 @@ const PasswordEdit: FC = () => {
         minHeight: '100vh'
       }}
     >
-      <CssBaseline />
+      <ForumBackButton />
       <PasswordEditIndex data={data} />
     </Container>
   )

@@ -1,0 +1,10 @@
+.settingsForm {
+  form {
+      width: 100%;
+      div {
+          button {
+              margin-top: 48px;
+          }
+      }
+  }
+}

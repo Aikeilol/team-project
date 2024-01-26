@@ -6,6 +6,18 @@ export type SignUpRequest = {
   password: string
   phone: string
 }
+export type profileRequest = {
+  first_name: string
+  second_name: string
+  login: string
+  email: string
+  display_name: string
+  phone: string
+}
+export type passwordRequest = {
+  oldPassword: string
+  newPassword: string
+}
 
 export type UserId = {
   id: number
@@ -27,4 +39,16 @@ export interface IUser {
   email: string
 }
 
+export interface IChangeUserProfile {
+  first_name: string;
+  second_name: string;
+  display_name: string;
+  login: string;
+  email: string;
+  phone: string;
+}
+export interface IChangeUserPassword {
+  oldPassword: string;
+  newPassword: string;
+}
 export type YandexApiError = { reason: string }

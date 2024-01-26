@@ -1,18 +1,21 @@
 import { FC } from 'react'
 import { Box } from '@mui/material'
-import { ISettingsData } from './types'
 import SettingsForm from './SettingsForm'
+import { IAuthData } from '../Auth/types'
+import './SettingsForm/style.css'
+import AuthHeader from '../Auth/AuthHeader'
 
 
 interface IProps {
-  data: ISettingsData
+  data: IAuthData
 }
 
 const SettingsIndex: FC<IProps> = ({ data }) => {
-  const { formData } = data
+  const { title, formData } = data
   return (
     <Box
       component="div"
+      className={'settingsForm'}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -21,7 +24,8 @@ const SettingsIndex: FC<IProps> = ({ data }) => {
         width: '550px'
       }}
     >
-      <SettingsForm title={'profile header'}  formData={formData}/>
+      <AuthHeader title={title} />
+      <SettingsForm formData={formData} />
     </Box>
   )
 }

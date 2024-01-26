@@ -6,7 +6,11 @@ interface IProps {
   formData: IProfileFormData
 }
 const ProfileBody: FC<IProps> = ({formData}) => {
+
   const { dataInputs } = formData
+  const data = dataInputs.reduce((object) => {
+      return object
+  })
   return (
     <Box
       component="div"
@@ -21,7 +25,7 @@ const ProfileBody: FC<IProps> = ({formData}) => {
         }
       }
     >
-      {dataInputs.map(({ id, label, type, name }, index) =>(
+      <>
         <Box
           component="div"
           sx={{
@@ -34,10 +38,85 @@ const ProfileBody: FC<IProps> = ({formData}) => {
             borderBottom: t => `1px solid ${t.palette.divider}`,
           }}
         >
-          <Box>{label}</Box>
-          <Box>{name}</Box>
+          <Box>Почта</Box>
+          <Box>{data.email}</Box>
         </Box>
-      ))}
+        <Box
+          component="div"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            pb: 2,
+            pt: 2,
+            borderBottom: t => `1px solid ${t.palette.divider}`,
+          }}
+        >
+          <Box>Логин</Box>
+          <Box>{data.login}</Box>
+        </Box>
+        <Box
+          component="div"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            pb: 2,
+            pt: 2,
+            borderBottom: t => `1px solid ${t.palette.divider}`,
+          }}
+        >
+          <Box>Имя</Box>
+          <Box>{data.first_name}</Box>
+        </Box>
+        <Box
+          component="div"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            pb: 2,
+            pt: 2,
+            borderBottom: t => `1px solid ${t.palette.divider}`,
+          }}
+        >
+          <Box>Фамилия</Box>
+          <Box>{data.second_name}</Box>
+        </Box>
+        <Box
+          component="div"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            pb: 2,
+            pt: 2,
+            borderBottom: t => `1px solid ${t.palette.divider}`,
+          }}
+        >
+          <Box>Имя в чате</Box>
+          <Box>{data.display_name}</Box>
+        </Box>
+        <Box
+          component="div"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            pb: 2,
+            pt: 2,
+            borderBottom: t => `1px solid ${t.palette.divider}`,
+          }}
+        >
+          <Box>Телефон</Box>
+          <Box>{data.phone}</Box>
+        </Box>
+      </>
     </Box>
   )
 }

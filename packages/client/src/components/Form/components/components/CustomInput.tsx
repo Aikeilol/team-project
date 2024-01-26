@@ -20,6 +20,7 @@ export const CustomInput = forwardRef<HTMLInputElement, InputProps>(
       error,
       helperText,
       variant,
+      defaultValue,
     } = props
 
     return (
@@ -33,6 +34,7 @@ export const CustomInput = forwardRef<HTMLInputElement, InputProps>(
         name={name}
         autoFocus={autoFocus}
         value={value}
+        defaultValue={defaultValue}
         error={error}
         helperText={helperText}
         sx={{ maxWidth: '320px', width: '100%' }}

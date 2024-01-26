@@ -23,7 +23,7 @@ const ProfileIndex: FC<IProps> = ({ data }) => {
         width: '550px'
       }}
     >
-      <ProfileHeader title={'profile header'} />
+      <ProfileHeader formData={formData} />
       <ProfileBody  formData={formData}/>
       <ProfileFooter />
     </Box>

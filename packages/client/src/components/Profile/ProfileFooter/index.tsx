@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Box, CssBaseline, Link } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
+import { logOut } from '../../../utils/scripts/api/profileApi'
 
 const ProfileFooter: FC = () => {
   return (
@@ -54,6 +55,7 @@ const ProfileFooter: FC = () => {
         to={'/sign-in'}
         color={"#FF0000"}
         underline="none"
+        onClick={e => logOut()}
       >
         {'Выйти'}
       </Link>

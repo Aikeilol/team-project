@@ -1,53 +1,37 @@
 import { FC } from 'react'
-import { ISettingsData, ISettingsFormData, SettingsInput } from '../../components/Settings/types'
-import { Container, CssBaseline } from '@mui/material'
+import { Container } from '@mui/material'
 import SettingsIndex from '../../components/Settings'
 import './style.css'
+import { AuthInput, IAuthData, IFormData } from '../../components/Auth/types'
+import {
+  DisplayNameInput,
+  EmailInput,
+  FirstNameInput,
+  LoginInput,
+  PhoneInput,
+  SecondNameInput
+} from '../../components/Form/data'
+import ForumBackButton from '../../components/Forum/ForumBackButton'
+
 const Settings: FC = () => {
-  const dataInputs: Array<SettingsInput> = [
-    {
-      id: 'first_name',
-      label: 'Имя',
-      name: 'first_name',
-      type: 'text',
-    },
-    {
-      id: 'second_name',
-      label: 'Фамилия',
-      name: 'second_name',
-      type: 'text',
-    },
-    {
-      id: 'display_name',
-      label: 'Имя в чате',
-      name: 'display_name',
-      type: 'text',
-    },
-    {
-      id: 'login',
-      label: 'Логин',
-      type: 'text',
-      name: 'login',
-    },
-    {
-      id: 'email',
-      label: 'Почта',
-      type: 'email',
-      name: 'email',
-    },
-    {
-      id: 'phone',
-      label: 'Телефон',
-      name: 'phone',
-      type: 'tel',
-    }
+  const dataInputs: Array<AuthInput> = [
+    FirstNameInput,
+    SecondNameInput,
+    LoginInput,
+    EmailInput,
+    PhoneInput,
+    DisplayNameInput
   ]
-  const formData: ISettingsFormData = {
-    dataInputs: dataInputs
+  const formData: IFormData = {
+    dataInputs: dataInputs,
+    buttonText: 'Сохранить'
   }
-  const data: ISettingsData = {
+
+  const data: IAuthData = {
+    title: 'Настройки профиля',
     formData: formData
   }
+
   return (
     <Container
       component="main"
@@ -59,7 +43,7 @@ const Settings: FC = () => {
         minHeight: '100vh'
       }}
     >
-      <CssBaseline />
+      <ForumBackButton />
       <SettingsIndex data={data} />
     </Container>
   )
