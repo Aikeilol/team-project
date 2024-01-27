@@ -25,7 +25,7 @@ const ProfileFooter: FC = () => {
         component={RouterLink}
         to={'/settings'}
         variant="body1"
-        color={"#1C47BE"}
+        color={"primary"}
         underline="none"
       >
         {'Изменить данные'}
@@ -41,7 +41,7 @@ const ProfileFooter: FC = () => {
         component={RouterLink}
         to={'/password-edit'}
         variant="body1"
-        color={"#1C47BE"}
+        color={"primary"}
         underline="none"
       >
         {'Изменить пароль'}
@@ -53,7 +53,7 @@ const ProfileFooter: FC = () => {
         }}
         component={RouterLink}
         to={'/sign-in'}
-        color={"#FF0000"}
+        color={"error"}
         underline="none"
         onClick={e => logOut()}
       >

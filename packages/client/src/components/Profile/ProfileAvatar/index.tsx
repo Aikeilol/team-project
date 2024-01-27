@@ -1,8 +1,8 @@
-import { FC } from 'react'
+import { ChangeEvent, FC } from 'react'
 import { Avatar, Box, IconButton } from '@mui/material'
 
 interface IProps {
-  onChange: () => void
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void
   source: string
 }
 

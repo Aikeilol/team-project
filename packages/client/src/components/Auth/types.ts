@@ -34,5 +34,5 @@ export interface IFormData {
 export interface IAuthData {
   title: string
   formData: IFormData
-  footerInfo: AuthFooterInfo
+  footerInfo?: AuthFooterInfo
 }

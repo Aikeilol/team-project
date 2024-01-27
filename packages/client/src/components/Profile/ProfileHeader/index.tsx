@@ -25,7 +25,7 @@ const ProfileHeader: FC<IProps> = ({ formData }) => {
   }, [])
 
   const handleAvatarUpload = (event: FormEvent<HTMLInputElement>) => {
-    const avatar = event.target.files[0]
+    const avatar = event.target?.files[0]
     if (!event.target?.files) {
       return;
     }
