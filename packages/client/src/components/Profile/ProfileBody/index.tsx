@@ -16,10 +16,6 @@ const ProfileBody: FC<IProps> = ({formData}) => {
       component="div"
       sx={
         {
-          display: 'flex',
-          alignItems: 'flex-start',
-          justifyContent: 'center',
-          flexDirection: 'column',
           width: '100%',
           mb: 5,
         }
@@ -28,90 +24,42 @@ const ProfileBody: FC<IProps> = ({formData}) => {
       <>
         <Box
           component="div"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            pb: 2,
-            pt: 2,
-            borderBottom: t => `1px solid ${t.palette.divider}`,
-          }}
+          className={'customField'}
         >
           <Box>Почта</Box>
           <Box>{data.email}</Box>
         </Box>
         <Box
           component="div"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            pb: 2,
-            pt: 2,
-            borderBottom: t => `1px solid ${t.palette.divider}`,
-          }}
+          className={'customField'}
         >
           <Box>Логин</Box>
           <Box>{data.login}</Box>
         </Box>
         <Box
           component="div"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            pb: 2,
-            pt: 2,
-            borderBottom: t => `1px solid ${t.palette.divider}`,
-          }}
+          className={'customField'}
         >
           <Box>Имя</Box>
           <Box>{data.first_name}</Box>
         </Box>
         <Box
           component="div"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            pb: 2,
-            pt: 2,
-            borderBottom: t => `1px solid ${t.palette.divider}`,
-          }}
+          className={'customField'}
         >
           <Box>Фамилия</Box>
           <Box>{data.second_name}</Box>
         </Box>
         <Box
           component="div"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            pb: 2,
-            pt: 2,
-            borderBottom: t => `1px solid ${t.palette.divider}`,
-          }}
+          className={'customField'}
         >
           <Box>Имя в чате</Box>
           <Box>{data.display_name}</Box>
         </Box>
         <Box
           component="div"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            pb: 2,
-            pt: 2,
-            borderBottom: t => `1px solid ${t.palette.divider}`,
-          }}
+          className={'customField'}
         >
           <Box>Телефон</Box>
           <Box>{data.phone}</Box>

@@ -10,11 +10,6 @@ const ProfileAvatar: FC<IProps> = ({ onChange, source }) => {
   return (
     <Box
       component="div"
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}
     >
       <input
         id="upload-avatar"

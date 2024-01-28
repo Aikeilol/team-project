@@ -15,13 +15,7 @@ const ProfileIndex: FC<IProps> = ({ data }) => {
   return (
     <Box
       component="div"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '550px'
-      }}
+      className={'settingsForm'}
     >
       <ProfileHeader formData={formData} />
       <ProfileBody  formData={formData}/>

@@ -15,13 +15,6 @@ const PasswordEditIndex: FC<IProps> = ({ data }) => {
     <Box
       component="div"
       className={'settingsForm'}
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '550px'
-      }}
     >
       <AuthHeader title={title} />
       <PasswordEditForm  formData={formData}/>

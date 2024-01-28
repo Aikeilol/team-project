@@ -41,30 +41,24 @@ const ProfileHeader: FC<IProps> = ({ formData }) => {
     )
   }
   return (
-    <>
-      <Box
-        component="div"
-        sx={{
-          mt: 6,
-          mb: 10,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column'
-        }}
-      >
-        <ProfileAvatar
-          onChange={handleAvatarUpload}
-          source={`${API_URL}/resources${avatar}`}
-        />
-        <Typography
-          component="p"
-          variant="body2"
-          align="center"
-          sx={{ mt: 4 }}
-        >{data.first_name} {data.second_name}</Typography>
-      </Box>
-    </>
+    <Box
+      component="div"
+      sx={{
+        mt: 6,
+        mb: 10
+      }}
+    >
+      <ProfileAvatar
+        onChange={handleAvatarUpload}
+        source={`${API_URL}/resources${avatar}`}
+      />
+      <Typography
+        component="p"
+        variant="body2"
+        align="center"
+        sx={{ mt: 4 }}
+      >{data.first_name} {data.second_name}</Typography>
+    </Box>
   )
 }
 
