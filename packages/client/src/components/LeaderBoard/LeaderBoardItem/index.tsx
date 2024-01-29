@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { ListItemAvatar, ListItemText, Typography } from '@mui/material'
+import { Box, ListItemAvatar, ListItemText, Typography } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
 import ListItem from '@mui/material/ListItem'
 import { IListItem } from '../types'
@@ -8,25 +8,48 @@ interface IProps {
 }
 const LeaderBoardItem: FC<IProps> = ( item ) => {
   const {
-    avatar,
-    displayName,
-    firstName,
-    secondName,
+    display_name,
+    first_name,
+    second_name,
     ratingFieldName,
-  cursor,
-  limit } = item
+    cursor,
+    limit,
+    avatar
+  } = item.item
+
   return (
     <ListItem
+      className={'list-grid'}
       sx={{
+        display: 'grid',
         width: '100%',
         borderBottom: t => `1px solid ${t.palette.divider}`,
       }}
     >
-      <ListItemAvatar>
-        <Avatar alt="avatar" src="/static/images/avatar/1.jpg" />
-      </ListItemAvatar>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <ListItemAvatar>
+          <Avatar alt="avatar" src={avatar} />
+        </ListItemAvatar>
+        <ListItemText
+          primary={display_name}
+          secondary={
+            <Typography
+              sx={{ display: 'inline' }}
+              component="span"
+              variant="body2"
+              color="text.primary"
+            >
+              {first_name} {second_name}
+            </Typography>
+          }
+        />
+      </Box>
       <ListItemText
-        primary="display_name"
         secondary={
           <Typography
             sx={{ display: 'inline' }}
@@ -34,7 +57,7 @@ const LeaderBoardItem: FC<IProps> = ( item ) => {
             variant="body2"
             color="text.primary"
           >
-            {'first_name'} {'second_name'}
+            {ratingFieldName}
           </Typography>
         }
       />
@@ -46,7 +69,7 @@ const LeaderBoardItem: FC<IProps> = ( item ) => {
             variant="body2"
             color="text.primary"
           >
-            {'ratingFieldName'}
+            {cursor}
           </Typography>
         }
       />
@@ -58,19 +81,7 @@ const LeaderBoardItem: FC<IProps> = ( item ) => {
             variant="body2"
             color="text.primary"
           >
-            {'cursor'}
-          </Typography>
-        }
-      />
-      <ListItemText
-        secondary={
-          <Typography
-            sx={{ display: 'inline' }}
-            component="span"
-            variant="body2"
-            color="text.primary"
-          >
-            {'limit'}
+            {limit}
           </Typography>
         }
       />

@@ -1,5 +1,11 @@
-
+export interface IListTitle {
+  user: string
+  rating: string
+  cursor: string
+  limit: string
+}
 export interface IListItem {
+  id: number
   avatar: string
   display_name: string
   first_name: string
@@ -8,11 +14,8 @@ export interface IListItem {
   cursor: number
   limit: number
 }
-export interface IListData {
-  list: Array<object>
-}
-
 export interface ILeaderData {
   title: string,
-  listData: IListData
+  listTitle: IListTitle
+  listData: Array<IListItem>
 }

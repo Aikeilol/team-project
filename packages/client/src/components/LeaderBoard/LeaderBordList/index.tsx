@@ -1,15 +1,16 @@
 import { FC } from 'react'
-import { IListData } from '../types'
+import { IListItem} from '../types'
 import List from '@mui/material/List'
 import React from 'react'
 import LeaderBoardItem from '../LeaderBoardItem'
 
 interface IProps {
-  listData: IListData
+  listData: Array<IListItem>
 }
 
 const LeaderBoardList: FC<IProps> = (listData) => {
-  const { list } = listData
+  const users = listData.listData
+  console.log('listData lbl', users)
   return (
     <List
       sx={{
@@ -17,10 +18,17 @@ const LeaderBoardList: FC<IProps> = (listData) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        flexDirection: 'column',
+        flexDirection: 'column'
       }}
     >
-      <LeaderBoardItem item={list}/>
+      {users && Array.isArray(users) && users.map((props: IListItem) => {
+        return (
+          <LeaderBoardItem
+            key={props.id}
+            item={props}
+          />
+        )
+      })}
     </List>
   )
 }
