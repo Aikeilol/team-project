@@ -14,25 +14,23 @@ import MenuIcon from '@mui/icons-material/Menu'
 export interface IProps {
   score: number
   record: number
+  isOpen: boolean
   startAgain: () => void
 }
 
-const GameEndDialog: FC<IProps> = ({ startAgain, score, record }) => {
-  const [open, setOpen] = React.useState(true)
+const GameEndDialog: FC<IProps> = ({ startAgain, score, record, isOpen }) => {
   const navigate = useNavigate()
 
   const handleStartAgain = () => {
     startAgain()
-    setOpen(false)
   }
 
   const handleToMainMenu = () => {
     navigate('/')
-    setOpen(false)
   }
 
   return (
-    <Dialog open={open}>
+    <Dialog open={isOpen}>
       <DialogContent sx={{ padding: '15px', background: 'transparent' }}>
         <DialogTitle align="center" variant="h5">
           Игра завершена

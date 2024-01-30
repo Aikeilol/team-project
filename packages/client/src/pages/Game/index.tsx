@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './style.css'
 import { getRandomInt } from './utils/getRandomInt'
+import GameEndDialog from '../../components/GameEndDialog'
 
 function Game() {
   // Поле, на котором всё будет происходить, — тоже как бы переменная
@@ -37,21 +38,29 @@ function Game() {
     y: 320,
   }
 
-  useEffect(() => {
+  const [openEndGameModal, setOpenEndGameModal] = useState(false)
+  const [record, setRecord] = useState(0)
+  const [score, setScore] = useState(0)
+
+  let stopGame = false
+
+  function startGame() {
     let requestId = 0
     document.addEventListener('keydown', setSnakeControllers)
 
-    if (ref.current) {
+    if (!stopGame && ref.current) {
       requestId = requestAnimationFrame(gameLoop)
     }
     return () => {
       document.removeEventListener('keydown', setSnakeControllers)
       cancelAnimationFrame(requestId)
     }
-  }, [])
+  }
+
+  useEffect(() => startGame(), [])
 
   function gameLoop() {
-    if (!ref.current) {
+    if (stopGame || !ref.current) {
       return
     }
     const canvas: HTMLCanvasElement = ref.current
@@ -125,15 +134,8 @@ function Game() {
         snake.cells[i].y === snake.y && snake.cells[i].x === snake.x
 
       if (!isFirstCoord && isCurrentCoordEqvLastCoord) {
-        snake.x = 160
-        snake.y = 160
-        snake.cells = []
-        snake.maxCells = 4
-        snake.dx = grid
-        snake.dy = 0
-        // Ставим яблочко в случайное место
-        apple.x = getRandomInt(0, 50) * grid
-        apple.y = getRandomInt(0, 50) * grid
+        stopGame = true
+        setOpenEndGameModal(true)
         break
       }
     }
@@ -146,6 +148,10 @@ function Game() {
       // Рисуем новое яблочко
       apple.x = getRandomInt(0, 50) * grid
       apple.y = getRandomInt(0, 50) * grid
+      setScore(prevScore => prevScore + 1)
+      if (score + 1 > record) {
+        setRecord(prevRecord => prevRecord + 1)
+      }
     }
 
     snake.cells.forEach(function (cell) {
@@ -154,8 +160,41 @@ function Game() {
       context.fillRect(cell.x, cell.y, grid - 1, grid - 1)
     })
   }
+
+  function setInitialGameState() {
+    snake.x = 160
+    snake.y = 160
+    snake.cells = []
+    snake.maxCells = 4
+    snake.dx = grid
+    snake.dy = 0
+    // Ставим яблочко в случайное место
+    apple.x = getRandomInt(0, 50) * grid
+    apple.y = getRandomInt(0, 50) * grid
+  }
+
+  function startAgain() {
+    setOpenEndGameModal(false)
+    setScore(0)
+    setInitialGameState()
+    stopGame = false
+    startGame()
+  }
+
+  useEffect(() => {
+    if (score > record) {
+      setRecord(score)
+    }
+  }, [score, record])
+
   return (
     <div className="game-body">
+      <GameEndDialog
+        isOpen={openEndGameModal}
+        score={score}
+        record={record}
+        startAgain={startAgain}
+      />
       <canvas ref={ref} width="800" height="800"></canvas>
     </div>
   )
