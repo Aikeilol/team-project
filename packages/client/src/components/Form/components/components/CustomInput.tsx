@@ -19,6 +19,7 @@ export const CustomInput = forwardRef<HTMLInputElement, InputProps>(
       error,
       helperText,
       variant,
+      defaultValue,
     } = props
 
     return (

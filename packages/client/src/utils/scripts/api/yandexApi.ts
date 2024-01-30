@@ -14,11 +14,11 @@ import axios, {
   RawAxiosRequestHeaders,
 } from 'axios'
 
-const yandexApi: AxiosInstance = axios.create({
+export const yandexApi: AxiosInstance = axios.create({
   baseURL: 'https://ya-praktikum.tech/api/v2',
 })
 
-const config: AxiosRequestConfig = {
+export const config: AxiosRequestConfig = {
   headers: {
     Accept: 'application/json',
   } as RawAxiosRequestHeaders,

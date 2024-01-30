@@ -14,6 +14,7 @@ type FormValues = {
   password: string
   newPassword: string
   oldPassword: string
+  display_name: string
 }
 
 interface IProps {

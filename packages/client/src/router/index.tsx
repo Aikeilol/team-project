@@ -13,8 +13,11 @@ import Topics from '../pages/Forum/Topics'
 import Forum from '../pages/Forum'
 import Intro from '../components/Intro'
 import { getUserLoader } from './loaders'
-import { signInAction, signUpAction } from './actions'
+import { signInAction, signUpAction, userProfileAction } from './actions'
 import ProtectedRoute from '../components/ProtectedRoute'
+import Settings from '../pages/Settings'
+import PasswordEdit from '../pages/PasswordEdit'
+import userPasswordAction from './actions/userPasswordAction'
 
 const router = createBrowserRouter([
   {
@@ -38,6 +41,16 @@ const router = createBrowserRouter([
               {
                 path: 'profile',
                 element: <Profile />,
+              },
+              {
+                path: 'settings',
+                element: <Settings />,
+                action: userProfileAction
+              },
+              {
+                path: 'password-edit',
+                element: <PasswordEdit />,
+                action: userPasswordAction
               },
               {
                 path: 'game',
