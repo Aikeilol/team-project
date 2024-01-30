@@ -1,16 +1,11 @@
-import { redirect as reroute } from 'react-router-dom'
+import { IUser } from '../../utils/scripts/api/types'
 import { getUser } from '../../utils/scripts/api/yandexApi'
 import { AxiosResponse } from 'axios'
-import { IUser } from '../../utils/scripts/api/types'
 
-const getUserLoader = async (redirect = false) => {
-  const { data } = ((await getUser()) as AxiosResponse<IUser>) || {}
-
-  if (data) {
-    return redirect ? reroute('/') : data
-  }
-
-  return null
+const getUserLoader = async () => {
+  const user = ((await getUser()) as AxiosResponse<IUser>) || null
+  console.log(user.data)
+  return user?.data ? user.data : null
 }
 
 export default getUserLoader

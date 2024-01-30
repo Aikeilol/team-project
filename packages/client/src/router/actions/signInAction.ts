@@ -3,8 +3,9 @@ import { signIn } from '../../utils/scripts/api/yandexApi'
 import { SignInRequest } from '../../utils/scripts/api/types'
 import { AxiosResponse } from 'axios'
 import showAlert from '../../utils/scripts/showAlert'
+import { setUser } from '../../store/slices/userSlice'
 
-const signInAction = async ({ request }: LoaderFunctionArgs) => {
+const signInAction = async (dispatch, { request }: LoaderFunctionArgs) => {
   const formData = await request.formData()
   const state: { [key: string]: unknown } = {}
 
@@ -17,6 +18,7 @@ const signInAction = async ({ request }: LoaderFunctionArgs) => {
 
   if (data) {
     showAlert('Вы успешно авторизовались', 'success')
+    dispatch(setUser(data))
     return redirect('/')
   }
 

@@ -1,9 +1,11 @@
 import { Paper } from '@mui/material'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { IAuthData } from './types'
 import AuthForm from './AuthForm'
 import AuthHeader from './AuthHeader'
 import AuthFooter from './AuthFooter'
+import { useAppSelector } from '../../store/hooks'
+import { useNavigate } from 'react-router-dom'
 
 interface IProps {
   data: IAuthData
@@ -11,6 +13,15 @@ interface IProps {
 
 const Auth: FC<IProps> = ({ data }) => {
   const { title, formData, footerInfo } = data
+  const navigate = useNavigate()
+  const { user } = useAppSelector(state => state.user)
+
+  //  useEffect(() => {
+  //    console.log(user)
+  //    if (user) {
+  //      navigate('/')
+  //    }
+  //  }, [])
 
   return (
     <Paper
