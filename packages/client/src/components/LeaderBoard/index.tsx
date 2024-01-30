@@ -9,9 +9,7 @@ interface IProps {
 }
 
 const LeaderBoardComponent: FC<IProps> = ({ data }) => {
-  const { title, listData, listTitle} = data
-  console.log('listData LBC', listData)
-  console.log('listTitle LBC', listTitle)
+  const { title, listData} = data
   return (
     <Box
       component="div"
@@ -23,7 +21,7 @@ const LeaderBoardComponent: FC<IProps> = ({ data }) => {
         minHeight: '100vh',
         width: '100%',
       }}>
-      <LeaderBoardHeader title={title} listTitle={listTitle} />
+      <LeaderBoardHeader title={title} />
       <LeaderBoardList listData={listData}/>
     </Box>
   )

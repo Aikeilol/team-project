@@ -1,9 +1,3 @@
-export interface IListTitle {
-  user: string
-  rating: string
-  cursor: string
-  limit: string
-}
 export interface IListItem {
   id: number
   avatar: string
@@ -11,11 +5,10 @@ export interface IListItem {
   first_name: string
   second_name: string
   ratingFieldName: string
-  cursor: number
+  cursor?: number
   limit: number
 }
 export interface ILeaderData {
   title: string,
-  listTitle: IListTitle
   listData: Array<IListItem>
 }

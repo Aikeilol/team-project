@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
-import { Box, ListItemAvatar, ListItemText, Typography } from '@mui/material'
+import { Box, TableCell, TableRow, Typography } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
-import ListItem from '@mui/material/ListItem'
 import { IListItem } from '../types'
 interface IProps {
   item: IListItem
@@ -12,80 +11,39 @@ const LeaderBoardItem: FC<IProps> = ( item ) => {
     first_name,
     second_name,
     ratingFieldName,
-    cursor,
     limit,
     avatar
   } = item.item
 
   return (
-    <ListItem
-      className={'list-grid'}
-      sx={{
-        display: 'grid',
-        width: '100%',
-        borderBottom: t => `1px solid ${t.palette.divider}`,
-      }}
+    <TableRow
+      hover
     >
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-        }}
+      <TableCell
+        component="th"
+        scope="row"
       >
-        <ListItemAvatar>
-          <Avatar alt="avatar" src={avatar} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={display_name}
-          secondary={
-            <Typography
-              sx={{ display: 'inline' }}
-              component="span"
-              variant="body2"
-              color="text.primary"
-            >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+          }}
+        >
+          <Avatar src={avatar} />
+          <Box sx={{ minWidth: 0 }}>
+            <Typography noWrap fontWeight="lg">
+              {display_name}
+            </Typography>
+            <Typography noWrap fontWeight="lg">
               {first_name} {second_name}
             </Typography>
-          }
-        />
-      </Box>
-      <ListItemText
-        secondary={
-          <Typography
-            sx={{ display: 'inline' }}
-            component="span"
-            variant="body2"
-            color="text.primary"
-          >
-            {ratingFieldName}
-          </Typography>
-        }
-      />
-      <ListItemText
-        secondary={
-          <Typography
-            sx={{ display: 'inline' }}
-            component="span"
-            variant="body2"
-            color="text.primary"
-          >
-            {cursor}
-          </Typography>
-        }
-      />
-      <ListItemText
-        secondary={
-          <Typography
-            sx={{ display: 'inline' }}
-            component="span"
-            variant="body2"
-            color="text.primary"
-          >
-            {limit}
-          </Typography>
-        }
-      />
-    </ListItem>
+          </Box>
+        </Box>
+      </TableCell>
+      <TableCell align="left">{ratingFieldName}</TableCell>
+      <TableCell align="left">{limit}</TableCell>
+    </TableRow>
   )
 }
 

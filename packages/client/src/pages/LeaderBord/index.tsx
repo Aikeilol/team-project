@@ -36,20 +36,11 @@ const LeaderBoard: FC = () => {
       limit: 16
     },
   ]
-  const listTitle = {
-    user: 'Пользователь',
-    rating: 'Рейтинг',
-    cursor: 'Курсор',
-    limit: 'Лимит',
-  }
 
   const data = {
     title: 'Список топ игроков',
-    listTitle: listTitle,
     listData: listData
-
   }
-  console.log('data LB', data)
 
   return (
     <Container
