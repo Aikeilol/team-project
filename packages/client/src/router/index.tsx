@@ -19,11 +19,10 @@ import Intro from '../components/Intro'
 import { signInAction, signUpAction } from './actions'
 import ProtectedRoute from '../components/ProtectedRoute'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
-import { redirectLoader, getUserLoader } from './loaders'
+import { redirectLoader } from './loaders'
 
 const Router = () => {
   const { user } = useAppSelector(state => state.user)
-  console.log(user)
   const dispatch = useAppDispatch()
 
   const router = createBrowserRouter([
@@ -31,7 +30,6 @@ const Router = () => {
       path: '/',
       element: <App />,
       errorElement: <Error />,
-      loader: getUserLoader,
       children: [
         {
           path: '/',
