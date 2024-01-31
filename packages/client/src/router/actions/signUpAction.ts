@@ -1,7 +1,6 @@
 import { LoaderFunctionArgs, redirect } from 'react-router-dom'
 import { getUser, signUp } from '../../utils/scripts/api/yandexApi'
-import { SignUpRequest, UserId, IUser } from '../../utils/scripts/api/types'
-import { AxiosResponse } from 'axios'
+import { SignUpRequest } from '../../utils/scripts/api/types'
 import showAlert from '../../utils/scripts/showAlert'
 import { setUser } from '../../store/slices/userSlice'
 import { AppDispatch } from '../../store/store'
@@ -17,11 +16,10 @@ const signUpAction = async (
     state[key] = value
   }
 
-  const { data } =
-    ((await signUp(state as SignUpRequest)) as AxiosResponse<UserId>) || {}
+  const { data } = (await signUp(state as SignUpRequest)) || {}
 
   if (data) {
-    const user = ((await getUser()) as AxiosResponse<IUser>) || {}
+    const user = (await getUser()) || {}
     showAlert('Вы успешно зарегистрировались', 'success')
 
     if (user) {

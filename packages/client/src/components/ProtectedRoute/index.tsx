@@ -2,16 +2,13 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { useAppSelector } from '../../store/hooks'
 
 const ProtectedRoute = () => {
-  const isAuth = useAppSelector(state => state.user).user
-  console.log(isAuth)
+  const { user } = useAppSelector(state => state.user)
 
-  if (typeof isAuth === 'undefined') {
-    console.log(1)
-
+  if (typeof user === 'undefined') {
     return null
   }
 
-  return isAuth ? <Outlet /> : <Navigate to="/sign-in" replace />
+  return user ? <Outlet /> : <Navigate to="/sign-in" replace />
 }
 
 export default ProtectedRoute

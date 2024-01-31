@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     getUser().then(response => {
-      if (typeof response?.data !== 'undefined') {
+      if (response?.data) {
         dispatch(setUser(response.data))
       } else {
         dispatch(setUser(null))

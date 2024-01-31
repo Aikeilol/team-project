@@ -1,11 +1,5 @@
 import showAlert from '../showAlert'
-import {
-  IUser,
-  SignInRequest,
-  SignUpRequest,
-  UserId,
-  YandexApiError,
-} from './types'
+import { SignInRequest, SignUpRequest, YandexApiError } from './types'
 import axios, {
   AxiosError,
   AxiosInstance,
@@ -25,36 +19,36 @@ const config: AxiosRequestConfig = {
   withCredentials: true,
 }
 
-export const signUp = async (data: SignUpRequest) => {
+const showError = (err: unknown) => {
+  const error = err as AxiosError<YandexApiError>
+  const message = error.response?.data.reason as string
+  showAlert(message, 'error')
+}
+
+export const signUp = async (data: SignUpRequest): Promise<AxiosResponse> => {
   try {
-    return (await yandexApi.post(
-      '/auth/signup',
-      data,
-      config
-    )) as AxiosResponse<UserId>
+    return await yandexApi.post('/auth/signup', data, config)
   } catch (err) {
-    const error = err as AxiosError<YandexApiError>
-    const message = error.response?.data.reason as string
-    showAlert(message, 'error')
+    showError(err)
+
+    return Promise.reject(err)
   }
 }
 
-export const signIn = async (data: SignInRequest) => {
+export const signIn = async (data: SignInRequest): Promise<AxiosResponse> => {
   try {
-    return (await yandexApi.post('/auth/signin', data, config)) as AxiosResponse
+    return await yandexApi.post('/auth/signin', data, config)
   } catch (err) {
-    const error = err as AxiosError<YandexApiError>
-    const message = error.response?.data.reason as string
-    showAlert(message, 'error')
+    showError(err)
+
+    return Promise.reject(err)
   }
 }
 
-export const getUser = async () => {
+export const getUser = async (): Promise<AxiosResponse> => {
   try {
-    return (await yandexApi
-      .get('/auth/user', config)
-      .then(res => res)) as AxiosResponse<IUser>
+    return await yandexApi.get('/auth/user', config).then(res => res)
   } catch (error) {
-    console.log(error)
+    return Promise.reject(error)
   }
 }
