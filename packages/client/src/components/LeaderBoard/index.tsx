@@ -17,7 +17,6 @@ const LeaderBoardComponent: FC<IProps> = ({ data }) => {
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         flexDirection: 'column',
-        minHeight: '100vh',
         width: '100%',
       }}>
       <LeaderBoardHeader title={title} />

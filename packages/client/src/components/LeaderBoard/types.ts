@@ -1,7 +1,7 @@
 export interface IListItem {
-  id?: number
+  id: number
   avatar?: string
-  display_name?: string
+  display_name: string
   first_name?: string
   second_name?: string
   ratingFieldName?: string

@@ -3,7 +3,7 @@ import { Box, TableCell, TableRow, Typography } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
 import { IListItem } from '../types'
 interface IProps {
-  item: IListItem
+  item: Partial<IListItem>
 }
 const LeaderBoardItem: FC<IProps> = ( item ) => {
   const {

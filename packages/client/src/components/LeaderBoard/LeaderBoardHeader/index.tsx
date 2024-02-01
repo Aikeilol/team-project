@@ -10,7 +10,7 @@ const LeaderBoardHeader: FC<IProps> = ({ title }) => {
     <>
       <Box
         sx={{
-          mt: 8,
+          mt: 3,
           mb: 6,
           pb: 2,
           display: 'flex',

@@ -14,6 +14,7 @@ import {
 } from '@mui/material'
 import { DisplayNameCol, LimitCol, RatingFieldNameCol } from '../data'
 
+
 interface IProps {
   listData: Array<IListItem>
 }
@@ -104,9 +105,9 @@ const LeaderBoardList: FC<IProps> = listData => {
   const rows = listData.listData
 
   const [order, setOrder] = useState<Order>('asc')
-  const [orderBy, setOrderBy] = useState('calories')
+  const [orderBy, setOrderBy] = useState('')
 
-  const handleRequestSort = (event: any, property: SetStateAction<string>) => {
+  const handleRequestSort = (event: Event, property: SetStateAction<string>) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
     setOrderBy(property)

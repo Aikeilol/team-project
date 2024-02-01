@@ -48,8 +48,8 @@ const LeaderBoard: FC = () => {
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
+        alignItems: 'flex-start',
+        minHeight: 'calc(100vh - 64px)',
       }}>
       <LeaderBoardComponent data={data} />
     </Container>
