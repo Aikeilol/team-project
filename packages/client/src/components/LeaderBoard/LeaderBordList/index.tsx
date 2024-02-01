@@ -10,7 +10,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TableSortLabel
+  TableSortLabel,
 } from '@mui/material'
 import { DisplayNameCol, LimitCol, RatingFieldNameCol } from '../data'
 
@@ -41,42 +41,38 @@ function getComparator<Key extends keyof never>(
     : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
-function stableSort<T>(array: readonly T[], comparator: (a: number | T, b: number | T) => number) {
+function stableSort<T>(array: IListItem[], comparator: (a: T, b: T) => number) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number])
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0])
     if (order !== 0) return order
     return a[1] - b[1]
   })
-  return stabilizedThis.map((el) => el[0])
+  return stabilizedThis.map(el => el[0])
 }
 
 interface HeadCell {
-  disablePadding: boolean;
-  id: string;
-  label: string;
-  numeric: boolean;
+  disablePadding: boolean
+  id: string
+  label: string
+  numeric: boolean
 }
 
 const headCells: readonly HeadCell[] = [
   DisplayNameCol,
   RatingFieldNameCol,
-  LimitCol
+  LimitCol,
 ]
 
 interface EnhancedTableHeadProps {
-  order: Order;
-  orderBy: string;
-  rowCount: number;
-  onRequestSort: (event: MouseEvent, property: never | string) => void;
+  order: Order
+  orderBy: string
+  rowCount: number
+  onRequestSort: (event: MouseEvent, property: never | string) => void
 }
 
 const EnhancedTableHead = (props: EnhancedTableHeadProps) => {
-  const {
-    order,
-    orderBy,
-    onRequestSort
-  } = props
+  const { order, orderBy, onRequestSort } = props
   const createSortHandler = (property: never | string) => (event: never) => {
     onRequestSort(event, property)
   }
@@ -84,21 +80,17 @@ const EnhancedTableHead = (props: EnhancedTableHeadProps) => {
   return (
     <TableHead>
       <TableRow>
-        {headCells.map((headCell) => (
+        {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
+            sortDirection={orderBy === headCell.id ? order : false}>
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
+              onClick={createSortHandler(headCell.id)}>
               {headCell.label}
               {orderBy === headCell.id ? (
-                <span>
-                  {order === 'desc' ? '' : ''}
-                </span>
+                <span>{order === 'desc' ? '' : ''}</span>
               ) : null}
             </TableSortLabel>
           </TableCell>
@@ -108,31 +100,28 @@ const EnhancedTableHead = (props: EnhancedTableHeadProps) => {
   )
 }
 
-
-const LeaderBoardList: FC<IProps> = (listData) => {
-  const rows: Array<IListItem> = listData.listData
+const LeaderBoardList: FC<IProps> = listData => {
+  const rows = listData.listData
 
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState('calories')
 
   const handleRequestSort = (event: any, property: SetStateAction<string>) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
 
   return (
     <Paper
       sx={{
-        width: '100%'
-      }}
-    >
+        width: '100%',
+      }}>
       <TableContainer>
         <Table
           aria-labelledby="tableTitle"
-          size={"medium"}
-          aria-label="enhanced table"
-        >
+          size={'medium'}
+          aria-label="enhanced table">
           <EnhancedTableHead
             order={order}
             orderBy={orderBy}
@@ -140,20 +129,13 @@ const LeaderBoardList: FC<IProps> = (listData) => {
             rowCount={rows.length}
           />
           <TableBody>
-            {stableSort(rows, getComparator(order, orderBy)).map(
-              (row) => {
-                return (
-                  <LeaderBoardItem
-                    key={row.id}
-                    item={row}
-                  />
-                  );
-                }
-              )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
+            {stableSort(rows, getComparator(order, orderBy)).map(row => {
+              return <LeaderBoardItem key={row.id} item={row} />
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   )
 }
 

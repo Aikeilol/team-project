@@ -9,10 +9,9 @@ interface IProps {
 }
 
 const LeaderBoardComponent: FC<IProps> = ({ data }) => {
-  const { title, listData} = data
+  const { title, listData } = data
   return (
     <Box
-      component="div"
       sx={{
         display: 'flex',
         justifyContent: 'flex-start',
@@ -22,7 +21,7 @@ const LeaderBoardComponent: FC<IProps> = ({ data }) => {
         width: '100%',
       }}>
       <LeaderBoardHeader title={title} />
-      <LeaderBoardList listData={listData}/>
+      <LeaderBoardList listData={listData} />
     </Box>
   )
 }
