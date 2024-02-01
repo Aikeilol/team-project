@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import './style.css'
 import { getRandomInt } from './utils/getRandomInt'
+import FullScreenButton from '../../components/FullScreenButton'
 
 function Game() {
   // Поле, на котором всё будет происходить, — тоже как бы переменная
@@ -156,6 +157,7 @@ function Game() {
   }
   return (
     <div className="game-body">
+      <FullScreenButton elRef={ref}/>
       <canvas ref={ref} width="800" height="800"></canvas>
     </div>
   )
