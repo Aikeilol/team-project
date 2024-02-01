@@ -42,13 +42,13 @@ function Game() {
   const [record, setRecord] = useState(0)
   const [score, setScore] = useState(0)
 
-  let isStopped = false
+  const isStoppedRef = useRef(false)
 
   function startGame() {
     let requestId = 0
     document.addEventListener('keydown', setSnakeControllers)
 
-    if (!isStopped && ref.current) {
+    if (!isStoppedRef.current && ref.current) {
       requestId = requestAnimationFrame(gameLoop)
     }
     return () => {
@@ -60,7 +60,7 @@ function Game() {
   useEffect(() => startGame(), [])
 
   function gameLoop() {
-    if (isStopped || !ref.current) {
+    if (isStoppedRef.current || !ref.current) {
       return
     }
     const canvas: HTMLCanvasElement = ref.current
@@ -134,7 +134,7 @@ function Game() {
         snake.cells[i].y === snake.y && snake.cells[i].x === snake.x
 
       if (!isFirstCoord && isCurrentCoordEqvLastCoord) {
-        isStopped = true
+        isStoppedRef.current = true
         setOpenEndGameModal(true)
         break
       }
@@ -161,9 +161,6 @@ function Game() {
 
   function updateScore() {
     setScore(prevScore => prevScore + 1)
-    if (score + 1 > record) {
-      setRecord(prevRecord => prevRecord + 1)
-    }
   }
 
   function setInitialGameState() {
@@ -182,7 +179,7 @@ function Game() {
     setOpenEndGameModal(false)
     setScore(0)
     setInitialGameState()
-    isStopped = false
+    isStoppedRef.current = false
     startGame()
   }
 
