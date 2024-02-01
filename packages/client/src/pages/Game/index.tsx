@@ -42,13 +42,13 @@ function Game() {
   const [record, setRecord] = useState(0)
   const [score, setScore] = useState(0)
 
-  let stopGame = false
+  let isStopped = false
 
   function startGame() {
     let requestId = 0
     document.addEventListener('keydown', setSnakeControllers)
 
-    if (!stopGame && ref.current) {
+    if (!isStopped && ref.current) {
       requestId = requestAnimationFrame(gameLoop)
     }
     return () => {
@@ -60,7 +60,7 @@ function Game() {
   useEffect(() => startGame(), [])
 
   function gameLoop() {
-    if (stopGame || !ref.current) {
+    if (isStopped || !ref.current) {
       return
     }
     const canvas: HTMLCanvasElement = ref.current
@@ -134,7 +134,7 @@ function Game() {
         snake.cells[i].y === snake.y && snake.cells[i].x === snake.x
 
       if (!isFirstCoord && isCurrentCoordEqvLastCoord) {
-        stopGame = true
+        isStopped = true
         setOpenEndGameModal(true)
         break
       }
@@ -143,15 +143,13 @@ function Game() {
     const isSameCoordWithApple = snake.x === apple.x && snake.y === apple.y
 
     if (isSameCoordWithApple) {
+      updateScore()
+
       // увеличиваем длину змейки
       snake.maxCells++
       // Рисуем новое яблочко
       apple.x = getRandomInt(0, 50) * grid
       apple.y = getRandomInt(0, 50) * grid
-      setScore(prevScore => prevScore + 1)
-      if (score + 1 > record) {
-        setRecord(prevRecord => prevRecord + 1)
-      }
     }
 
     snake.cells.forEach(function (cell) {
@@ -159,6 +157,13 @@ function Game() {
       context.fillStyle = 'yellow'
       context.fillRect(cell.x, cell.y, grid - 1, grid - 1)
     })
+  }
+
+  function updateScore() {
+    setScore(prevScore => prevScore + 1)
+    if (score + 1 > record) {
+      setRecord(prevRecord => prevRecord + 1)
+    }
   }
 
   function setInitialGameState() {
@@ -177,7 +182,7 @@ function Game() {
     setOpenEndGameModal(false)
     setScore(0)
     setInitialGameState()
-    stopGame = false
+    isStopped = false
     startGame()
   }
 
