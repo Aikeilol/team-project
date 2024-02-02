@@ -25,7 +25,7 @@ const Auth: FC<IProps> = ({ data }) => {
 
       <AuthForm formData={formData} />
 
-      <AuthFooter footerInfo={footerInfo} />
+      {footerInfo && <AuthFooter footerInfo={footerInfo} />}
     </Paper>
   )
 }

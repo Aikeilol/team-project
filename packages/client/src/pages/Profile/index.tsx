@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Container, CssBaseline } from '@mui/material'
+import { Container } from '@mui/material'
 import ProfileIndex from '../../components/Profile'
 import { IProfileData, IProfileFormData } from '../../components/Profile/types'
 import { IUser } from '../../utils/scripts/api/types'
@@ -14,27 +14,23 @@ const Profile: FC = () => {
     id: 0,
     login: '',
     phone: '',
-    second_name: ''
+    second_name: '',
   })
 
   useEffect(() => {
-    getUser().then(
-      response => {
-        if (response?.data) {
-          setUserData(response.data)
-        }
+    getUser().then(response => {
+      if (response?.data) {
+        setUserData(response.data)
       }
-    )
+    })
   }, [])
 
-  const userArr = [
-    userData
-  ]
+  const userArr = [userData]
   const formData: IProfileFormData = {
-    dataInputs: userArr
+    dataInputs: userArr,
   }
   const dataObject: IProfileData = {
-    formData: formData
+    formData: formData,
   }
   return (
     <Container
@@ -44,9 +40,8 @@ const Profile: FC = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '100vh'
-      }}
-    >
+        minHeight: 'calc(100vh - 64px)',
+      }}>
       <ProfileIndex data={dataObject} />
     </Container>
   )
