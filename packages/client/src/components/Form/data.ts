@@ -5,14 +5,13 @@ const FirstNameInput: AuthInput = {
   label: 'Имя',
   name: 'first_name',
   type: 'text',
-  value: '',
   rules: {
     pattern: {
       value: /^[A-ZА-Я]{1}[a-zа-я-]*$/,
       message:
         'Первая буква должна быть заглавной, без пробелов и без цифр, допустим дефис',
     },
-    required: 'Поле не может быть пустым'
+    required: 'Поле не может быть пустым',
   },
 }
 
@@ -144,5 +143,5 @@ export {
   PasswordInput,
   DisplayNameInput,
   NewPasswordInput,
-  OldPasswordInput
+  OldPasswordInput,
 }
