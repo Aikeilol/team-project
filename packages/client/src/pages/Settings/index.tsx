@@ -9,7 +9,7 @@ import {
   FirstNameInput,
   LoginInput,
   PhoneInput,
-  SecondNameInput
+  SecondNameInput,
 } from '../../components/Form/data'
 import ForumBackButton from '../../components/Forum/ForumBackButton'
 
@@ -20,16 +20,16 @@ const Settings: FC = () => {
     LoginInput,
     EmailInput,
     PhoneInput,
-    DisplayNameInput
+    DisplayNameInput,
   ]
   const formData: IFormData = {
     dataInputs: dataInputs,
-    buttonText: 'Сохранить'
+    buttonText: 'Сохранить',
   }
 
   const data: IAuthData = {
     title: 'Настройки профиля',
-    formData: formData
+    formData: formData,
   }
 
   return (
@@ -40,9 +40,8 @@ const Settings: FC = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '100vh'
-      }}
-    >
+        minHeight: 'calc(100vh - 64px)',
+      }}>
       <ForumBackButton />
       <SettingsIndex data={data} />
     </Container>

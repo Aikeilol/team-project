@@ -5,18 +5,15 @@ import { IAuthData } from '../Auth/types'
 import './SettingsForm/style.css'
 import AuthHeader from '../Auth/AuthHeader'
 
-
 interface IProps {
   data: IAuthData
 }
 
 const SettingsIndex: FC<IProps> = ({ data }) => {
   const { title, formData } = data
+
   return (
-    <Box
-      component="div"
-      className={'settingsForm'}
-    >
+    <Box component="div" className={'settingsForm'}>
       <AuthHeader title={title} />
       <SettingsForm formData={formData} />
     </Box>
