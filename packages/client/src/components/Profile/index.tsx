@@ -5,7 +5,6 @@ import ProfileFooter from './ProfileFooter'
 import ProfileBody from './ProfileBody'
 import { IProfileData } from './types'
 
-
 interface IProps {
   data: IProfileData
 }
@@ -13,12 +12,9 @@ interface IProps {
 const ProfileIndex: FC<IProps> = ({ data }) => {
   const { formData } = data
   return (
-    <Box
-      component="div"
-      className={'settingsForm'}
-    >
+    <Box className={'settingsForm'}>
       <ProfileHeader formData={formData} />
-      <ProfileBody  formData={formData}/>
+      <ProfileBody formData={formData} />
       <ProfileFooter />
     </Box>
   )

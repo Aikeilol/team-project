@@ -1,24 +1,23 @@
 .settingsForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 550px;
-    form {
-        width: 100%;
-        div {
-            button {
-                margin-top: 48px;
-            }
-        }
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 550px;
 }
+.settingsForm form {
+  width: 100%;
+}
+.settingsForm form div button {
+  margin-top: 48px;
+}
+
 .customField {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding-bottom: 16px;
-    padding-top: 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 16px;
+  padding-top: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
