@@ -11,7 +11,7 @@ interface IProps {
 const PasswordEditIndex: FC<IProps> = ({ data }) => {
   const { title, formData } = data
   return (
-    <Box component="div" className={'settingsForm'}>
+    <Box className={'settingsForm'}>
       <AuthHeader title={title} />
       <PasswordEditForm formData={formData} />
     </Box>

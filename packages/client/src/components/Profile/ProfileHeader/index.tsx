@@ -46,7 +46,6 @@ const ProfileHeader: FC<IProps> = ({ formData }) => {
   }
   return (
     <Box
-      component="div"
       sx={{
         mt: 5,
         mb: 6,

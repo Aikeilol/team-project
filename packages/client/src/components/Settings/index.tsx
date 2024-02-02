@@ -13,7 +13,7 @@ const SettingsIndex: FC<IProps> = ({ data }) => {
   const { title, formData } = data
 
   return (
-    <Box component="div" className={'settingsForm'}>
+    <Box className={'settingsForm'}>
       <AuthHeader title={title} />
       <SettingsForm formData={formData} />
     </Box>
