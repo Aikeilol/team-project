@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import './style.css'
 import { getRandomInt } from './utils/getRandomInt'
+import FullScreenButton from '../../components/FullScreenButton'
 import GameEndDialog from '../../components/GameEndDialog'
+
 
 function Game() {
   // Поле, на котором всё будет происходить, — тоже как бы переменная
@@ -191,6 +193,7 @@ function Game() {
 
   return (
     <div className="game-body">
+      <FullScreenButton elRef={ref}/>
       <GameEndDialog
         isOpen={openEndGameModal}
         score={score}
