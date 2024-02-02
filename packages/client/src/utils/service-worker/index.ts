@@ -1,4 +1,4 @@
-export const register = async (swUrl: string) => {
+export const registerSW = async (swUrl: string) => {
   if (!import.meta.env.PROD) {
     console.log('Service worker is not registered in development mode.')
     return

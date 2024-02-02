@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom'
 import router from './router'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import theme from './utils/scripts/theme'
-import { register } from './utils/service-worker'
+import { registerSW } from './utils/service-worker'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -15,4 +15,4 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   </React.StrictMode>
 )
 
-register('/service-worker.js')
+registerSW('/net-or-cache-sw.js')
