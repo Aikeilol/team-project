@@ -1,8 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAppSelector } from '../../store/hooks'
+import { selectUser } from '../../store/slices/userSlice'
 
 const ProtectedRoute = () => {
-  const { user } = useAppSelector(state => state.user)
+  const user = useAppSelector(state => selectUser(state))
 
   if (typeof user === 'undefined') {
     return null

@@ -10,13 +10,13 @@ function App() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    getUser().then(response => {
-      if (response?.data) {
-        dispatch(setUser(response.data))
-      } else {
+    getUser()
+      .then(response => {
+        dispatch(setUser(response.data || null))
+      })
+      .catch(() => {
         dispatch(setUser(null))
-      }
-    })
+      })
   }, [])
 
   return (
