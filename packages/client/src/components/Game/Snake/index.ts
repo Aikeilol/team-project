@@ -1,5 +1,5 @@
-import { GRID_SIZE, SPRITE_GRID_SIZE } from './constants'
-import { Apple } from './apple'
+import { GRID_SIZE, SPRITE_GRID_SIZE } from '../constants'
+import { Apple } from '../Apple'
 
 export class Snake {
   x: number = GRID_SIZE * 10
