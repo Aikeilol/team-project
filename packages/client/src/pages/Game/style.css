@@ -1,11 +1,6 @@
 .game-body {
-  background: black;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-}
-
-canvas {
-  border: 1px solid white;
 }
