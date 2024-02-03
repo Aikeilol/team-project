@@ -16,12 +16,16 @@ import Messages from '../pages/Forum/Messages'
 import Topics from '../pages/Forum/Topics'
 import Forum from '../pages/Forum'
 import Intro from '../components/Intro'
-import { redirectLoader } from './loaders'
-import { signInAction, signUpAction, userProfileAction } from './actions'
 import ProtectedRoute from '../components/ProtectedRoute'
 import Settings from '../pages/Settings'
 import PasswordEdit from '../pages/PasswordEdit'
-import userPasswordAction from './actions/userPasswordAction'
+import { redirectLoader } from './loaders'
+import {
+  signInAction,
+  signUpAction,
+  userProfileAction,
+  userPasswordAction,
+} from './actions'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 
 const Router = () => {
