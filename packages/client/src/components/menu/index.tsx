@@ -8,8 +8,6 @@ const pages = [
   { url: '/game', title: 'Игра' },
   { url: '/leaderboard', title: 'Лидерборд' },
   { url: '/forum', title: 'Форум' },
-  { url: '/sign-in', title: 'Авторизация' },
-  { url: '/sign-up', title: 'Регистрация' },
 ]
 
 function Menu() {

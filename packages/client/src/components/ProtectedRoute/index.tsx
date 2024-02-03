@@ -1,11 +1,15 @@
-import { Navigate, Outlet, useLoaderData } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
+import { useAppSelector } from '../../store/hooks'
+import { selectUser } from '../../store/slices/userSlice'
 
 const ProtectedRoute = () => {
-  const isAuth = useLoaderData()
+  const user = useAppSelector(state => selectUser(state))
 
-  console.log(isAuth)
+  if (typeof user === 'undefined') {
+    return null
+  }
 
-  return isAuth ? <Outlet /> : <Navigate to="/sign-in" replace />
+  return user ? <Outlet /> : <Navigate to="/sign-in" replace />
 }
 
 export default ProtectedRoute
