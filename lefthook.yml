@@ -10,4 +10,4 @@ pre-commit:
       stage_fixed: true
     test:
       glob: '*.test.{ts,tsx}'
-      run: yarn test {staged_files}
+      run: yarn test
