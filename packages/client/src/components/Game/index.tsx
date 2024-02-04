@@ -108,7 +108,7 @@ function Game() {
   }, [score, record])
 
   return (
-    <>
+    <div id="gameElement">
       <FullScreenButton elRef={canvasRef} />
       <GameEndDialog
         isOpen={openEndGameModal}
@@ -117,7 +117,7 @@ function Game() {
         startAgain={startAgain}
       />
       <canvas ref={canvasRef} width="640" height="640"></canvas>
-    </>
+    </div>
   )
 }
 
