@@ -1,9 +1,8 @@
 import { Button } from '@mui/material'
-import './style.css'
-import { FC, RefObject } from 'react'
+import React, { FC, RefObject } from 'react'
 
 interface IProps {
-  elRef: RefObject<HTMLCanvasElement | null>
+  elRef: RefObject<HTMLElement>
 }
 interface DocumentWithFullscreen {
   exitFullscreen?: () => void
@@ -54,7 +53,7 @@ const FullScreenButton: FC<IProps> = ({ elRef }) => {
 
   return (
     <Button
-      className={'fullscreen-button'}
+      sx={{ position: 'fixed', top: '13px', right: '13px' }}
       variant="outlined"
       onClick={handleFullscreen}>
       {'Fullscreen'}

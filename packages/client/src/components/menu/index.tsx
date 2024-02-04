@@ -12,7 +12,7 @@ const pages = [
 
 function Menu() {
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ height: '64px' }}>
       <Toolbar>
         <nav>
           {pages.map(({ url, title }) => (
