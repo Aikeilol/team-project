@@ -1,4 +1,4 @@
-import App from './index'
+import { App } from './App'
 import { render } from '@testing-library/react'
 
 // @ts-ignore
