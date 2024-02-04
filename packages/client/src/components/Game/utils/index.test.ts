@@ -6,7 +6,7 @@ describe('Функция получения случайного числа', ()
   })
 
   test('Значения не выходят за заданный диапазон', () => {
-    expect(getRandomInt(0, 11231230)).toBeGreaterThanOrEqual(0)
+    expect(getRandomInt(0, 10)).toBeGreaterThanOrEqual(0)
     expect(getRandomInt(0, 10)).toBeLessThanOrEqual(10)
   })
 })
