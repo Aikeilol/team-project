@@ -9,5 +9,4 @@ pre-commit:
       run: yarn prettier -w {staged_files}
       stage_fixed: true
     test:
-      glob: '*.test.{ts,tsx}'
       run: yarn test
