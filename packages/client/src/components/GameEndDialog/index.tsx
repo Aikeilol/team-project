@@ -6,7 +6,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material'
-import React, { FC } from 'react'
+import React, { FC, RefObject } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReplayIcon from '@mui/icons-material/Replay'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -16,9 +16,16 @@ export interface IProps {
   record: number
   isOpen: boolean
   startAgain: () => void
+  containerRef: RefObject<HTMLElement>
 }
 
-const GameEndDialog: FC<IProps> = ({ startAgain, score, record, isOpen }) => {
+const GameEndDialog: FC<IProps> = ({
+  startAgain,
+  score,
+  record,
+  isOpen,
+  containerRef,
+}) => {
   const navigate = useNavigate()
 
   const handleStartAgain = () => {
@@ -30,7 +37,7 @@ const GameEndDialog: FC<IProps> = ({ startAgain, score, record, isOpen }) => {
   }
 
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen} container={containerRef.current}>
       <DialogContent sx={{ padding: '15px', background: 'transparent' }}>
         <DialogTitle align="center" variant="h5">
           Игра завершена

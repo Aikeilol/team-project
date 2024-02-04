@@ -1,4 +1,4 @@
-import { GRID_SIZE, SPRITE_GRID_SIZE, GRID_COUNT } from '../constants'
+import { GRID_SIZE, SPRITE_GRID_SIZE } from '../constants'
 import { getRandomInt } from '../utils/getRandomInt'
 
 export class Apple {
@@ -19,8 +19,10 @@ export class Apple {
     )
   }
 
-  move() {
-    this.x = getRandomInt(0, GRID_COUNT) * GRID_SIZE
-    this.y = getRandomInt(0, GRID_COUNT) * GRID_SIZE
+  move(canvas: HTMLCanvasElement) {
+    const gridCountX = Math.floor(canvas.width / GRID_SIZE)
+    const gridCountY = Math.floor(canvas.height / GRID_SIZE)
+    this.x = getRandomInt(0, gridCountX) * GRID_SIZE
+    this.y = getRandomInt(0, gridCountY) * GRID_SIZE
   }
 }
