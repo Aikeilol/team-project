@@ -19,4 +19,27 @@ describe('Компонент игры "Змейка"', () => {
     expect(snake.snakeIsOutTheField).toBeDefined()
     expect(snake.draw).toBeDefined()
   })
+  test('hasCollisions работает правильно', () => {
+    snake.cells = [
+      { x: 272, y: 464 },
+      { x: 272, y: 480 },
+      { x: 256, y: 480 },
+      { x: 256, y: 464 },
+      { x: 274, y: 464 },
+      { x: 288, y: 464 },
+      { x: 288, y: 448 },
+    ]
+    //проверяем что элемент головы не затрагивает механизм столкновений
+    snake.x = 272
+    snake.y = 464
+    expect(snake.hasCollisions()).toBeFalsy()
+    //обнаружение столкновений работает правильно
+    snake.x = 272
+    snake.y = 480
+    expect(snake.hasCollisions()).toBeTruthy()
+    //при отсутствии столкновений работает правильно
+    snake.x = 111
+    snake.y = 111
+    expect(snake.hasCollisions()).toBeFalsy()
+  })
 })
