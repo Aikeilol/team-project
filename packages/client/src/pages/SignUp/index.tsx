@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import Auth from '../../components/Auth'
 import { Container } from '@mui/material'
 import {

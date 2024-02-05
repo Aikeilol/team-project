@@ -1,3 +1,4 @@
+import React from 'react'
 import { Outlet } from 'react-router-dom'
 import './style.css'
 import { SnackbarProvider } from 'notistack'
@@ -12,7 +13,7 @@ function App() {
   useEffect(() => {
     getUser()
       .then(response => {
-        dispatch(setUser(response.data || null))
+        dispatch(setUser(response?.data || null))
       })
       .catch(() => {
         dispatch(setUser(null))

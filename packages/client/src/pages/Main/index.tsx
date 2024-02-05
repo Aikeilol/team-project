@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import React, { Outlet } from 'react-router-dom'
 import Menu from '../../components/menu'
 
 function Main() {

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { forumService } from '../../../services/forum.service'
 import { Forum, Topic } from '../types'
 import ForumList from '../../../components/Forum/ForumList'

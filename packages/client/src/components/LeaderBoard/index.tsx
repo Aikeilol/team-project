@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { ILeaderData } from './types'
 import LeaderBoardHeader from './LeaderBoardHeader'
 import LeaderBoardList from './LeaderBordList'

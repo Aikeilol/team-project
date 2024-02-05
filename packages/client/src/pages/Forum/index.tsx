@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 import ForumLayout from '../../components/Forum/ForumLayout'
 

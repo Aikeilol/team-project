@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { Fab, FabTypeMap, Tooltip } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 
