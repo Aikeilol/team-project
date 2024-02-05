@@ -1,3 +1,4 @@
+import React from 'react'
 import { Typography, Link, Box } from '@mui/material'
 import { useRouteError, isRouteErrorResponse } from 'react-router-dom'
 

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { Box } from '@mui/material'
 import PasswordEditForm from './PasswordEditForm'
 import AuthHeader from '../Auth/AuthHeader'
