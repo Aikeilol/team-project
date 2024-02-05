@@ -1,5 +1,5 @@
 import { Paper } from '@mui/material'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { IAuthData } from './types'
 import AuthForm from './AuthForm'
 import AuthHeader from './AuthHeader'

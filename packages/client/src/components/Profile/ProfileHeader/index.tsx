@@ -1,4 +1,4 @@
-import { FC, FormEvent, useEffect, useState } from 'react'
+import React, { FC, FormEvent, useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { IProfileFormData } from '../types'
 import { changeUserAvatar } from '../../../utils/scripts/api/profileApi'

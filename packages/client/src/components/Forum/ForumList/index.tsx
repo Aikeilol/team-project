@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 import List from '@mui/material/List'
-import { Key } from 'react'
+import React, { Key } from 'react'
 
 interface IProps<T extends { id: number }> {
   template: (data: T, key: Key) => JSX.Element

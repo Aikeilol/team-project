@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { Container } from '@mui/material'
 import LeaderBoardComponent from '../../components/LeaderBoard'
 

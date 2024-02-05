@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { IFormData } from '../Auth/types'
 import CustomForm from './components/CustomForm'
 import { CustomInput } from './components/components/CustomInput'

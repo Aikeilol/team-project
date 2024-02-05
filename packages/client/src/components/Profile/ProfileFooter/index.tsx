@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { Box, CssBaseline, Link } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import { logOut } from '../../../utils/scripts/api/profileApi'

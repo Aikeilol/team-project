@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react'
+import React, { ChangeEvent, FC } from 'react'
 import { Avatar, Box, IconButton } from '@mui/material'
 
 interface IProps {
@@ -8,9 +8,7 @@ interface IProps {
 
 const ProfileAvatar: FC<IProps> = ({ onChange, source }) => {
   return (
-    <Box
-      component="div"
-    >
+    <Box component="div">
       <input
         id="upload-avatar"
         name={'avatar'}
@@ -24,7 +22,7 @@ const ProfileAvatar: FC<IProps> = ({ onChange, source }) => {
           <Avatar
             alt={'avatar'}
             src={source}
-            sx={{width: 130, height: 130}}
+            sx={{ width: 130, height: 130 }}
           />
         </IconButton>
       </label>
