@@ -1,12 +1,10 @@
 import { FC, FormEvent, useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import { IProfileFormData } from '../types'
-import {
-  API_URL,
-  changeUserAvatar,
-} from '../../../utils/scripts/api/profileApi'
+import { changeUserAvatar } from '../../../utils/scripts/api/profileApi'
 import ProfileAvatar from '../ProfileAvatar'
 import { getUser } from '../../../utils/scripts/api/yandexApi'
+import { API_URL } from '../../../utils/scripts/constants'
 
 interface IProps {
   formData: IProfileFormData
