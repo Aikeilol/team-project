@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { Typography } from '@mui/material'
 import ForumBackLink from '../ForumBackButton'
 

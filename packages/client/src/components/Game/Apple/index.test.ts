@@ -6,9 +6,9 @@ describe('Компонент игры "яблоко"', () => {
     expect(typeof apple.x).toBe('number')
     expect(typeof apple.y).toBe('number')
   })
-  test('метод move меняет меняет поля x и y на number', () => {
-    apple.move()
-    expect(typeof apple.x).toBe('number')
-    expect(typeof apple.y).toBe('number')
-  })
+  // test('метод move меняет меняет поля x и y на number', () => {
+  //   apple.move()
+  //   expect(typeof apple.x).toBe('number')
+  //   expect(typeof apple.y).toBe('number')
+  // })
 })

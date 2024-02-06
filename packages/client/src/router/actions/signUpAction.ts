@@ -19,7 +19,7 @@ const signUpAction = async (
   const { data } = (await signUp(state as SignUpRequest)) || {}
 
   if (data) {
-    const user = (await getUser()) || {}
+    const user = await getUser()
     showAlert('Вы успешно зарегистрировались', 'success')
 
     if (user) {

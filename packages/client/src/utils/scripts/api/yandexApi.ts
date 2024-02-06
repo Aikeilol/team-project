@@ -1,15 +1,15 @@
+import { API_URL } from '../constants'
 import showAlert from '../showAlert'
 import { SignInRequest, SignUpRequest, YandexApiError } from './types'
 import axios, {
   AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
-  AxiosResponse,
   RawAxiosRequestHeaders,
 } from 'axios'
 
 export const yandexApi: AxiosInstance = axios.create({
-  baseURL: 'https://ya-praktikum.tech/api/v2',
+  baseURL: API_URL,
 })
 
 export const config: AxiosRequestConfig = {
@@ -25,30 +25,26 @@ const showError = (err: unknown) => {
   showAlert(message, 'error')
 }
 
-export const signUp = async (data: SignUpRequest): Promise<AxiosResponse> => {
+export const signUp = async (data: SignUpRequest) => {
   try {
     return await yandexApi.post('/auth/signup', data, config)
   } catch (err) {
-    showError(err)
-
-    return Promise.reject(err)
+    return showError(err)
   }
 }
 
-export const signIn = async (data: SignInRequest): Promise<AxiosResponse> => {
+export const signIn = async (data: SignInRequest) => {
   try {
     return await yandexApi.post('/auth/signin', data, config)
   } catch (err) {
-    showError(err)
-
-    return Promise.reject(err)
+    return showError(err)
   }
 }
 
-export const getUser = async (): Promise<AxiosResponse> => {
+export const getUser = async () => {
   try {
     return await yandexApi.get('/auth/user', config).then(res => res)
   } catch (error) {
-    return Promise.reject(error)
+    return console.error(error)
   }
 }

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { Container } from '@mui/material'
 import SettingsIndex from '../../components/Settings'
 import './style.css'

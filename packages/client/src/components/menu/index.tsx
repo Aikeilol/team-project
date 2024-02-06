@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from '@mui/material/Link'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -12,7 +13,7 @@ const pages = [
 
 function Menu() {
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ height: '64px' }}>
       <Toolbar>
         <nav>
           {pages.map(({ url, title }) => (

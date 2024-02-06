@@ -1,14 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import FullScreenButton from '../FullScreenButton'
 import GameEndDialog from '../GameEndDialog'
 import { Snake } from './Snake'
 import { Apple } from './Apple'
-import { sprites } from './constants'
+import { sprites, GRID_SIZE } from './constants'
 
 import './style.css'
 
 function Game() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const snakeRef = useRef(new Snake())
   const appleRef = useRef(new Apple())
@@ -63,9 +64,11 @@ function Game() {
       return
     }
 
+    resizeCanvasToDisplaySize(canvas)
+
     // Очищаем поле
     context.clearRect(0, 0, canvas.width, canvas.height)
-    context.drawImage(sprites.sandSprite, 0, 0)
+    context.drawImage(sprites.sandSprite, 0, 0, canvas.width, canvas.height)
 
     const snake = snakeRef.current
     const apple = appleRef.current
@@ -82,7 +85,7 @@ function Game() {
       // увеличиваем длину змейки
       snake.maxCells++
       // Рисуем новое яблочко
-      apple.move()
+      apple.move(canvas)
 
       updateScore()
     }
@@ -107,17 +110,29 @@ function Game() {
     }
   }, [score, record])
 
+  const resizeCanvasToDisplaySize = (canvas: HTMLCanvasElement) => {
+    canvas.style.width = '100%'
+    canvas.style.height = '100%'
+
+    // Устанавливаем размеры canvas в соответствии с размерами контейнера (высота и ширина кратны размеру клетки)
+    canvas.width = canvas.offsetWidth - (canvas.offsetWidth % GRID_SIZE)
+    canvas.height = canvas.offsetHeight - (canvas.offsetHeight % GRID_SIZE)
+  }
+
   return (
-    <div id="gameElement">
-      <FullScreenButton elRef={canvasRef} />
-      <GameEndDialog
-        isOpen={openEndGameModal}
-        score={score}
-        record={record}
-        startAgain={startAgain}
-      />
-      <canvas ref={canvasRef} width="640" height="640"></canvas>
-    </div>
+    <>
+      <FullScreenButton elRef={containerRef} />
+      <div className="game-container" ref={containerRef}>
+        <GameEndDialog
+          isOpen={openEndGameModal}
+          score={score}
+          record={record}
+          startAgain={startAgain}
+          containerRef={containerRef}
+        />
+        <canvas ref={canvasRef} className="game-board"></canvas>
+      </div>
+    </>
   )
 }
 

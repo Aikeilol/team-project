@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { IFormData } from '../types'
+import React from 'react'
 import { Form } from '../../Form'
 
 interface IProps {

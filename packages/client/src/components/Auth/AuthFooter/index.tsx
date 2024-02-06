@@ -1,5 +1,5 @@
 import { Grid, Link, Typography } from '@mui/material'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { AuthFooterInfo } from '../types'
 import { Link as RouterLink } from 'react-router-dom'
 
