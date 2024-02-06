@@ -21,7 +21,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div id="App" className="App">
       <SnackbarProvider maxSnack={3} />
       <Outlet />
     </div>
