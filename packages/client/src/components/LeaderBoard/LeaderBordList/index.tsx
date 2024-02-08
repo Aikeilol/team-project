@@ -1,4 +1,4 @@
-import { FC, SetStateAction, useState } from 'react'
+import React, { FC, SetStateAction, useState } from 'react'
 import { IListItem } from '../types'
 import LeaderBoardItem from '../LeaderBoardItem'
 
@@ -13,7 +13,6 @@ import {
   TableSortLabel,
 } from '@mui/material'
 import { DisplayNameCol, LimitCol, RatingFieldNameCol } from '../data'
-
 
 interface IProps {
   listData: Array<IListItem>
@@ -107,7 +106,10 @@ const LeaderBoardList: FC<IProps> = listData => {
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState('')
 
-  const handleRequestSort = (event: Event, property: SetStateAction<string>) => {
+  const handleRequestSort = (
+    event: Event,
+    property: SetStateAction<string>
+  ) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
     setOrderBy(property)

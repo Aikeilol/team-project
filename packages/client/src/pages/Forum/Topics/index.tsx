@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Message, Topic } from '../types'
 import { forumService } from '../../../services/forum.service'
 import { Box } from '@mui/material'

@@ -1,4 +1,4 @@
-import React from 'react'
+import { forwardRef } from 'react'
 import { styled } from '@mui/system'
 import {
   NavLink as RouterLink,
@@ -11,7 +11,7 @@ const StyledRouterLink = styled(RouterLink)(() => ({
   },
 }))
 
-export const LinkBehavior = React.forwardRef<
+export const LinkBehavior = forwardRef<
   HTMLAnchorElement,
   Omit<RouterLinkProps, 'to'> & { href: RouterLinkProps['to'] }
 >((props, ref) => {

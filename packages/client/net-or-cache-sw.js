@@ -72,6 +72,14 @@ self.addEventListener('fetch', (ev) => {
     return;
   }
 
+  if (
+    ev.request.url.startsWith('chrome-extension') ||
+    ev.request.url.includes('extension') ||
+    !(ev.request.url.indexOf('http') === 0)
+  ) {
+    return
+  }
+
   ev.respondWith(
     fromNetwork(ev.request, 5000).catch(() => {
       console.log(`Fetching request for: ${ev.request.url} from cache`);
