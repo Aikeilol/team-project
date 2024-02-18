@@ -51,4 +51,15 @@ export interface IChangeUserPassword {
   oldPassword: string;
   newPassword: string;
 }
+export interface ILBAddUser {
+  data: object;
+  ratingFieldName: string;
+  teamName: string;
+}
+export interface ILBTeam {
+  ratingFieldName: string;
+  cursor: number
+  limit: number
+}
+
 export type YandexApiError = { reason: string }

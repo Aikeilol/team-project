@@ -1,18 +1,18 @@
 import React, { FC } from 'react'
 import { Box, TableCell, TableRow, Typography } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
-import { IListItem } from '../types'
+import { ILeader } from '../types'
+import { API_URL } from '../../../utils/scripts/constants'
 interface IProps {
-  item: Partial<IListItem>
+  item: Partial<ILeader>
+
 }
 const LeaderBoardItem: FC<IProps> = ( item ) => {
   const {
-    display_name,
-    first_name,
-    second_name,
-    ratingFieldName,
-    limit,
-    avatar
+    userDisplayName,
+    userFirstName,
+    ratingSlytherinTeam,
+    userAvatar
   } = item.item
 
   return (
@@ -30,19 +30,18 @@ const LeaderBoardItem: FC<IProps> = ( item ) => {
             gap: 1.5,
           }}
         >
-          <Avatar src={avatar} />
+          <Avatar src={`${API_URL}/resources${userAvatar}`} />
           <Box sx={{ minWidth: 0 }}>
             <Typography noWrap fontWeight="lg">
-              {display_name}
+              {userDisplayName}
             </Typography>
             <Typography noWrap fontWeight="lg">
-              {first_name} {second_name}
+              {userFirstName}
             </Typography>
           </Box>
         </Box>
       </TableCell>
-      <TableCell align="left">{ratingFieldName}</TableCell>
-      <TableCell align="left">{limit}</TableCell>
+      <TableCell align="left">{ratingSlytherinTeam}</TableCell>
     </TableRow>
   )
 }

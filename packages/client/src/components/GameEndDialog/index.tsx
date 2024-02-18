@@ -1,15 +1,11 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material'
-import React, { FC, RefObject } from 'react'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
+import React, { FC, RefObject, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReplayIcon from '@mui/icons-material/Replay'
 import MenuIcon from '@mui/icons-material/Menu'
+import { addUserToLeaderBoard } from '../../utils/scripts/api/leaderBoardApi'
+import { IUser } from '../../utils/scripts/api/types'
+import { getUser } from '../../utils/scripts/api/yandexApi'
 
 export interface IProps {
   score: number
@@ -19,6 +15,7 @@ export interface IProps {
   containerRef: RefObject<HTMLElement>
 }
 
+
 const GameEndDialog: FC<IProps> = ({
   startAgain,
   score,
@@ -27,14 +24,35 @@ const GameEndDialog: FC<IProps> = ({
   containerRef,
 }) => {
   const navigate = useNavigate()
-
+  const [userData, setUserData] = useState<IUser>()
   const handleStartAgain = () => {
     startAgain()
   }
-
   const handleToMainMenu = () => {
     navigate('/')
   }
+
+  useEffect(() => {
+    getUser().then(response => {
+      if (response?.data) {
+        setUserData(response.data)
+      }
+    })
+    const postData = {
+      data: {
+        id: userData?.id,
+        userFirstName: userData?.first_name,
+        userDisplayName: userData?.display_name,
+        userAvatar: userData?.avatar,
+        ratingSlytherinTeam: score
+      },
+      ratingFieldName: 'ratingSlytherinTeam',
+      teamName: 'slytherin'
+    }
+    if (isOpen && score > 0) {
+      addUserToLeaderBoard(postData).then()
+    }
+  }, [isOpen, score])
 
   return (
     <Dialog open={isOpen} container={containerRef.current}>
