@@ -6,6 +6,9 @@ import { Apple } from './Apple'
 import { sprites, GRID_SIZE } from './constants'
 
 import './style.css'
+import { getUser } from '../../utils/scripts/api/yandexApi'
+import { addUserToLeaderBoard } from '../../utils/scripts/api/leaderBoardApi'
+import { IUser } from '../../utils/scripts/api/types'
 
 function Game() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -20,6 +23,8 @@ function Game() {
   const [record, setRecord] = useState(0)
   const [score, setScore] = useState(0)
 
+  const [userData, setUserData] = useState<IUser>()
+
   const requestRef = useRef(0)
 
   useEffect(() => {
@@ -32,6 +37,28 @@ function Game() {
       )
     }
   }, [])
+
+  useEffect(() => {
+    getUser().then(response => {
+      if (response?.data) {
+        setUserData(response.data)
+      }
+    })
+    const postData = {
+      data: {
+        id: userData?.id,
+        userFirstName: userData?.first_name,
+        userDisplayName: userData?.display_name,
+        userAvatar: userData?.avatar,
+        ratingSlytherinTeam: score
+      },
+      ratingFieldName: 'ratingSlytherinTeam',
+      teamName: 'slytherin'
+    }
+    if (openEndGameModal && score > 0) {
+      addUserToLeaderBoard(postData).then()
+    }
+  }, [openEndGameModal, score])
 
   useEffect(() => {
     let frameCount = 0
