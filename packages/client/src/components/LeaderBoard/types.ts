@@ -10,5 +10,5 @@ export interface IObjectLeader {
 }
 export interface ILeaderData {
   title: string
-  listData: Array<ILeader>
+  listData: Array<IObjectLeader>
 }
