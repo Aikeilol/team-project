@@ -9,6 +9,7 @@ import './style.css'
 import { getUser } from '../../utils/scripts/api/yandexApi'
 import { addUserToLeaderBoard } from '../../utils/scripts/api/leaderBoardApi'
 import { IUser } from '../../utils/scripts/api/types'
+import { RATING_FIELD_NAME, TEAM_NAME } from '../../utils/scripts/constants'
 
 function Game() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -44,16 +45,19 @@ function Game() {
         setUserData(response.data)
       }
     })
+    if (!userData) {
+      return
+    }
     const postData = {
       data: {
-        id: userData?.id,
-        userFirstName: userData?.first_name,
-        userDisplayName: userData?.display_name,
-        userAvatar: userData?.avatar,
-        ratingSlytherinTeam: score
+        id: userData.id,
+        userFirstName: userData.first_name,
+        userDisplayName: userData.display_name,
+        userAvatar: userData.avatar,
+        ratingSlytherinTeam: score,
       },
-      ratingFieldName: 'ratingSlytherinTeam',
-      teamName: 'slytherin'
+      ratingFieldName: RATING_FIELD_NAME,
+      teamName: TEAM_NAME,
     }
     if (openEndGameModal && score > 0) {
       addUserToLeaderBoard(postData).then()
