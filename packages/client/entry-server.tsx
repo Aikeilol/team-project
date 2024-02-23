@@ -22,18 +22,21 @@ export async function render(remixRequest: Request) {
 
   const router = createStaticRouter(dataRoutes, context)
 
-  return ReactDOMServer.renderToString(
-    <StrictMode>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <StaticRouterProvider
-            router={router}
-            context={context}
-            nonce="the-nonce"
-          />
-        </ThemeProvider>
-      </Provider>
-    </StrictMode>
-  )
+  return [
+    ReactDOMServer.renderToString(
+      <StrictMode>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <StaticRouterProvider
+              router={router}
+              context={context}
+              nonce="the-nonce"
+            />
+          </ThemeProvider>
+        </Provider>
+      </StrictMode>
+    ),
+    store.getState(),
+  ]
 }
