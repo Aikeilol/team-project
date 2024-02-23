@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Box, TableCell, TableRow, Typography } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
 import { ILeader } from '../types'
-import { API_URL } from '../../../utils/scripts/constants'
+import getImageSrc from '../../../utils/scripts/getPath'
 interface IProps {
   item: Partial<ILeader>
 
@@ -30,7 +30,7 @@ const LeaderBoardItem: FC<IProps> = ( item ) => {
             gap: 1.5,
           }}
         >
-          <Avatar src={`${API_URL}/resources${userAvatar}`} />
+          <Avatar src={getImageSrc(userAvatar as string)} />
           <Box sx={{ minWidth: 0 }}>
             <Typography noWrap fontWeight="lg">
               {userDisplayName}

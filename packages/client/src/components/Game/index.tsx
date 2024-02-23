@@ -38,13 +38,14 @@ function Game() {
       )
     }
   }, [])
-
   useEffect(() => {
     getUser().then(response => {
       if (response?.data) {
         setUserData(response.data)
       }
     })
+  }, [])
+  useEffect(() => {
     if (!userData) {
       return
     }
@@ -62,7 +63,7 @@ function Game() {
     if (openEndGameModal && score > 0) {
       addUserToLeaderBoard(postData).then()
     }
-  }, [openEndGameModal, score])
+  }, [openEndGameModal, score, userData])
 
   useEffect(() => {
     let frameCount = 0
