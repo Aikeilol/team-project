@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "yarn build:ssr && yarn build:client",
+    "build:client": "tsc && vite build --config vite.config.ts",
+    "build:ssr": "tsc && vite build --ssr --config ssr.config.ts",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",

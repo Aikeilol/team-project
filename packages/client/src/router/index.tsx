@@ -29,89 +29,93 @@ import {
 } from './actions'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 
+// временно закомментировала, т к работа с redux не является частью текущей задачи
+
+export const routes = [
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <Error />,
+    children: [
+      // {
+      //   path: '/',
+      //   element: <ProtectedRoute />,
+      //   children: [
+      {
+        path: '/',
+        element: <Main />,
+        children: [
+          {
+            index: true,
+            element: <Intro />,
+          },
+          {
+            path: 'profile',
+            element: <Profile />,
+          },
+          {
+            path: 'settings',
+            element: <Settings />,
+            action: userProfileAction,
+          },
+          {
+            path: 'password-edit',
+            element: <PasswordEdit />,
+            action: userPasswordAction,
+          },
+          {
+            path: 'game',
+            element: <Game />,
+          },
+          {
+            path: 'leaderboard',
+            element: <LeaderBord />,
+          },
+          {
+            path: 'forum',
+            element: <Forum />,
+            children: [
+              {
+                index: true,
+                element: <Forums />,
+              },
+              {
+                path: ':forumId/topics',
+                element: <Topics />,
+              },
+              {
+                path: ':forumId/topics/:topicId/messages',
+                element: <Messages />,
+              },
+            ],
+          },
+          //   ],
+          // },
+        ],
+      },
+      {
+        path: '/sign-in',
+        element: <SignIn />,
+        // action: ({ request, params }: LoaderFunctionArgs) =>
+        //   signInAction(dispatch, { request, params }),
+        // loader: () => redirectLoader(user),
+      },
+      {
+        path: '/sign-up',
+        element: <SignUp />,
+        // action: ({ request, params }: LoaderFunctionArgs) =>
+        //   signUpAction(dispatch, { request, params }),
+        // loader: () => redirectLoader(user),
+      },
+    ],
+  },
+]
+
 const Router = () => {
   const { user } = useAppSelector(state => state.user)
   const dispatch = useAppDispatch()
 
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <App />,
-      errorElement: <Error />,
-      children: [
-        {
-          path: '/',
-          element: <ProtectedRoute />,
-          children: [
-            {
-              path: '/',
-              element: <Main />,
-              children: [
-                {
-                  index: true,
-                  element: <Intro />,
-                },
-                {
-                  path: 'profile',
-                  element: <Profile />,
-                },
-                {
-                  path: 'settings',
-                  element: <Settings />,
-                  action: userProfileAction,
-                },
-                {
-                  path: 'password-edit',
-                  element: <PasswordEdit />,
-                  action: userPasswordAction,
-                },
-                {
-                  path: 'game',
-                  element: <Game />,
-                },
-                {
-                  path: 'leaderboard',
-                  element: <LeaderBord />,
-                },
-                {
-                  path: 'forum',
-                  element: <Forum />,
-                  children: [
-                    {
-                      index: true,
-                      element: <Forums />,
-                    },
-                    {
-                      path: ':forumId/topics',
-                      element: <Topics />,
-                    },
-                    {
-                      path: ':forumId/topics/:topicId/messages',
-                      element: <Messages />,
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          path: '/sign-in',
-          element: <SignIn />,
-          action: ({ request, params }: LoaderFunctionArgs) =>
-            signInAction(dispatch, { request, params }),
-          loader: () => redirectLoader(user),
-        },
-        {
-          path: '/sign-up',
-          element: <SignUp />,
-          action: ({ request, params }: LoaderFunctionArgs) =>
-            signUpAction(dispatch, { request, params }),
-          loader: () => redirectLoader(user),
-        },
-      ],
-    },
-  ])
+  const router = createBrowserRouter(routes)
 
   return <RouterProvider router={router} />
 }

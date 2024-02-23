@@ -60,7 +60,7 @@ function Game() {
     const canvas = canvasRef.current
     const context = canvas?.getContext('2d') as CanvasRenderingContext2D
 
-    if (!canvas || !context) {
+    if (!canvas || !context || !sprites.sandSprite || !sprites.gameSprites) {
       return
     }
 

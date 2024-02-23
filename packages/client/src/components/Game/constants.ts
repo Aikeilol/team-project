@@ -6,12 +6,20 @@ export const GRID_SIZE = 16
 // размер одного спрайта
 export const SPRITE_GRID_SIZE = 64
 
+const isSSR = typeof document === 'undefined'
+
 // Спрайты змейки и яблока
-const gameSprites = new Image()
-gameSprites.src = snakeImages
+let gameSprites: HTMLImageElement | null = null
+if (!isSSR) {
+  gameSprites = new Image()
+  gameSprites.src = snakeImages
+}
 
 // Спрайт песка
-const sandSprite = new Image()
-sandSprite.src = sandImage
+let sandSprite: HTMLImageElement | null = null
+if (!isSSR) {
+  sandSprite = new Image()
+  sandSprite.src = sandImage
+}
 
 export const sprites = { gameSprites, sandSprite }
