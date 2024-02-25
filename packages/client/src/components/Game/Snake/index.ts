@@ -32,6 +32,8 @@ export class Snake {
       this.dy = GRID_SIZE
       this.dx = 0
     }
+
+    // sounds.stepSound.play()
   }
 
   move = () => {

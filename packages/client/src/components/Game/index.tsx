@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useContext,
+} from 'react'
 import FullScreenButton from '../FullScreenButton'
 import GameEndDialog from '../GameEndDialog'
 import { Snake } from './Snake'
@@ -6,14 +12,17 @@ import { Apple } from './Apple'
 import { GRID_SIZE } from './constants'
 import snakeImages from './images/snake-graphics.png'
 import sandImage from './images/sand.png'
+import { useAppContext } from '../../context/AppContext'
 
-import './style.css'
 import { getUser } from '../../utils/scripts/api/yandexApi'
 import { addUserToLeaderBoard } from '../../utils/scripts/api/leaderBoardApi'
 import { IUser } from '../../utils/scripts/api/types'
 import { RATING_FIELD_NAME, TEAM_NAME } from '../../utils/scripts/constants'
 
+import './style.css'
+
 function Game() {
+  const { notifications } = useAppContext()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -29,6 +38,12 @@ function Game() {
   const [userData, setUserData] = useState<IUser>()
 
   const requestRef = useRef(0)
+
+  const showNotificationWithResult = useCallback(() => {
+    notifications.sendNotification(
+      `Набрано очков: ${score}. Рекорд: ${record}.`
+    )
+  }, [score, record])
 
   useEffect(() => {
     window.addEventListener('keydown', snakeRef.current.setSnakeControllers)
@@ -88,7 +103,7 @@ function Game() {
     return () => {
       cancelAnimationFrame(requestRef.current)
     }
-  }, [isStopped])
+  }, [isStopped, showNotificationWithResult])
 
   function gameLoop() {
     const canvas = canvasRef.current
@@ -117,8 +132,13 @@ function Game() {
 
     if (snake.snakeIsOutTheField(context) || snake.hasCollisions()) {
       snake.reInit()
+
       setIsStopped(true)
       setOpenEndGameModal(true)
+
+      // sounds.loseSound.play()
+
+      showNotificationWithResult()
     }
 
     if (snake.appleWasEaten(apple)) {
@@ -128,6 +148,8 @@ function Game() {
       apple.move(canvas)
 
       updateScore()
+
+      // sounds.eatingSound.play()
     }
 
     snake.draw(context, gameSprites)
