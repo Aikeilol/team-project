@@ -3,7 +3,9 @@ import FullScreenButton from '../FullScreenButton'
 import GameEndDialog from '../GameEndDialog'
 import { Snake } from './Snake'
 import { Apple } from './Apple'
-import { sprites, GRID_SIZE } from './constants'
+import { GRID_SIZE } from './constants'
+import snakeImages from './images/snake-graphics.png'
+import sandImage from './images/sand.png'
 
 import './style.css'
 
@@ -60,6 +62,12 @@ function Game() {
     const canvas = canvasRef.current
     const context = canvas?.getContext('2d') as CanvasRenderingContext2D
 
+    const gameSprites = new Image()
+    gameSprites.src = snakeImages
+
+    const sandSprite = new Image()
+    sandSprite.src = sandImage
+
     if (!canvas || !context) {
       return
     }
@@ -68,7 +76,7 @@ function Game() {
 
     // Очищаем поле
     context.clearRect(0, 0, canvas.width, canvas.height)
-    context.drawImage(sprites.sandSprite, 0, 0, canvas.width, canvas.height)
+    context.drawImage(sandSprite, 0, 0, canvas.width, canvas.height)
 
     const snake = snakeRef.current
     const apple = appleRef.current
@@ -90,8 +98,8 @@ function Game() {
       updateScore()
     }
 
-    snake.draw(context, sprites.gameSprites)
-    apple.draw(context, sprites.gameSprites)
+    snake.draw(context, gameSprites)
+    apple.draw(context, gameSprites)
   }
 
   function updateScore() {
