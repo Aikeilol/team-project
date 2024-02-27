@@ -1,3 +1,5 @@
+import { ILeader } from '../../../components/LeaderBoard/types'
+
 export type SignUpRequest = {
   first_name: string
   second_name: string
@@ -40,15 +42,26 @@ export interface IUser {
 }
 
 export interface IChangeUserProfile {
-  first_name: string;
-  second_name: string;
-  display_name: string;
-  login: string;
-  email: string;
-  phone: string;
+  first_name: string
+  second_name: string
+  display_name: string
+  login: string
+  email: string
+  phone: string
 }
 export interface IChangeUserPassword {
-  oldPassword: string;
-  newPassword: string;
+  oldPassword: string
+  newPassword: string
 }
+export interface ILBAddUser {
+  data: ILeader
+  ratingFieldName: string
+  teamName: string
+}
+export interface ILBTeam {
+  ratingFieldName: string
+  cursor: number
+  limit: number
+}
+
 export type YandexApiError = { reason: string }

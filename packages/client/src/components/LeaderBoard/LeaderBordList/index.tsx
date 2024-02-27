@@ -1,5 +1,5 @@
 import React, { FC, SetStateAction, useState } from 'react'
-import { IListItem } from '../types'
+import { ILeader, IObjectLeader } from '../types'
 import LeaderBoardItem from '../LeaderBoardItem'
 
 import {
@@ -12,10 +12,10 @@ import {
   TableRow,
   TableSortLabel,
 } from '@mui/material'
-import { DisplayNameCol, LimitCol, RatingFieldNameCol } from '../data'
+import { DisplayNameCol, RatingFieldNameCol } from '../data'
 
 interface IProps {
-  listData: Array<IListItem>
+  listData: Array<IObjectLeader>
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -41,7 +41,7 @@ function getComparator<Key extends keyof never>(
     : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
-function stableSort<T>(array: IListItem[], comparator: (a: T, b: T) => number) {
+function stableSort<T>(array: (ILeader | undefined)[], comparator: (a: T, b: T) => number) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number])
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0])
@@ -60,8 +60,7 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
   DisplayNameCol,
-  RatingFieldNameCol,
-  LimitCol,
+  RatingFieldNameCol
 ]
 
 interface EnhancedTableHeadProps {
@@ -103,6 +102,11 @@ const EnhancedTableHead = (props: EnhancedTableHeadProps) => {
 const LeaderBoardList: FC<IProps> = listData => {
   const rows = listData.listData
 
+  const newRows = rows.map((item) => {
+    if (item.data) {
+      return item.data
+    }
+  })
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState('')
 
@@ -129,10 +133,11 @@ const LeaderBoardList: FC<IProps> = listData => {
             order={order}
             orderBy={orderBy}
             onRequestSort={handleRequestSort}
-            rowCount={rows.length}
+            rowCount={newRows.length}
           />
           <TableBody>
-            {stableSort(rows, getComparator(order, orderBy)).map(row => {
+            {stableSort(newRows,
+              getComparator(order, orderBy)).map(row => {
               return <LeaderBoardItem key={row.id} item={row} />
             })}
           </TableBody>

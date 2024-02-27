@@ -1,14 +1,14 @@
-export interface IListItem {
+export interface ILeader {
   id: number
-  avatar?: string
-  display_name: string
-  first_name?: string
-  second_name?: string
-  ratingFieldName?: string
-  cursor?: number
-  limit?: number
+  userFirstName: string
+  userDisplayName: string
+  userAvatar: string
+  ratingSlytherinTeam: number
+}
+export interface IObjectLeader {
+  data: ILeader
 }
 export interface ILeaderData {
   title: string
-  listData: Array<IListItem>
+  listData: Array<IObjectLeader>
 }

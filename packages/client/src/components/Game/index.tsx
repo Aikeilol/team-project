@@ -8,6 +8,10 @@ import snakeImages from './images/snake-graphics.png'
 import sandImage from './images/sand.png'
 
 import './style.css'
+import { getUser } from '../../utils/scripts/api/yandexApi'
+import { addUserToLeaderBoard } from '../../utils/scripts/api/leaderBoardApi'
+import { IUser } from '../../utils/scripts/api/types'
+import { RATING_FIELD_NAME, TEAM_NAME } from '../../utils/scripts/constants'
 
 function Game() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -22,6 +26,8 @@ function Game() {
   const [record, setRecord] = useState(0)
   const [score, setScore] = useState(0)
 
+  const [userData, setUserData] = useState<IUser>()
+
   const requestRef = useRef(0)
 
   useEffect(() => {
@@ -34,6 +40,32 @@ function Game() {
       )
     }
   }, [])
+  useEffect(() => {
+    getUser().then(response => {
+      if (response?.data) {
+        setUserData(response.data)
+      }
+    })
+  }, [])
+  useEffect(() => {
+    if (!userData) {
+      return
+    }
+    const postData = {
+      data: {
+        id: userData.id,
+        userFirstName: userData.first_name,
+        userDisplayName: userData.display_name,
+        userAvatar: userData.avatar,
+        ratingSlytherinTeam: score,
+      },
+      ratingFieldName: RATING_FIELD_NAME,
+      teamName: TEAM_NAME,
+    }
+    if (openEndGameModal && score > 0) {
+      addUserToLeaderBoard(postData).then()
+    }
+  }, [openEndGameModal, score, userData])
 
   useEffect(() => {
     let frameCount = 0

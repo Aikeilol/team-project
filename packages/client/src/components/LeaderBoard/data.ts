@@ -10,15 +10,8 @@ const RatingFieldNameCol = {
   disablePadding: false,
   label: "Рейтинг"
 }
-const LimitCol = {
-  id: "limit",
-  numeric: true,
-  disablePadding: false,
-  label: "Лимит"
-}
 
 export {
   DisplayNameCol,
   RatingFieldNameCol,
-  LimitCol
 }
