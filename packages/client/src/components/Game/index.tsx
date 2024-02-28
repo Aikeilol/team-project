@@ -1,17 +1,9 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  useContext,
-} from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import FullScreenButton from '../FullScreenButton'
 import GameEndDialog from '../GameEndDialog'
 import { Snake } from './Snake'
 import { Apple } from './Apple'
-import { GRID_SIZE } from './constants'
-import snakeImages from './images/snake-graphics.png'
-import sandImage from './images/sand.png'
+import { GRID_SIZE, getSounds, getSprites } from './constants'
 import { useAppContext } from '../../context/AppContext'
 
 import { getUser } from '../../utils/scripts/api/yandexApi'
@@ -20,6 +12,10 @@ import { IUser } from '../../utils/scripts/api/types'
 import { RATING_FIELD_NAME, TEAM_NAME } from '../../utils/scripts/constants'
 
 import './style.css'
+
+// количество кадров в секунду
+const fps = 15
+const msPerFrame = 1000 / fps
 
 function Game() {
   const { notifications } = useAppContext()
@@ -38,6 +34,7 @@ function Game() {
   const [userData, setUserData] = useState<IUser>()
 
   const requestRef = useRef(0)
+  const firstFrameTime = useRef(performance.now())
 
   const showNotificationWithResult = useCallback(() => {
     notifications.sendNotification(
@@ -82,23 +79,27 @@ function Game() {
     }
   }, [openEndGameModal, score, userData])
 
-  useEffect(() => {
-    let frameCount = 0
+  const animate = (now: number) => {
+    requestRef.current = requestAnimationFrame(animate)
 
-    const animate = () => {
-      requestRef.current = requestAnimationFrame(animate)
-
-      // Игровой код выполнится только один раз из четырёх, в этом и суть замедления кадров, а пока переменная count меньше четырёх, код выполняться не будет.
-      if (++frameCount < 8 || isStopped) {
-        return
-      }
-      // Обнуляем переменную скорости
-      frameCount = 0
-
-      gameLoop()
+    const msPassed = now - firstFrameTime.current
+    if (msPassed < msPerFrame) {
+      return
     }
 
-    animate()
+    const excessTime = msPassed % msPerFrame
+
+    firstFrameTime.current = now - excessTime
+
+    gameLoop()
+  }
+
+  useEffect(() => {
+    if (!isStopped) {
+      requestRef.current = requestAnimationFrame(animate)
+    } else {
+      cancelAnimationFrame(requestRef.current)
+    }
 
     return () => {
       cancelAnimationFrame(requestRef.current)
@@ -109,11 +110,9 @@ function Game() {
     const canvas = canvasRef.current
     const context = canvas?.getContext('2d') as CanvasRenderingContext2D
 
-    const gameSprites = new Image()
-    gameSprites.src = snakeImages
+    const { gameSprites, sandSprite } = getSprites()
 
-    const sandSprite = new Image()
-    sandSprite.src = sandImage
+    const { eatingSound, loseSound } = getSounds()
 
     if (!canvas || !context) {
       return
@@ -136,7 +135,7 @@ function Game() {
       setIsStopped(true)
       setOpenEndGameModal(true)
 
-      // sounds.loseSound.play()
+      loseSound.play()
 
       showNotificationWithResult()
     }
@@ -149,7 +148,7 @@ function Game() {
 
       updateScore()
 
-      // sounds.eatingSound.play()
+      eatingSound.play()
     }
 
     snake.draw(context, gameSprites)

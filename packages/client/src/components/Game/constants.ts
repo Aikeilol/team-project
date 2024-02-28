@@ -9,26 +9,30 @@ export const GRID_SIZE = 16
 // размер одного спрайта
 export const SPRITE_GRID_SIZE = 64
 
-// Спрайты змейки и яблока
-// const gameSprites = new Image()
-// gameSprites.src = snakeImages
+export const getSprites = () => {
+  // Спрайты змейки и яблока
+  const gameSprites = new Image()
+  gameSprites.src = snakeImages
 
-// // Спрайт песка
-// const sandSprite = new Image()
-// sandSprite.src = sandImage
+  // Спрайт песка
+  const sandSprite = new Image()
+  sandSprite.src = sandImage
 
-// const stepSound = new Audio()
-// stepSound.src = stepSoundSrc
-// stepSound.volume = 0.4
+  return { gameSprites, sandSprite }
+}
 
-// const eatingSound = new Audio()
-// eatingSound.src = eatingSoundSrc
-// eatingSound.volume = 0.1
+export const getSounds = () => {
+  const stepSound = new Audio()
+  stepSound.src = stepSoundSrc
+  stepSound.volume = 0.4
 
-// const loseSound = new Audio()
-// loseSound.src = loseSoundSrc
-// loseSound.volume = 0.1
+  const eatingSound = new Audio()
+  eatingSound.src = eatingSoundSrc
+  eatingSound.volume = 0.1
 
-// export const sprites = { gameSprites, sandSprite }
+  const loseSound = new Audio()
+  loseSound.src = loseSoundSrc
+  loseSound.volume = 0.1
 
-// export const sounds = { stepSound, eatingSound, loseSound }
+  return { stepSound, eatingSound, loseSound }
+}

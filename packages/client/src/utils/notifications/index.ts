@@ -1,18 +1,18 @@
 const PERMISSION_GRANTED = 'granted'
 
 export class Notifications {
-  supported = false
   granted = false
 
-  constructor() {
-    if (window && 'Notification' in window) {
-      this.supported = true
+  isSupported = () => {
+    if ('Notification' in window) {
+      return true
     }
-    console.log('Notifications', this, this.supported)
+
+    return false
   }
 
   sendNotification = async (msg: string) => {
-    if (!this.supported) {
+    if (!this.isSupported) {
       return
     }
 
@@ -28,7 +28,6 @@ export class Notifications {
   requestPermission = () => {
     return Notification.requestPermission()
       .then(permission => {
-        console.log('requestPermission', permission)
         this.granted = permission === PERMISSION_GRANTED
       })
       .catch(() => {
