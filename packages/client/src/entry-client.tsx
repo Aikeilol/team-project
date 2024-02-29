@@ -2,12 +2,14 @@ import React, { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { registerSW } from './utils/service-worker'
 import { App } from './App'
-import { AppContext, DefaultAppContext } from './context/AppContext'
+import { AppContext, createAppContext } from './context/AppContext'
+
+const appContext = createAppContext()
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <StrictMode>
-    <AppContext.Provider value={DefaultAppContext}>
+    <AppContext.Provider value={appContext}>
       <App />
     </AppContext.Provider>
   </StrictMode>

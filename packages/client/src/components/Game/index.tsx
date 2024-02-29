@@ -18,7 +18,7 @@ const fps = 15
 const msPerFrame = 1000 / fps
 
 function Game() {
-  const { notifications } = useAppContext()
+  const appContext = useAppContext()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -37,7 +37,7 @@ function Game() {
   const firstFrameTime = useRef(performance.now())
 
   const showNotificationWithResult = useCallback(() => {
-    notifications.sendNotification(
+    appContext.notifications?.sendNotification(
       `Набрано очков: ${score}. Рекорд: ${record}.`
     )
   }, [score, record])

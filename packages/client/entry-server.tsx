@@ -10,6 +10,7 @@ import { store } from './src/store/store.js'
 import { Provider } from 'react-redux'
 import { StrictMode } from 'react'
 import { ThemeProvider, CssBaseline } from '@mui/material'
+import { AppContext } from './src/context/AppContext'
 import theme from './src/utils/scripts/theme.js'
 
 export async function render(remixRequest: Request) {
@@ -26,12 +27,14 @@ export async function render(remixRequest: Request) {
     <StrictMode>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <StaticRouterProvider
-            router={router}
-            context={context}
-            nonce="the-nonce"
-          />
+          <AppContext.Provider value={{}}>
+            <CssBaseline />
+            <StaticRouterProvider
+              router={router}
+              context={context}
+              nonce="the-nonce"
+            />
+          </AppContext.Provider>
         </ThemeProvider>
       </Provider>
     </StrictMode>

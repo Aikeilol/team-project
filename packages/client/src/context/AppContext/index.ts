@@ -1,15 +1,20 @@
 import { createContext, useContext } from 'react'
-import { Notifications} from '../../utils/notifications'
+import { Notifications } from '../../utils/notifications'
 
 export type AppContextType = {
-  notifications: Notifications
+  notifications?: Notifications
 }
 
-export const DefaultAppContext: AppContextType = {  
-  notifications: new Notifications()
+export const createAppContext = () => ({ notifications: new Notifications() })
+
+export const AppContext = createContext<AppContextType | null>(null)
+
+export const useAppContext = () => {
+  const context = useContext(AppContext)
+
+  if (!context) {
+    throw new Error('useAppContext must be used within a AppContext.Provider')
+  }
+
+  return context
 }
-
-export const AppContext = createContext<AppContextType>(DefaultAppContext)
-
-
-export const useAppContext = () => useContext(AppContext)
