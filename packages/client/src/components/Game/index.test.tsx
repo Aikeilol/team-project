@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react'
+import React, { render, screen } from '@testing-library/react'
 import Game from './index'
+import { AppContext } from '../../context/AppContext'
 
 const mockUsedNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({
@@ -8,7 +9,11 @@ jest.mock('react-router-dom', () => ({
 }))
 
 test('Элемент игры рендерится', async () => {
-  render(<Game />)
+  render(
+    <AppContext.Provider value={{}}>
+      <Game />
+    </AppContext.Provider>
+  )
   const gameElement = screen.findByTestId('gameElement')
   expect(gameElement).toBeDefined()
 })
