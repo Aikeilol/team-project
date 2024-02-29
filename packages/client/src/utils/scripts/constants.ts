@@ -5,3 +5,5 @@ export const isServer = !(
   window.document &&
   window.document.createElement
 )
+export const RATING_FIELD_NAME = 'ratingSlytherinTeam'
+export const TEAM_NAME = 'slytherin'

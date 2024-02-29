@@ -1,48 +1,36 @@
 import React, { FC } from 'react'
 import { Box, TableCell, TableRow, Typography } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
-import { IListItem } from '../types'
+import { ILeader } from '../types'
+import getImageSrc from '../../../utils/scripts/getPath'
 interface IProps {
-  item: Partial<IListItem>
+  item: Partial<ILeader>
 }
-const LeaderBoardItem: FC<IProps> = ( item ) => {
-  const {
-    display_name,
-    first_name,
-    second_name,
-    ratingFieldName,
-    limit,
-    avatar
-  } = item.item
+const LeaderBoardItem: FC<IProps> = item => {
+  const { userDisplayName, userFirstName, ratingSlytherinTeam, userAvatar } =
+    item.item
 
   return (
-    <TableRow
-      hover
-    >
-      <TableCell
-        component="th"
-        scope="row"
-      >
+    <TableRow hover>
+      <TableCell component="th" scope="row">
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
             gap: 1.5,
-          }}
-        >
-          <Avatar src={avatar} />
+          }}>
+          <Avatar src={getImageSrc(userAvatar as string)} />
           <Box sx={{ minWidth: 0 }}>
             <Typography noWrap fontWeight="lg">
-              {display_name}
+              {userDisplayName}
             </Typography>
             <Typography noWrap fontWeight="lg">
-              {first_name} {second_name}
+              {userFirstName}
             </Typography>
           </Box>
         </Box>
       </TableCell>
-      <TableCell align="left">{ratingFieldName}</TableCell>
-      <TableCell align="left">{limit}</TableCell>
+      <TableCell align="left">{ratingSlytherinTeam}</TableCell>
     </TableRow>
   )
 }

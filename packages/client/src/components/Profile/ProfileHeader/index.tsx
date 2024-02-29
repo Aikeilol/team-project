@@ -4,7 +4,7 @@ import { IProfileFormData } from '../types'
 import { changeUserAvatar } from '../../../utils/scripts/api/profileApi'
 import ProfileAvatar from '../ProfileAvatar'
 import { getUser } from '../../../utils/scripts/api/yandexApi'
-import { API_URL } from '../../../utils/scripts/constants'
+import getImageSrc from '../../../utils/scripts/getPath'
 
 interface IProps {
   formData: IProfileFormData
@@ -50,7 +50,7 @@ const ProfileHeader: FC<IProps> = ({ formData }) => {
       }}>
       <ProfileAvatar
         onChange={handleAvatarUpload}
-        source={`${API_URL}/resources${avatar}`}
+        source={getImageSrc(avatar as string)}
       />
       <Typography component="p" variant="body2" align="center" sx={{ mt: 4 }}>
         {data.first_name} {data.second_name}
