@@ -10,13 +10,11 @@ import { Provider } from 'react-redux'
 import { StrictMode } from 'react'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import theme from './src/utils/scripts/theme.js'
-import { RouteObject } from 'react-router-dom'
 import { ServerRouter } from './src/router/index.js'
+import { AppContext } from './src/context/AppContext/index.js'
 
 export async function render(remixRequest: Request) {
-  const { query, dataRoutes } = createStaticHandler(
-    ServerRouter() as RouteObject[]
-  )
+  const { query, dataRoutes } = createStaticHandler(ServerRouter)
   const context = await query(remixRequest)
 
   if (context instanceof Response) {
@@ -30,12 +28,14 @@ export async function render(remixRequest: Request) {
       <StrictMode>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <StaticRouterProvider
-              router={router}
-              context={context}
-              nonce="the-nonce"
-            />
+            <AppContext.Provider value={{}}>
+              <CssBaseline />
+              <StaticRouterProvider
+                router={router}
+                context={context}
+                nonce="the-nonce"
+              />
+            </AppContext.Provider>
           </ThemeProvider>
         </Provider>
       </StrictMode>

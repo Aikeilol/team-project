@@ -30,89 +30,85 @@ import {
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { store } from '../store/store'
 
-export const ServerRouter = () => {
-  const routes = [
-    {
-      path: '/',
-      element: <App />,
-      errorElement: <Error />,
-      children: [
-        {
-          path: '/',
-          element: <ProtectedRoute />,
-          children: [
-            {
-              path: '/',
-              element: <Main />,
-              children: [
-                {
-                  index: true,
-                  element: <Intro />,
-                },
-                {
-                  path: 'profile',
-                  element: <Profile />,
-                },
-                {
-                  path: 'settings',
-                  element: <Settings />,
-                  action: userProfileAction,
-                },
-                {
-                  path: 'password-edit',
-                  element: <PasswordEdit />,
-                  action: userPasswordAction,
-                },
-                {
-                  path: 'game',
-                  element: <Game />,
-                },
-                {
-                  path: 'leaderboard',
-                  element: <LeaderBord />,
-                },
-                {
-                  path: 'forum',
-                  element: <Forum />,
-                  children: [
-                    {
-                      index: true,
-                      element: <Forums />,
-                    },
-                    {
-                      path: ':forumId/topics',
-                      element: <Topics />,
-                    },
-                    {
-                      path: ':forumId/topics/:topicId/messages',
-                      element: <Messages />,
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          path: '/sign-in',
-          element: <SignIn />,
-          // action: ({ request, params }: LoaderFunctionArgs) =>
-          //   signInAction(store.dispatch, { request, params }),
-          // loader: () => redirectLoader(store.getState().user),
-        },
-        {
-          path: '/sign-up',
-          element: <SignUp />,
-          // action: ({ request, params }: LoaderFunctionArgs) =>
-          //   signUpAction(store.dispatch, { request, params }),
-          // loader: () => redirectLoader(store.getState().user),
-        },
-      ],
-    },
-  ]
-
-  return routes
-}
+export const ServerRouter = [
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: '/',
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: '/',
+            element: <Main />,
+            children: [
+              {
+                index: true,
+                element: <Intro />,
+              },
+              {
+                path: 'profile',
+                element: <Profile />,
+              },
+              {
+                path: 'settings',
+                element: <Settings />,
+                action: userProfileAction,
+              },
+              {
+                path: 'password-edit',
+                element: <PasswordEdit />,
+                action: userPasswordAction,
+              },
+              {
+                path: 'game',
+                element: <Game />,
+              },
+              {
+                path: 'leaderboard',
+                element: <LeaderBord />,
+              },
+              {
+                path: 'forum',
+                element: <Forum />,
+                children: [
+                  {
+                    index: true,
+                    element: <Forums />,
+                  },
+                  {
+                    path: ':forumId/topics',
+                    element: <Topics />,
+                  },
+                  {
+                    path: ':forumId/topics/:topicId/messages',
+                    element: <Messages />,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: '/sign-in',
+        element: <SignIn />,
+        // action: ({ request, params }: LoaderFunctionArgs) =>
+        //   signInAction(store.dispatch, { request, params }),
+        // loader: () => redirectLoader(store.getState().user),
+      },
+      {
+        path: '/sign-up',
+        element: <SignUp />,
+        // action: ({ request, params }: LoaderFunctionArgs) =>
+        //   signUpAction(store.dispatch, { request, params }),
+        // loader: () => redirectLoader(store.getState().user),
+      },
+    ],
+  },
+]
 
 export const ClientRouter = () => {
   const { user } = useAppSelector(state => state.user)
