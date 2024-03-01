@@ -3,9 +3,15 @@ import FullScreenButton from '../FullScreenButton'
 import GameEndDialog from '../GameEndDialog'
 import { Snake } from './Snake'
 import { Apple } from './Apple'
-import { sprites, GRID_SIZE } from './constants'
+import { GRID_SIZE } from './constants'
+import snakeImages from './images/snake-graphics.png'
+import sandImage from './images/sand.png'
 
 import './style.css'
+import { getUser } from '../../utils/scripts/api/yandexApi'
+import { addUserToLeaderBoard } from '../../utils/scripts/api/leaderBoardApi'
+import { IUser } from '../../utils/scripts/api/types'
+import { RATING_FIELD_NAME, TEAM_NAME } from '../../utils/scripts/constants'
 
 function Game() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -20,6 +26,8 @@ function Game() {
   const [record, setRecord] = useState(0)
   const [score, setScore] = useState(0)
 
+  const [userData, setUserData] = useState<IUser>()
+
   const requestRef = useRef(0)
 
   useEffect(() => {
@@ -32,6 +40,32 @@ function Game() {
       )
     }
   }, [])
+  useEffect(() => {
+    getUser().then(response => {
+      if (response?.data) {
+        setUserData(response.data)
+      }
+    })
+  }, [])
+  useEffect(() => {
+    if (!userData) {
+      return
+    }
+    const postData = {
+      data: {
+        id: userData.id,
+        userFirstName: userData.first_name,
+        userDisplayName: userData.display_name,
+        userAvatar: userData.avatar,
+        ratingSlytherinTeam: score,
+      },
+      ratingFieldName: RATING_FIELD_NAME,
+      teamName: TEAM_NAME,
+    }
+    if (openEndGameModal && score > 0) {
+      addUserToLeaderBoard(postData).then()
+    }
+  }, [openEndGameModal, score, userData])
 
   useEffect(() => {
     let frameCount = 0
@@ -60,7 +94,13 @@ function Game() {
     const canvas = canvasRef.current
     const context = canvas?.getContext('2d') as CanvasRenderingContext2D
 
-    if (!canvas || !context || !sprites.sandSprite || !sprites.gameSprites) {
+    const gameSprites = new Image()
+    gameSprites.src = snakeImages
+
+    const sandSprite = new Image()
+    sandSprite.src = sandImage
+
+    if (!canvas || !context) {
       return
     }
 
@@ -68,7 +108,7 @@ function Game() {
 
     // Очищаем поле
     context.clearRect(0, 0, canvas.width, canvas.height)
-    context.drawImage(sprites.sandSprite, 0, 0, canvas.width, canvas.height)
+    context.drawImage(sandSprite, 0, 0, canvas.width, canvas.height)
 
     const snake = snakeRef.current
     const apple = appleRef.current
@@ -90,8 +130,8 @@ function Game() {
       updateScore()
     }
 
-    snake.draw(context, sprites.gameSprites)
-    apple.draw(context, sprites.gameSprites)
+    snake.draw(context, gameSprites)
+    apple.draw(context, gameSprites)
   }
 
   function updateScore() {
