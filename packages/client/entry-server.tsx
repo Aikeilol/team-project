@@ -5,15 +5,18 @@ import {
   createStaticRouter,
   StaticRouterProvider,
 } from 'react-router-dom/server'
-import { routes } from './src/router/index.js'
 import { store } from './src/store/store.js'
 import { Provider } from 'react-redux'
 import { StrictMode } from 'react'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import theme from './src/utils/scripts/theme.js'
+import { RouteObject } from 'react-router-dom'
+import { useServerRouter } from './src/router/index.js'
 
 export async function render(remixRequest: Request) {
-  const { query, dataRoutes } = createStaticHandler(routes)
+  const { query, dataRoutes } = createStaticHandler(
+    useServerRouter() as RouteObject[]
+  )
   const context = await query(remixRequest)
 
   if (context instanceof Response) {

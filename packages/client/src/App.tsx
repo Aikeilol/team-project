@@ -3,7 +3,7 @@ import { ThemeProvider, CssBaseline } from '@mui/material'
 import { store } from './store/store'
 import { Provider } from 'react-redux'
 import theme from './utils/scripts/theme'
-import Router from './router'
+import { ClientRouter } from './router'
 
 export const App = () => {
   return (
@@ -11,7 +11,7 @@ export const App = () => {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Router />
+          <ClientRouter />
         </ThemeProvider>
       </Provider>
     </StrictMode>
