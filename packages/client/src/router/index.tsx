@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   createBrowserRouter,
   LoaderFunctionArgs,
@@ -28,11 +28,9 @@ import {
   userPasswordAction,
 } from './actions'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { store } from '../store/store'
 
-export const useServerRouter = () => {
-  // const { user } = useAppSelector(state => state.user)
-  // const dispatch = useAppDispatch()
-
+export const ServerRouter = () => {
   const routes = [
     {
       path: '/',
@@ -99,15 +97,15 @@ export const useServerRouter = () => {
           path: '/sign-in',
           element: <SignIn />,
           // action: ({ request, params }: LoaderFunctionArgs) =>
-          //   signInAction(dispatch, { request, params }),
-          // loader: () => redirectLoader(user),
+          //   signInAction(store.dispatch, { request, params }),
+          // loader: () => redirectLoader(store.getState().user),
         },
         {
           path: '/sign-up',
           element: <SignUp />,
           // action: ({ request, params }: LoaderFunctionArgs) =>
-          //   signUpAction(dispatch, { request, params }),
-          // loader: () => redirectLoader(user),
+          //   signUpAction(store.dispatch, { request, params }),
+          // loader: () => redirectLoader(store.getState().user),
         },
       ],
     },

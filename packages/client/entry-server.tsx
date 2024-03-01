@@ -11,11 +11,11 @@ import { StrictMode } from 'react'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import theme from './src/utils/scripts/theme.js'
 import { RouteObject } from 'react-router-dom'
-import { useServerRouter } from './src/router/index.js'
+import { ServerRouter } from './src/router/index.js'
 
 export async function render(remixRequest: Request) {
   const { query, dataRoutes } = createStaticHandler(
-    useServerRouter() as RouteObject[]
+    ServerRouter() as RouteObject[]
   )
   const context = await query(remixRequest)
 
