@@ -41,7 +41,10 @@ function getComparator<Key extends keyof never>(
     : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
-function stableSort<T>(array: (ILeader | undefined)[], comparator: (a: T, b: T) => number) {
+function stableSort<T>(
+  array: (ILeader | undefined)[],
+  comparator: (a: T, b: T) => number
+) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number])
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0])
@@ -58,10 +61,7 @@ interface HeadCell {
   numeric: boolean
 }
 
-const headCells: readonly HeadCell[] = [
-  DisplayNameCol,
-  RatingFieldNameCol
-]
+const headCells: readonly HeadCell[] = [DisplayNameCol, RatingFieldNameCol]
 
 interface EnhancedTableHeadProps {
   order: Order
@@ -102,7 +102,7 @@ const EnhancedTableHead = (props: EnhancedTableHeadProps) => {
 const LeaderBoardList: FC<IProps> = listData => {
   const rows = listData.listData
 
-  const newRows = rows.map((item) => {
+  const newRows = rows.map(item => {
     if (item.data) {
       return item.data
     }
@@ -136,8 +136,7 @@ const LeaderBoardList: FC<IProps> = listData => {
             rowCount={newRows.length}
           />
           <TableBody>
-            {stableSort(newRows,
-              getComparator(order, orderBy)).map(row => {
+            {stableSort(newRows, getComparator(order, orderBy)).map(row => {
               return <LeaderBoardItem key={row.id} item={row} />
             })}
           </TableBody>

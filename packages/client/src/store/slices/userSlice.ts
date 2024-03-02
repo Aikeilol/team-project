@@ -12,7 +12,7 @@ type User = {
   avatar: string
   email: string
 } | null
-interface IUserState {
+export interface IUserState {
   user: User | null | undefined
 }
 

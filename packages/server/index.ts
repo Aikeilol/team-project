@@ -68,8 +68,17 @@ async function startServer() {
       }
 
       try {
-        const appHtml = await render(createFetchRequest(req, res))
-        const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+        const [appHtml, store] = await render(createFetchRequest(req, res))
+        const html = template.replace(
+          `<!--ssr-outlet-->`,
+          appHtml +
+            `<script>
+        window.__PRELOADED_STATE__ = ${JSON.stringify({ store }).replace(
+          /</g,
+          '\\u003c'
+        )}
+      </script>`
+        )
         res.setHeader('Content-Type', 'text/html')
         return res.status(200).end(html)
       } catch (e) {

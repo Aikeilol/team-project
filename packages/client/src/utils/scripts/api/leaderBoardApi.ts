@@ -6,7 +6,7 @@ import { config, yandexApi } from './yandexApi'
 const handleApiError = (err: AxiosError<YandexApiError>) => {
   const message = err.response?.data.reason as string
   showAlert(message, 'error')
-};
+}
 export const addUserToLeaderBoard = async (data: ILBAddUser) => {
   try {
     return await yandexApi.post('/leaderboard', data, config)

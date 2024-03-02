@@ -1,17 +1,14 @@
 const DisplayNameCol = {
-  id: "display_name",
+  id: 'display_name',
   numeric: false,
   disablePadding: false,
-  label: "Пользователь",
+  label: 'Пользователь',
 }
 const RatingFieldNameCol = {
-  id: "ratingFieldName",
+  id: 'ratingFieldName',
   numeric: true,
   disablePadding: false,
-  label: "Рейтинг"
+  label: 'Рейтинг',
 }
 
-export {
-  DisplayNameCol,
-  RatingFieldNameCol,
-}
+export { DisplayNameCol, RatingFieldNameCol }

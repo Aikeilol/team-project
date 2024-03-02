@@ -5,31 +5,20 @@ import { ILeader } from '../types'
 import getImageSrc from '../../../utils/scripts/getPath'
 interface IProps {
   item: Partial<ILeader>
-
 }
-const LeaderBoardItem: FC<IProps> = ( item ) => {
-  const {
-    userDisplayName,
-    userFirstName,
-    ratingSlytherinTeam,
-    userAvatar
-  } = item.item
+const LeaderBoardItem: FC<IProps> = item => {
+  const { userDisplayName, userFirstName, ratingSlytherinTeam, userAvatar } =
+    item.item
 
   return (
-    <TableRow
-      hover
-    >
-      <TableCell
-        component="th"
-        scope="row"
-      >
+    <TableRow hover>
+      <TableCell component="th" scope="row">
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
             gap: 1.5,
-          }}
-        >
+          }}>
           <Avatar src={getImageSrc(userAvatar as string)} />
           <Box sx={{ minWidth: 0 }}>
             <Typography noWrap fontWeight="lg">

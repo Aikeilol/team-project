@@ -1,4 +1,11 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material'
 import React, { FC, RefObject } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReplayIcon from '@mui/icons-material/Replay'
@@ -11,7 +18,6 @@ export interface IProps {
   startAgain: () => void
   containerRef: RefObject<HTMLElement>
 }
-
 
 const GameEndDialog: FC<IProps> = ({
   startAgain,

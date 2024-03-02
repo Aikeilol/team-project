@@ -3,7 +3,6 @@ import { Container } from '@mui/material'
 import LeaderBoardComponent from '../../components/LeaderBoard'
 import { getAllLeaders } from '../../utils/scripts/api/leaderBoardApi'
 
-
 const LeaderBoard: FC = () => {
   const [listData, setListData] = useState([])
 
@@ -11,13 +10,12 @@ const LeaderBoard: FC = () => {
     const postData = {
       ratingFieldName: 'ratingSlytherinTeam',
       cursor: 0,
-      limit: 10
+      limit: 10,
     }
     getAllLeaders(postData).then(response => {
       if (response?.data) {
         setListData(response.data)
       }
-
     })
   }, [])
 
