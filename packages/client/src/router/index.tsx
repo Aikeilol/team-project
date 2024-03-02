@@ -36,79 +36,79 @@ export const ServerRouter = [
     element: <App />,
     errorElement: <Error />,
     children: [
-      // {
-      //   path: '/',
-      //   element: <ProtectedRoute />,
-      //   children: [
       {
         path: '/',
-        element: <Main />,
+        element: <ProtectedRoute />,
         children: [
           {
-            index: true,
-            element: <Intro />,
-          },
-          {
-            path: 'profile',
-            element: <Profile />,
-          },
-          {
-            path: 'settings',
-            element: <Settings />,
-            action: userProfileAction,
-          },
-          {
-            path: 'password-edit',
-            element: <PasswordEdit />,
-            action: userPasswordAction,
-          },
-          {
-            path: 'game',
-            element: <Game />,
-          },
-          {
-            path: 'leaderboard',
-            element: <LeaderBord />,
-          },
-          {
-            path: 'forum',
-            element: <Forum />,
+            path: '/',
+            element: <Main />,
             children: [
               {
                 index: true,
-                element: <Forums />,
+                element: <Intro />,
               },
               {
-                path: ':forumId/topics',
-                element: <Topics />,
+                path: 'profile',
+                element: <Profile />,
               },
               {
-                path: ':forumId/topics/:topicId/messages',
-                element: <Messages />,
+                path: 'settings',
+                element: <Settings />,
+                action: userProfileAction,
+              },
+              {
+                path: 'password-edit',
+                element: <PasswordEdit />,
+                action: userPasswordAction,
+              },
+              {
+                path: 'game',
+                element: <Game />,
+              },
+              {
+                path: 'leaderboard',
+                element: <LeaderBord />,
+              },
+              {
+                path: 'forum',
+                element: <Forum />,
+                children: [
+                  {
+                    index: true,
+                    element: <Forums />,
+                  },
+                  {
+                    path: ':forumId/topics',
+                    element: <Topics />,
+                  },
+                  {
+                    path: ':forumId/topics/:topicId/messages',
+                    element: <Messages />,
+                  },
+                ],
               },
             ],
           },
         ],
       },
+      {
+        path: '/sign-in',
+        element: <SignIn />,
+        action: ({ request, params }: LoaderFunctionArgs) =>
+          signInAction(store.dispatch, { request, params }),
+        loader: () => redirectLoader(store.getState().user),
+      },
+      {
+        path: '/sign-up',
+        element: <SignUp />,
+        action: ({ request, params }: LoaderFunctionArgs) =>
+          signUpAction(store.dispatch, { request, params }),
+        loader: () => redirectLoader(store.getState().user),
+      },
     ],
   },
-  {
-    path: '/sign-in',
-    element: <SignIn />,
-    action: ({ request, params }: LoaderFunctionArgs) =>
-      signInAction(store.dispatch, { request, params }),
-    loader: () => redirectLoader(store.getState().user),
-  },
-  {
-    path: '/sign-up',
-    element: <SignUp />,
-    action: ({ request, params }: LoaderFunctionArgs) =>
-      signUpAction(store.dispatch, { request, params }),
-    loader: () => redirectLoader(store.getState().user),
-  },
 ]
-//   },
-// ]
 
 export const ClientRouter = () => {
   const { user } = useAppSelector(state => state.user)
