@@ -18,7 +18,13 @@ if (isSsr) {
     </StrictMode>
   )
 } else {
-  ReactDOM.createRoot(root).render(<App />)
+  ReactDOM.createRoot(root).render(
+    <StrictMode>
+      <AppContext.Provider value={appContext}>
+        <App />
+      </AppContext.Provider>
+    </StrictMode>
+  )
 }
 
 registerSW('/net-or-cache-sw.js')
