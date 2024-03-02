@@ -5,12 +5,14 @@ import { isServer } from '../utils/scripts/constants'
 declare global {
   interface Window {
     __PRELOADED_STATE__: {
-      user: IUserState
+      store: {
+        user: IUserState
+      }
     }
   }
 }
 
-const preloadedState = isServer ? {} : window.__PRELOADED_STATE__
+const preloadedState = isServer ? {} : window?.__PRELOADED_STATE__?.store
 
 export const store = configureStore({
   reducer: {
