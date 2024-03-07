@@ -3,15 +3,28 @@ import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
 import express from 'express'
+import forumRouter from './routes/forum'
+const apiRouter = express.Router()
 
 dotenv.config()
 
 import * as fs from 'fs'
 import * as path from 'path'
+import { dbConnect, sequelize } from './db'
+import { Forum } from './models/forum'
 
 const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
+  dbConnect()
+  await sequelize.sync()
+
+  const count = await Forum.count()
+  if (count === 0) {
+    const forums = ['Новые игры', 'Геймдизайнеры', 'Технологии']
+    forums.forEach(async (title, i) => await Forum.create({ id: i, title }))
+  }
+
   const app = express()
   app.use(cors())
   const port = Number(process.env.SERVER_PORT) || 3001
@@ -22,9 +35,13 @@ async function startServer() {
   const srcPath = path.dirname(require.resolve('client'))
   const ssrClientPath = require.resolve('client/dist-ssr/entry-server.cjs')
 
+  app.use('/api', apiRouter)
+
   app.get('/api', (_, res) => {
     res.json('👋 Howdy from the server :)')
   })
+
+  apiRouter.use('/forums', forumRouter)
 
   if (isDev()) {
     vite = await createViteServer({
