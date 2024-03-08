@@ -48,3 +48,27 @@ export const getUser = async () => {
     return console.error(error)
   }
 }
+
+export const getServiceId = async (redirectUri: string) => {
+  try {
+    return await yandexApi
+      .get('/oauth/yandex/service-id', {
+        headers: {
+          Accept: 'application/json',
+        } as RawAxiosRequestHeaders,
+        withCredentials: true,
+        params: { redirectUri },
+      })
+      .then(res => res)
+  } catch (err) {
+    return console.error(err)
+  }
+}
+
+export const signInYandexPassport = async (code: string) => {
+  try {
+    return await yandexApi.post('/oauth/yandex', { code: code }, config)
+  } catch (err) {
+    return showError(err)
+  }
+}

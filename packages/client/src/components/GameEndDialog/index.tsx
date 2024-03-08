@@ -27,11 +27,9 @@ const GameEndDialog: FC<IProps> = ({
   containerRef,
 }) => {
   const navigate = useNavigate()
-
   const handleStartAgain = () => {
     startAgain()
   }
-
   const handleToMainMenu = () => {
     navigate('/')
   }
