@@ -1,44 +1,33 @@
 import { Request, Response } from 'express'
-import { Message, Topic } from '../models/forum'
-import { returnNumber } from '../utils/return-number'
-import { PAGE_NUMBER_DEFAULT, PAGE_SIZE_DEFAULT } from '../constants/constants'
-import { errorHandler } from '../utils/error-handler'
+import { Message } from '../models/forum'
+import { errorHandler } from '../utils/errorHandler'
+import {
+  createOneTopic,
+  deleteOneTopic,
+  getAllTopics,
+  getOneTopic,
+  updateOneTopic,
+} from '../services/topic.service'
 
-const getAllTopics = async (req: Request, res: Response) => {
+const getTopics = async (req: Request, res: Response) => {
   try {
-    const forumId = Number(req.params.forumId)
-    const page_number =
-      returnNumber(req.query.page_number as string, PAGE_NUMBER_DEFAULT) - 1
-    const page_size = returnNumber(
-      req.query.page_size as string,
-      PAGE_SIZE_DEFAULT
+    const forumId = req.params.forumId
+    const topics = await getAllTopics(
+      forumId,
+      <string>req.query.page_number,
+      <string>req.query.page_size
     )
 
-    const topics = await Topic.findAndCountAll({
-      order: [['createdAt', 'desc']],
-      where: {
-        forum_id: forumId,
-      },
-      limit: page_size,
-      offset: page_size * page_number,
-    })
-
-    for (const topic of topics.rows) {
-      topic.message_count = await Message.count({
-        where: { topic_id: topic.id },
-      })
-    }
-
-    res.send(topics.rows)
+    res.send(topics)
   } catch (error) {
     errorHandler(res, error as Error)
   }
 }
 
-const getOneTopic = async (req: Request, res: Response) => {
+const getTopic = async (req: Request, res: Response) => {
   try {
-    const topicId = Number(req.params.id)
-    const topic = await Topic.findByPk(topicId)
+    const topicId = req.params.id
+    const topic = await getOneTopic(topicId)
 
     if (topic) {
       topic.message_count = await Message.count({
@@ -58,7 +47,7 @@ const getOneTopic = async (req: Request, res: Response) => {
 
 const updateTopic = async (req: Request, res: Response) => {
   try {
-    const topicId = Number(req.params.id)
+    const topicId = req.params.id
     const title = req.body?.title
 
     if (!title) {
@@ -66,12 +55,7 @@ const updateTopic = async (req: Request, res: Response) => {
       return
     }
 
-    const [num] = await Topic.update(
-      { title },
-      {
-        where: { id: topicId },
-      }
-    )
+    const num = await updateOneTopic(topicId, title)
 
     if (num === 1) {
       res.send({
@@ -90,7 +74,7 @@ const updateTopic = async (req: Request, res: Response) => {
 
 const createTopic = async (req: Request, res: Response) => {
   try {
-    const forumId = Number(req.params.forumId)
+    const forumId = req.params.forumId
     const title = req.body?.title
 
     if (!title) {
@@ -98,11 +82,7 @@ const createTopic = async (req: Request, res: Response) => {
       return
     }
 
-    const createdTopic = await Topic.create({
-      forum_id: forumId,
-      title,
-      message_count: 0,
-    })
+    const createdTopic = await createOneTopic(forumId, title)
 
     res.status(201).send(createdTopic)
   } catch (error) {
@@ -112,11 +92,8 @@ const createTopic = async (req: Request, res: Response) => {
 
 const deleteTopic = async (req: Request, res: Response) => {
   try {
-    const topicId = Number(req.params.id)
-
-    const num = await Topic.destroy({
-      where: { id: topicId },
-    })
+    const topicId = req.params.id
+    const num = await deleteOneTopic(topicId)
 
     if (num == 1) {
       res.send({
@@ -133,4 +110,4 @@ const deleteTopic = async (req: Request, res: Response) => {
   }
 }
 
-export { getAllTopics, getOneTopic, createTopic, updateTopic, deleteTopic }
+export { getTopics, getTopic, createTopic, updateTopic, deleteTopic }

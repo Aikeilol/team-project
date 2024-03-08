@@ -10,8 +10,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest .",
-    "migrate": "npx sequelize-cli db:migrate",
-    "migrate:undo": "npx sequelize-cli db:migrate:undo"
+    "migrate": "yarn sequelize-cli db:migrate",
+    "migrate:undo": "yarn sequelize-cli db:migrate:undo"
   },
   "dependencies": {
     "compression": "^1.7.4",

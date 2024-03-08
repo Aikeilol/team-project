@@ -1,8 +1,8 @@
 import {
   createTopic,
   deleteTopic,
-  getAllTopics,
-  getOneTopic,
+  getTopics,
+  getTopic,
   updateTopic,
 } from '../controllers/topic.controller'
 import { getAllForums } from '../controllers/forum.controller'
@@ -17,9 +17,9 @@ const forumRouter: Router = express.Router()
 
 forumRouter.get('/forums', getAllForums)
 
-forumRouter.get('/forums/:forumId/topics', getAllTopics)
+forumRouter.get('/forums/:forumId/topics', getTopics)
 forumRouter.post('/forums/:forumId/topics', createTopic)
-forumRouter.get('/topics/:id', getOneTopic)
+forumRouter.get('/topics/:id', getTopic)
 forumRouter.patch('/topics/:id', updateTopic)
 forumRouter.delete('/topics/:id', deleteTopic)
 

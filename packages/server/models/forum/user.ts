@@ -9,18 +9,24 @@ export type UserAttributes = {
 
 export interface UserInstance extends Model<UserAttributes>, UserAttributes {}
 
-const User = sequelize.define<UserInstance>('user', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
+const User = sequelize.define<UserInstance>(
+  'user',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+    },
+    avatar: {
+      type: DataTypes.STRING,
+    },
+    display_name: {
+      type: DataTypes.STRING,
+    },
   },
-  avatar: {
-    type: DataTypes.STRING,
-  },
-  display_name: {
-    type: DataTypes.STRING,
-  },
-})
+  {
+    timestamps: false,
+  }
+)
 
 export default User
