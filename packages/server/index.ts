@@ -22,11 +22,16 @@ async function startServer() {
   const count = await Forum.count()
   if (count === 0) {
     const forums = ['Новые игры', 'Геймдизайнеры', 'Технологии']
-    forums.forEach(async (title, i) => await Forum.create({ id: i, title }))
+    forums.forEach(
+      async (title, i) =>
+        await Forum.create({ id: i, title, topic_count: 0, message_count: 0 })
+    )
   }
 
   const app = express()
   app.use(cors())
+  app.use(express.json())
+
   const port = Number(process.env.SERVER_PORT) || 3001
 
   let vite: ViteDevServer
@@ -37,11 +42,11 @@ async function startServer() {
 
   app.use('/api', apiRouter)
 
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)')
-  })
+  apiRouter.use('/forum', forumRouter)
 
-  apiRouter.use('/forums', forumRouter)
+  apiRouter.get('*', (_, res) => {
+    res.status(404).json('👋 Howdy from the server :)')
+  })
 
   if (isDev()) {
     vite = await createViteServer({

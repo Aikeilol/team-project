@@ -5,7 +5,7 @@ import {
   getOneTopic,
   updateTopic,
 } from '../controllers/topic.controller'
-import { getAllForums, getOneForum } from '../controllers/forum.controller'
+import { getAllForums } from '../controllers/forum.controller'
 import express, { Router } from 'express'
 import {
   createMessage,
@@ -15,17 +15,18 @@ import {
 } from '../controllers/message.controller'
 const forumRouter: Router = express.Router()
 
-forumRouter.get('/', getAllForums)
-forumRouter.get('/:id', getOneForum)
+forumRouter.get('/forums', getAllForums)
 
-forumRouter.get('/:forumId/topics', getAllTopics)
+forumRouter.get('/forums/:forumId/topics', getAllTopics)
+forumRouter.post('/forums/:forumId/topics', createTopic)
 forumRouter.get('/topics/:id', getOneTopic)
-forumRouter.post('/topics', createTopic)
 forumRouter.patch('/topics/:id', updateTopic)
 forumRouter.delete('/topics/:id', deleteTopic)
 
 forumRouter.get('/topics/:topicId/messages', getMessages)
-forumRouter.post('/messages', createMessage)
+forumRouter.get('/topics/:topicId/messages/:parentId', getMessages)
+forumRouter.post('/topics/:topicId/messages', createMessage)
+forumRouter.post('/topics/:topicId/messages/:parentId', createMessage)
 forumRouter.patch('/messages/:id', updateMessage)
 forumRouter.delete('/messages/:id', deleteMessage)
 
