@@ -10,23 +10,12 @@ dotenv.config()
 
 import * as fs from 'fs'
 import * as path from 'path'
-import { dbConnect, sequelize } from './db'
-import { Forum } from './models/forum'
+import { dbConnect } from './db'
 
 const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
-  dbConnect()
-  await sequelize.sync()
-
-  const count = await Forum.count()
-  if (count === 0) {
-    const forums = ['Новые игры', 'Геймдизайнеры', 'Технологии']
-    forums.forEach(
-      async (title, i) =>
-        await Forum.create({ id: i, title, topic_count: 0, message_count: 0 })
-    )
-  }
+  await dbConnect()
 
   const app = express()
   app.use(cors())
