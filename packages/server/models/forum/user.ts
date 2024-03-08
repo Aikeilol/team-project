@@ -1,8 +1,6 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../../db'
 
-// временная таблица
-
 export type UserAttributes = {
   id: number
   display_name: string
