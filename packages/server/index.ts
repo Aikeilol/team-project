@@ -3,17 +3,25 @@ import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
 import express from 'express'
+import forumRouter from './routes/forum'
+import { errorHandlerMiddleware } from './middlewares/errorHandlerMiddleware'
+const apiRouter = express.Router()
 
 dotenv.config()
 
 import * as fs from 'fs'
 import * as path from 'path'
+import { dbConnect } from './db'
 
 const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
+  await dbConnect()
+
   const app = express()
   app.use(cors())
+  app.use(express.json())
+
   const port = Number(process.env.SERVER_PORT) || 3001
 
   let vite: ViteDevServer
@@ -22,8 +30,14 @@ async function startServer() {
   const srcPath = path.dirname(require.resolve('client'))
   const ssrClientPath = require.resolve('client/dist-ssr/entry-server.cjs')
 
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)')
+  app.use('/api', apiRouter)
+
+  apiRouter.use('/forum', forumRouter)
+
+  apiRouter.use(errorHandlerMiddleware)
+
+  apiRouter.get('*', (_, res) => {
+    res.status(404).json('👋 Howdy from the server :)')
   })
 
   if (isDev()) {
