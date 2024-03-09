@@ -17,14 +17,9 @@ export const createOrUpdateUser = async (userObj: UserAttributes) => {
       user.display_name !== userObj.display_name ||
       user.avatar !== userObj.avatar
     ) {
-      await User.update(
-        { display_name: userObj.display_name, avatar: userObj.avatar },
-        {
-          where: {
-            id: userObjId,
-          },
-        }
-      )
+      user.display_name = userObj.display_name
+      user.avatar = userObj.avatar
+      await user.save()
     }
   }
 

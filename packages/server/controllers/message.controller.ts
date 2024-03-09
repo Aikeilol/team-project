@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
 import { errorHandler } from '../utils/errorHandler'
-import { UserInstance } from '../models/forum/user'
 import {
   updateOneMessage,
   createOneMessage,
@@ -60,8 +59,13 @@ const createMessage = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { message, author }: { message: string; author: UserInstance } =
-    req.body
+  const {
+    message,
+    author,
+  }: {
+    message: string
+    author: { avatar: string | null; email: string; display_name: string }
+  } = req.body
   const { topicId, parentId } = req.params
 
   try {
