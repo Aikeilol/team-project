@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { errorHandler } from '../utils/errorHandler'
 import { UserInstance } from '../models/forum/user'
 import {
@@ -8,7 +8,7 @@ import {
   getAllMessages,
 } from '../services/message.service'
 
-const getMessages = async (req: Request, res: Response) => {
+const getMessages = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { topicId, parentId } = req.params
     const messages = await getAllMessages(
@@ -20,11 +20,15 @@ const getMessages = async (req: Request, res: Response) => {
 
     res.send(messages)
   } catch (error) {
-    errorHandler(res, error as Error)
+    next(error)
   }
 }
 
-const updateMessage = async (req: Request, res: Response) => {
+const updateMessage = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const messageId = req.params.id
     const message = req.body.message
@@ -47,11 +51,15 @@ const updateMessage = async (req: Request, res: Response) => {
       })
     }
   } catch (error) {
-    errorHandler(res, error as Error)
+    next(error)
   }
 }
 
-const createMessage = async (req: Request, res: Response) => {
+const createMessage = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { message, author }: { message: string; author: UserInstance } =
     req.body
   const { topicId, parentId } = req.params
@@ -71,11 +79,15 @@ const createMessage = async (req: Request, res: Response) => {
 
     res.status(201).send(newMessage)
   } catch (error) {
-    errorHandler(res, error as Error)
+    next(error)
   }
 }
 
-const deleteMessage = async (req: Request, res: Response) => {
+const deleteMessage = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const messageId = req.params.id
 
@@ -92,7 +104,7 @@ const deleteMessage = async (req: Request, res: Response) => {
       })
     }
   } catch (error) {
-    errorHandler(res, error as Error)
+    next(error)
   }
 }
 

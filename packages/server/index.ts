@@ -4,6 +4,7 @@ import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
 import express from 'express'
 import forumRouter from './routes/forum'
+import { errorHandlerMiddleware } from './middlewares/errorHandlerMiddleware'
 const apiRouter = express.Router()
 
 dotenv.config()
@@ -32,6 +33,8 @@ async function startServer() {
   app.use('/api', apiRouter)
 
   apiRouter.use('/forum', forumRouter)
+
+  apiRouter.use(errorHandlerMiddleware)
 
   apiRouter.get('*', (_, res) => {
     res.status(404).json('👋 Howdy from the server :)')

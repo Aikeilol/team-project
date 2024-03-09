@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { Message } from '../models/forum'
 import { errorHandler } from '../utils/errorHandler'
 import {
@@ -9,7 +9,7 @@ import {
   updateOneTopic,
 } from '../services/topic.service'
 
-const getTopics = async (req: Request, res: Response) => {
+const getTopics = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const forumId = req.params.forumId
     const topics = await getAllTopics(
@@ -20,11 +20,11 @@ const getTopics = async (req: Request, res: Response) => {
 
     res.send(topics)
   } catch (error) {
-    errorHandler(res, error as Error)
+    next(error)
   }
 }
 
-const getTopic = async (req: Request, res: Response) => {
+const getTopic = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const topicId = req.params.id
     const topic = await getOneTopic(topicId)
@@ -41,11 +41,11 @@ const getTopic = async (req: Request, res: Response) => {
       })
     }
   } catch (error) {
-    errorHandler(res, error as Error)
+    next(error)
   }
 }
 
-const updateTopic = async (req: Request, res: Response) => {
+const updateTopic = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const topicId = req.params.id
     const title = req.body?.title
@@ -68,11 +68,11 @@ const updateTopic = async (req: Request, res: Response) => {
       })
     }
   } catch (error) {
-    errorHandler(res, error as Error)
+    next(error)
   }
 }
 
-const createTopic = async (req: Request, res: Response) => {
+const createTopic = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const forumId = req.params.forumId
     const title = req.body?.title
@@ -86,11 +86,11 @@ const createTopic = async (req: Request, res: Response) => {
 
     res.status(201).send(createdTopic)
   } catch (error) {
-    errorHandler(res, error as Error)
+    next(error)
   }
 }
 
-const deleteTopic = async (req: Request, res: Response) => {
+const deleteTopic = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const topicId = req.params.id
     const num = await deleteOneTopic(topicId)
@@ -106,7 +106,7 @@ const deleteTopic = async (req: Request, res: Response) => {
       })
     }
   } catch (error) {
-    errorHandler(res, error as Error)
+    next(error)
   }
 }
 

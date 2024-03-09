@@ -5,7 +5,7 @@ import {
   getTopic,
   updateTopic,
 } from '../controllers/topic.controller'
-import { getAllForums } from '../controllers/forum.controller'
+import { getForums } from '../controllers/forum.controller'
 import express, { Router } from 'express'
 import {
   createMessage,
@@ -15,7 +15,7 @@ import {
 } from '../controllers/message.controller'
 const forumRouter: Router = express.Router()
 
-forumRouter.get('/forums', getAllForums)
+forumRouter.get('/forums', getForums)
 
 forumRouter.get('/forums/:forumId/topics', getTopics)
 forumRouter.post('/forums/:forumId/topics', createTopic)

@@ -4,7 +4,7 @@ import { PAGE_NUMBER_DEFAULT } from '../constants/constants'
 import { PAGE_SIZE_DEFAULT } from '../constants/constants'
 import { Op } from 'sequelize'
 
-const allForums = async (pageNumber: string, pageSize: string) => {
+export const getAllForums = async (pageNumber: string, pageSize: string) => {
   const page_number = returnNumber(pageNumber, PAGE_NUMBER_DEFAULT) - 1
   const page_size = returnNumber(pageSize, PAGE_SIZE_DEFAULT)
 
@@ -35,5 +35,3 @@ const allForums = async (pageNumber: string, pageSize: string) => {
 
   return forums.rows
 }
-
-export { allForums }
