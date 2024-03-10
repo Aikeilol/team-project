@@ -5,10 +5,44 @@ import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import { red } from '@mui/material/colors'
 import { Box, ListItem } from '@mui/material'
-import { Message } from '../../../pages/Forum/types'
+import { Message, Request } from '../../../pages/Forum/types'
+import getImageSrc from '../../../utils/scripts/getPath'
+import DialogWithInput from '../ForumDialogWithInput'
+import {
+  deleteMessageDialogData,
+  updateMessageDialogData,
+} from '../../../pages/Forum/constants'
+import {
+  deleteMessage,
+  updateMessage,
+} from '../../../utils/scripts/api/forumApi'
+import { useAppSelector } from '../../../store/hooks'
+import { selectUser } from '../../../store/slices/userSlice'
 
-const ForumMessageItem: FC<Message> = ({ author, message, createDateTime }) => {
-  const date = new Date(createDateTime).toLocaleDateString()
+interface IProps extends Message {
+  handlerGetMessages(): void
+}
+
+const ForumMessageItem: FC<IProps> = ({
+  author,
+  message,
+  createdAt,
+  id,
+  handlerGetMessages,
+}) => {
+  const user = useAppSelector(state => selectUser(state))
+
+  const date = new Date(createdAt).toLocaleDateString()
+
+  const deleteMessageDialogConfirm = async (data: Request) => {
+    await deleteMessage(data)
+    await handlerGetMessages()
+  }
+
+  const updateMessageDialogConfirm = async (data: Request) => {
+    await updateMessage(data)
+    await handlerGetMessages()
+  }
 
   return (
     <ListItem>
@@ -30,6 +64,7 @@ const ForumMessageItem: FC<Message> = ({ author, message, createDateTime }) => {
                 height: 56,
                 bgcolor: red[500],
               }}
+              src={author?.avatar ? getImageSrc(author?.avatar) : ''}
               aria-label="recipe">
               R
             </Avatar>
@@ -40,12 +75,14 @@ const ForumMessageItem: FC<Message> = ({ author, message, createDateTime }) => {
               minWidth: '150px',
               borderRight: '1px solid gray',
             }}>
-            <Typography gutterBottom variant="body1" component="div">
-              {author}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {date}
-            </Typography>
+            <>
+              <Typography gutterBottom variant="body1" component="div">
+                {author.display_name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {date}
+              </Typography>
+            </>
           </Box>
 
           <Box
@@ -55,6 +92,7 @@ const ForumMessageItem: FC<Message> = ({ author, message, createDateTime }) => {
               minHeight: '100%',
               background: '#464545a6',
               padding: '16px',
+              width: '100%',
             }}>
             <Typography
               variant="body1"
@@ -66,6 +104,32 @@ const ForumMessageItem: FC<Message> = ({ author, message, createDateTime }) => {
               }}>
               {message}
             </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              minWidth: '150px',
+              borderLeft: '1px solid gray',
+              alignItems: 'start',
+              justifyContent: 'space-evenly',
+            }}>
+            <DialogWithInput
+              {...updateMessageDialogData(id, message)}
+              disabled={false}
+              flagBtn={'edit'}
+              showBtn={user!.id === author.id}
+              onConfirm={updateMessageDialogConfirm}
+              tooltip={'Редактировать сообщение'}
+            />
+            <DialogWithInput
+              {...deleteMessageDialogData(id, message)}
+              disabled={true}
+              flagBtn={'delete'}
+              showBtn={user!.id === author.id}
+              onConfirm={deleteMessageDialogConfirm}
+              tooltip={'Удалить сообщение'}
+            />
           </Box>
         </CardContent>
       </Card>

@@ -1,7 +1,5 @@
-import { forumService } from '../../services/forum.service'
-
-export const messageDialogData = (topicId: number) => ({
-  itemId: topicId,
+export const messageDialogData = (id: number) => ({
+  itemId: id,
   cancelBtnText: 'Отмена',
   confirmBtnText: 'Создать',
   dialogTitle: 'Создать сообщение',
@@ -9,14 +7,48 @@ export const messageDialogData = (topicId: number) => ({
     label: 'Текст сообщения',
     multiple: true,
   },
-  addRequest: forumService.addMessage,
 })
 
-export const topicDialogData = (forumId: number) => ({
-  itemId: forumId,
+export const topicDialogData = (id: number) => ({
+  itemId: id,
   cancelBtnText: 'Отмена',
   confirmBtnText: 'Создать',
   dialogTitle: 'Создать тему',
   input: { label: 'Тема' },
-  addRequest: forumService.addTopic,
+})
+
+export const deleteTopicDialogData = (id: number, title: string) => ({
+  itemId: id,
+  cancelBtnText: 'Отмена',
+  confirmBtnText: 'Удалить',
+  dialogTitle: 'Удалить тему',
+  input: { label: 'Тема' },
+  initialText: title,
+})
+
+export const updateTopicDialogData = (id: number, title: string) => ({
+  itemId: id,
+  cancelBtnText: 'Отмена',
+  confirmBtnText: 'Обновить',
+  dialogTitle: 'Обновить название темы',
+  input: { label: 'Тема' },
+  initialText: title,
+})
+
+export const deleteMessageDialogData = (id: number, title: string) => ({
+  itemId: id,
+  cancelBtnText: 'Отмена',
+  confirmBtnText: 'Удалить',
+  dialogTitle: 'Удалить сообщение',
+  input: { label: 'Текст сообщения' },
+  initialText: title,
+})
+
+export const updateMessageDialogData = (id: number, title: string) => ({
+  itemId: id,
+  cancelBtnText: 'Отмена',
+  confirmBtnText: 'Обновить',
+  dialogTitle: 'Обновить сообщение',
+  input: { label: 'Текст сообщения' },
+  initialText: title,
 })

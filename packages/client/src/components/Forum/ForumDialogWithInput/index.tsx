@@ -7,8 +7,10 @@ import {
   FabTypeMap,
   TextField,
 } from '@mui/material'
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useEffect } from 'react'
 import ForumAddButton from '../ForumAddButton'
+import ForumDeleteButton from '../ForumDeleteButton'
+import ForumEditButton from '../ForumEditButton'
 
 interface IInput {
   multiple?: boolean
@@ -23,9 +25,12 @@ export interface DialogProps<T> {
   dialogTitle: string
   input: IInput
   addBtnType?: 'medium' | 'small' | 'secondary'
+  showBtn?: boolean
+  flagBtn?: 'add' | 'edit' | 'delete'
   tooltip?: string
-  addRequest: (id: number, text: string) => Promise<T>
-  onConfirm: (item: T) => void
+  disabled?: boolean
+  initialText?: string
+  onConfirm(item: unknown): void
 }
 
 const ForumDialogWithInput = <T extends object>({
@@ -34,9 +39,12 @@ const ForumDialogWithInput = <T extends object>({
   confirmBtnText,
   dialogTitle,
   addBtnType,
-  addRequest,
   onConfirm,
+  flagBtn = 'add',
+  showBtn = true,
   input,
+  disabled = false,
+  initialText = '',
   tooltip,
 }: DialogProps<T>) => {
   const [open, setOpen] = React.useState(false)
@@ -64,11 +72,12 @@ const ForumDialogWithInput = <T extends object>({
 
     async function addReq() {
       try {
-        const data = await addRequest(itemId, text)
-        if (data) {
-          onConfirm(data)
-          handleClose()
+        const data = {
+          id: itemId,
+          title: text,
         }
+        onConfirm(data)
+        handleClose()
       } catch (err) {
         console.log(err)
       }
@@ -77,13 +86,48 @@ const ForumDialogWithInput = <T extends object>({
     addReq()
   }
 
+  const renderButton = (type: string) => {
+    switch (type) {
+      case 'add': {
+        return (
+          <ForumAddButton
+            tooltip={tooltip}
+            size={addBtnType as FabTypeMap['props']['size']}
+            click={handleClickOpen}
+          />
+        )
+      }
+      case 'edit': {
+        return (
+          <ForumEditButton
+            tooltip={tooltip}
+            size={addBtnType as FabTypeMap['props']['size']}
+            click={handleClickOpen}
+          />
+        )
+      }
+      case 'delete': {
+        return (
+          <ForumDeleteButton
+            tooltip={tooltip}
+            size={addBtnType as FabTypeMap['props']['size']}
+            click={handleClickOpen}
+          />
+        )
+      }
+      default: {
+        return null
+      }
+    }
+  }
+
+  useEffect(() => {
+    setText(initialText)
+  }, [])
+
   return (
     <div>
-      <ForumAddButton
-        tooltip={tooltip}
-        size={addBtnType as FabTypeMap['props']['size']}
-        click={handleClickOpen}
-      />
+      {showBtn && renderButton(flagBtn)}
       <Dialog
         scroll="body"
         open={open}
@@ -104,6 +148,7 @@ const ForumDialogWithInput = <T extends object>({
             fullWidth
             onChange={handleChange}
             value={text ?? ''}
+            disabled={disabled}
           />
         </DialogContent>
 
