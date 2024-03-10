@@ -65,3 +65,18 @@ export interface ILBTeam {
 }
 
 export type YandexApiError = { reason: string }
+
+export type Reaction = {
+  emojiId: number
+  unicode: string
+  userEmails: string[]
+}
+export type MessagesReaction = {
+  messageId: number
+  reactions: Reaction[]
+}
+
+export type Emoji = {
+  id: number
+  unicode: string
+}

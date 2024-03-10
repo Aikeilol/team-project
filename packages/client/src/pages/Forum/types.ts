@@ -1,3 +1,5 @@
+import { Reaction } from '../../utils/scripts/api/types'
+
 export interface Forum {
   id: number
   title: string
@@ -20,4 +22,8 @@ export interface Message {
   message: string
   author: string
   createDateTime: Date
+}
+
+export interface MessageWithReaction extends Message {
+  reactions: Reaction[]
 }
