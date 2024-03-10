@@ -92,16 +92,16 @@ export const saveReaction = async (
   }
 }
 
-export const deleteReaction = async (
-  user: {
-    email: string
-    displayName: string
-    avatar: string | null
-  },
-  messageId: number
-) => {
-  const existingUser = await createOrUpdateUser(user)
+export const deleteReaction = async (userEmail: string, messageId: number) => {
+  const existingUser = await User.findOne({
+    where: {
+      email: userEmail,
+    },
+  })
 
+  if (!existingUser) {
+    return
+  }
   const reaction = await Reaction.findOne({
     where: { messageId, authorId: existingUser.id! },
   })

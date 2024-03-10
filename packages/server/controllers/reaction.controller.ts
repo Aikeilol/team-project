@@ -71,29 +71,18 @@ const deleteReaction = async (
   next: NextFunction
 ) => {
   try {
-    const { user, messageId } = req.body || {}
+    const { userEmail, messageId } = req.body || {}
 
-    if (!checkNumber(messageId)) {
+    if (!checkNumber(messageId) || !userEmail) {
       errorHandler(res, null, {
-        message: ' messageId should be numbers',
+        message:
+          ' messageId should be numbers and userEmail should be a not empty string',
         code: 400,
       })
       return
     }
 
-    const { email, displayName, avatar } = user || {}
-    if (!email || !displayName) {
-      errorHandler(res, null, {
-        message: 'user should contain email and displayName',
-        code: 400,
-      })
-      return
-    }
-
-    await reactionService.deleteReaction(
-      { email, displayName, avatar },
-      parseInt(messageId)
-    )
+    await reactionService.deleteReaction(userEmail, parseInt(messageId))
 
     res.status(200).send()
   } catch (error) {
