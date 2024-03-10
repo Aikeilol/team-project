@@ -75,14 +75,14 @@ const updateTopic = async (req: Request, res: Response, next: NextFunction) => {
 const createTopic = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const forumId = req.params.forumId
-    const title = req.body?.title
+    const { title, author } = req.body
 
     if (!title) {
       errorHandler(res, null, { message: `Title can not be empty`, code: 400 })
       return
     }
 
-    const createdTopic = await createOneTopic(forumId, title)
+    const createdTopic = await createOneTopic(forumId, title, author)
 
     res.status(201).send(createdTopic)
   } catch (error) {
