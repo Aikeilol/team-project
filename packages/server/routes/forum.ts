@@ -17,6 +17,7 @@ import { getEmojis } from '../controllers/emoji.controller'
 import {
   getMessagesReactions,
   saveReaction,
+  deleteReaction,
 } from '../controllers/reaction.controller'
 const forumRouter: Router = express.Router()
 
@@ -37,7 +38,8 @@ forumRouter.delete('/messages/:id', deleteMessage)
 
 forumRouter.get('/emojis', getEmojis)
 
-forumRouter.get('/reactions', getMessagesReactions)
-forumRouter.post('/reactions', saveReaction)
+forumRouter.get('/reactions/messages', getMessagesReactions)
+forumRouter.put('/reactions', saveReaction)
+forumRouter.delete('/reactions', deleteReaction)
 
 export default forumRouter

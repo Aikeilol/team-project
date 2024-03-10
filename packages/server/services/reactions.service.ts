@@ -58,14 +58,13 @@ type ReactionUpdate = {
 }
 
 export const saveReaction = async (
-  emojiId: number,
   user: {
     email: string
     displayName: string
     avatar: string | null
   },
   messageId: number,
-  shouldAdd: boolean
+  emojiId: number
 ): Promise<ReactionUpdate> => {
   const existingUser = await createOrUpdateUser(user)
 
@@ -73,37 +72,43 @@ export const saveReaction = async (
     where: { messageId, authorId: existingUser.id! },
   })
 
-  if (shouldAdd) {
-    if (!reaction) {
-      const newReaction = new Reaction()
-      newReaction.emojiId = emojiId
-      newReaction.authorId = existingUser.id
-      newReaction.messageId = messageId
-      await newReaction.save()
-
-      return {
-        wasCreated: true,
-        reactionId: newReaction.id,
-      }
-    } else {
-      reaction.emojiId = emojiId
-      await reaction.save()
-
-      return {
-        wasUpdated: true,
-        reactionId: reaction.id,
-      }
-    }
-  } else if (reaction) {
-    await reaction.destroy()
+  if (!reaction) {
+    const newReaction = new Reaction()
+    newReaction.emojiId = emojiId
+    newReaction.authorId = existingUser.id
+    newReaction.messageId = messageId
+    await newReaction.save()
 
     return {
-      wasRemoved: true,
+      reactionId: newReaction.id,
     }
-  }
-  return {
-    wasUpdated: false,
+  } else {
+    reaction.emojiId = emojiId
+    await reaction.save()
+
+    return {
+      reactionId: reaction.id,
+    }
   }
 }
 
-export default { getMessagesReactions, saveReaction }
+export const deleteReaction = async (
+  user: {
+    email: string
+    displayName: string
+    avatar: string | null
+  },
+  messageId: number
+) => {
+  const existingUser = await createOrUpdateUser(user)
+
+  const reaction = await Reaction.findOne({
+    where: { messageId, authorId: existingUser.id! },
+  })
+
+  if (reaction) {
+    await reaction.destroy()
+  }
+}
+
+export default { getMessagesReactions, saveReaction, deleteReaction }

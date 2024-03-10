@@ -12,7 +12,7 @@ export interface ForumInstance
   extends Model<ForumAttributes>,
     ForumAttributes {}
 
-const Forum = sequelize.define<ForumInstance>('forums', {
+const Forum = sequelize.define<ForumInstance>('forum', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,

@@ -17,6 +17,7 @@ const User = sequelize.define<UserInstance>(
       type: DataTypes.INTEGER.UNSIGNED,
       primaryKey: true,
       autoIncrement: true,
+      allowNull: false,
     },
     avatar: {
       type: DataTypes.STRING,

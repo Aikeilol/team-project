@@ -34,7 +34,7 @@ const saveReaction = async (
   next: NextFunction
 ) => {
   try {
-    const { emojiId, user, messageId, shouldAdd } = req.body || {}
+    const { emojiId, user, messageId } = req.body || {}
 
     if (!checkNumber(emojiId) || !checkNumber(messageId)) {
       errorHandler(res, null, {
@@ -54,10 +54,9 @@ const saveReaction = async (
     }
 
     const result = await reactionService.saveReaction(
-      parseInt(emojiId),
       { email, displayName, avatar },
       parseInt(messageId),
-      shouldAdd
+      parseInt(emojiId)
     )
 
     res.status(201).send(result)
@@ -66,4 +65,40 @@ const saveReaction = async (
   }
 }
 
-export { getMessagesReactions, saveReaction }
+const deleteReaction = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { user, messageId } = req.body || {}
+
+    if (!checkNumber(messageId)) {
+      errorHandler(res, null, {
+        message: ' messageId should be numbers',
+        code: 400,
+      })
+      return
+    }
+
+    const { email, displayName, avatar } = user || {}
+    if (!email || !displayName) {
+      errorHandler(res, null, {
+        message: 'user should contain email and displayName',
+        code: 400,
+      })
+      return
+    }
+
+    await reactionService.deleteReaction(
+      { email, displayName, avatar },
+      parseInt(messageId)
+    )
+
+    res.status(200).send()
+  } catch (error) {
+    next(error)
+  }
+}
+
+export { getMessagesReactions, saveReaction, deleteReaction }
