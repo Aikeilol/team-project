@@ -2,6 +2,7 @@ import { Message } from '../models/forum'
 import { returnNumber } from '../utils/returnNumber'
 import { PAGE_NUMBER_DEFAULT, PAGE_SIZE_DEFAULT } from '../constants/constants'
 import User, { UserInstance } from '../models/forum/user'
+import { createOrUpdateUser } from './user.service'
 
 export const getAllMessages = async (
   topicId: string,
@@ -60,37 +61,13 @@ export const createOneMessage = async (
   topicId: string,
   parentId: string
 ) => {
-  const authorId = Number(author.id)
-
-  let user = await User.findOne({
-    where: {
-      id: authorId,
-    },
-  })
-
-  if (!user) {
-    user = await User.create({ ...author, id: authorId })
-  } else {
-    if (
-      user.display_name !== author.display_name ||
-      user.avatar !== author.avatar
-    ) {
-      await User.update(
-        { display_name: author.display_name, avatar: author.avatar },
-        {
-          where: {
-            id: authorId,
-          },
-        }
-      )
-    }
-  }
+  const user = await createOrUpdateUser(author)
 
   const createdMessage = await Message.create({
     message,
     topic_id: Number(topicId),
     parent_id: isNaN(parseInt(parentId)) ? null : parseInt(parentId),
-    author_id: authorId,
+    author_id: user.id,
     has_children: false,
   })
 

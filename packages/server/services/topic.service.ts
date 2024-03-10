@@ -1,6 +1,8 @@
 import { Message, Topic } from '../models/forum'
 import { returnNumber } from '../utils/returnNumber'
 import { PAGE_NUMBER_DEFAULT, PAGE_SIZE_DEFAULT } from '../constants/constants'
+import { createOrUpdateUser } from './user.service'
+import User, { UserAttributes } from '../models/forum/user'
 
 export const getAllTopics = async (
   forumIdStr: string,
@@ -19,6 +21,13 @@ export const getAllTopics = async (
     },
     limit: page_size,
     offset: page_size * page_number,
+    attributes: { exclude: ['author_id'] },
+    include: [
+      {
+        model: User,
+        as: 'author',
+      },
+    ],
   })
 
   for (const topic of topics.rows) {
@@ -34,7 +43,15 @@ export const getAllTopics = async (
 
 export const getOneTopic = async (topicIdStr: string) => {
   const topicId = Number(topicIdStr)
-  const topic = await Topic.findByPk(topicId)
+  const topic = await Topic.findByPk(topicId, {
+    attributes: { exclude: ['author_id'] },
+    include: [
+      {
+        model: User,
+        as: 'author',
+      },
+    ],
+  })
 
   return topic
 }
@@ -52,13 +69,20 @@ export const updateOneTopic = async (topicIdStr: string, title: string) => {
   return num
 }
 
-export const createOneTopic = async (forumIdStr: string, title: string) => {
+export const createOneTopic = async (
+  forumIdStr: string,
+  title: string,
+  author: UserAttributes
+) => {
   const forumId = Number(forumIdStr)
+
+  const user = await createOrUpdateUser(author)
 
   const createdTopic = await Topic.create({
     forum_id: forumId,
     title,
     message_count: 0,
+    author_id: user.id,
   })
 
   return createdTopic

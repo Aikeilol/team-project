@@ -6,6 +6,7 @@ interface TopicAttributes {
   forum_id: number
   title: string
   message_count: number
+  author_id: number
 }
 
 export interface TopicInstance
@@ -29,6 +30,9 @@ const Topic = sequelize.define<TopicInstance>('topic', {
     type: DataTypes.INTEGER,
     defaultValue: 0,
     allowNull: false,
+  },
+  author_id: {
+    type: DataTypes.INTEGER,
   },
 })
 
