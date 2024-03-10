@@ -1,7 +1,7 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import dotenv from 'dotenv'
-
-dotenv.config()
+import path from 'path'
+dotenv.config({ path: path.resolve(__dirname, '../../../.env') })
 
 const sequelizeOptions: SequelizeOptions = {
   host: 'localhost',
@@ -14,9 +14,6 @@ const sequelizeOptions: SequelizeOptions = {
 
 // Создаем инстанс Sequelize
 export const sequelize = new Sequelize(sequelizeOptions)
-
-// Инициализируем модели
-// export const User = sequelize.define('User', userModel, {});
 
 export async function dbConnect() {
   try {
