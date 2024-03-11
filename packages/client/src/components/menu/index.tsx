@@ -2,6 +2,7 @@ import React from 'react'
 import Link from '@mui/material/Link'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
+import MenuThemeButton from './MenuThemeButton'
 
 const pages = [
   { url: '/', title: 'Главная' },
@@ -26,6 +27,7 @@ function Menu() {
               {title}
             </Link>
           ))}
+          <MenuThemeButton />
         </nav>
       </Toolbar>
     </AppBar>
