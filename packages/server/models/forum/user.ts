@@ -4,6 +4,7 @@ import { sequelize } from '../../db'
 export type UserAttributes = {
   id: number
   display_name: string
+  email: string
   avatar: string | null
 }
 
@@ -13,12 +14,17 @@ const User = sequelize.define<UserInstance>(
   'user',
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER.UNSIGNED,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false,
     },
     avatar: {
       type: DataTypes.STRING,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     display_name: {
       type: DataTypes.STRING,

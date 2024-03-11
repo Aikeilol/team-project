@@ -1,7 +1,7 @@
 import { Message } from '../models/forum'
 import { returnNumber } from '../utils/returnNumber'
 import { PAGE_NUMBER_DEFAULT, PAGE_SIZE_DEFAULT } from '../constants/constants'
-import User, { UserInstance } from '../models/forum/user'
+import User, { UserAttributes } from '../models/forum/user'
 import { createOrUpdateUser } from './user.service'
 
 export const getAllMessages = async (
@@ -57,7 +57,7 @@ export const updateOneMessage = async (
 
 export const createOneMessage = async (
   message: string,
-  author: UserInstance,
+  author: UserAttributes,
   topicId: string,
   parentId: string
 ) => {

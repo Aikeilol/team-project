@@ -19,7 +19,12 @@ async function startServer() {
   await dbConnect()
 
   const app = express()
-  app.use(cors())
+  app.use(
+    cors({
+      origin: process.env.CLIENT_URL || 'http://localhost:3000',
+      credentials: true,
+    })
+  )
   app.use(express.json())
 
   const port = Number(process.env.SERVER_PORT) || 3001

@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express'
 import { errorHandler } from '../utils/errorHandler'
-import { UserInstance } from '../models/forum/user'
 import {
   updateOneMessage,
   createOneMessage,
   deleteOneMessage,
   getAllMessages,
 } from '../services/message.service'
+import { UserAttributes } from '../models/forum/user'
 
 const getMessages = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -60,8 +60,13 @@ const createMessage = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { message, author }: { message: string; author: UserInstance } =
-    req.body
+  const {
+    message,
+    author,
+  }: {
+    message: string
+    author: UserAttributes
+  } = req.body
   const { topicId, parentId } = req.params
 
   try {
