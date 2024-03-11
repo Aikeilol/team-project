@@ -6,8 +6,7 @@ import {
 } from './types'
 import { AxiosError, AxiosResponse, RawAxiosRequestHeaders } from 'axios'
 import showAlert from '../showAlert'
-import { yandexApi } from './yandexApi'
-import { config } from '../constants'
+import { config, yandexApi } from './yandexApi'
 
 export const changeUserProfile = async (data: IChangeUserProfile) => {
   try {

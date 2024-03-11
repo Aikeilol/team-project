@@ -1,4 +1,4 @@
-import { API_URL, config } from '../constants'
+import { API_URL } from '../constants'
 import showAlert from '../showAlert'
 import { SignInRequest, SignUpRequest, YandexApiError } from './types'
 import axios, {
@@ -11,6 +11,13 @@ import axios, {
 export const yandexApi: AxiosInstance = axios.create({
   baseURL: API_URL,
 })
+
+export const config: AxiosRequestConfig = {
+  headers: {
+    Accept: 'application/json',
+  } as RawAxiosRequestHeaders,
+  withCredentials: true,
+}
 
 const showError = (err: unknown) => {
   const error = err as AxiosError<YandexApiError>

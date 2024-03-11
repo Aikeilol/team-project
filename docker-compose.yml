@@ -2,8 +2,6 @@ version: "3.9"
 
 services:
     client:
-        env_file: 
-          - .env
         container_name: prakticum-client
         image: prakticum-client
         build:
@@ -17,10 +15,7 @@ services:
         environment:
           - CLIENT_PORT=${CLIENT_PORT}
           - SERVER_PORT=${SERVER_PORT}
-        depends_on: [server]
     server:
-        env_file: 
-          - .env
         container_name: prakticum-server
         image: prackicum-server
         build:
@@ -33,10 +28,8 @@ services:
             - "${SERVER_PORT}:${SERVER_PORT}"
         environment:
           SERVER_PORT: ${SERVER_PORT}
-        depends_on: [postgres]
+
     postgres:
-      env_file:
-        - .env
       image: postgres:14     
       ports:
         - "${POSTGRES_PORT}:${POSTGRES_PORT}"
@@ -46,18 +39,4 @@ services:
         POSTGRES_DB: ${POSTGRES_DB}
       volumes:
         - ./tmp/pgdata:/var/lib/postgresql/data
-      pull_policy: always
-    pgadmin:
-      container_name: pgadmin_container
-      image: dpage/pgadmin4
-      environment:
-        PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-        PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-        PGADMIN_CONFIG_SERVER_MODE: 'False'
-      volumes:
-       - pgadmin:/var/lib/pgadmin
 
-      ports:
-      - "${PGADMIN_PORT:-5050}:80"
-volumes:
-  pgadmin:
