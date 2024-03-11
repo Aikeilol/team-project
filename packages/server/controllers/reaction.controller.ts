@@ -45,10 +45,10 @@ const saveReaction = async (
       return
     }
 
-    const { id, email, displayName, avatar } = user || {}
-    if (!email || !displayName) {
+    const { id, email, display_name, avatar } = user || {}
+    if (!email || !display_name) {
       errorHandler(res, null, {
-        message: 'user should contain email and displayName',
+        message: 'user should contain email and display_name',
         code: 400,
       })
       return
@@ -63,7 +63,7 @@ const saveReaction = async (
     }
 
     const result = await reactionService.saveReaction(
-      { id: parseInt(id), email, display_name: displayName, avatar },
+      { id: parseInt(id), email, display_name, avatar },
       parseInt(messageId),
       parseInt(emojiId)
     )

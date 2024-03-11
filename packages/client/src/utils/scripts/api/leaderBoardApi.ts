@@ -1,7 +1,8 @@
 import showAlert from '../showAlert'
 import { AxiosError } from 'axios'
 import { ILBAddUser, ILBTeam, YandexApiError } from './types'
-import { config, yandexApi } from './yandexApi'
+import { yandexApi } from './yandexApi'
+import { config } from '../constants'
 
 const handleApiError = (err: AxiosError<YandexApiError>) => {
   const message = err.response?.data.reason as string
