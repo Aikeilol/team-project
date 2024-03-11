@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import { buildSync } from 'esbuild'
 import { join } from 'node:path'
 import { splitVendorChunkPlugin } from 'vite'
+import EnvironmentPlugin from 'vite-plugin-environment'
 
 dotenv.config()
 
@@ -34,6 +35,7 @@ export default defineConfig({
         })
       },
     },
+    EnvironmentPlugin('all'),
   ],
   build: {
     rollupOptions: {
