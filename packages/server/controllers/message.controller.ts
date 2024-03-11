@@ -6,6 +6,7 @@ import {
   deleteOneMessage,
   getAllMessages,
 } from '../services/message.service'
+import { UserAttributes } from '../models/forum/user'
 
 const getMessages = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -64,7 +65,7 @@ const createMessage = async (
     author,
   }: {
     message: string
-    author: { avatar: string | null; email: string; display_name: string }
+    author: UserAttributes
   } = req.body
   const { topicId, parentId } = req.params
 

@@ -1,6 +1,7 @@
 import { Emoji, User, Reaction } from '../models/forum'
 import { createOrUpdateUser } from './user.service'
 import { Op } from 'sequelize'
+import { UserAttributes } from '../models/forum/user'
 
 type MessagesReactions = {
   messageId: number
@@ -51,18 +52,11 @@ export const getMessagesReactions = async (messageIds: number[]) => {
 }
 
 type ReactionUpdate = {
-  wasRemoved?: boolean
-  wasUpdated?: boolean
-  wasCreated?: boolean
   reactionId?: number
 }
 
 export const saveReaction = async (
-  user: {
-    email: string
-    displayName: string
-    avatar: string | null
-  },
+  user: UserAttributes,
   messageId: number,
   emojiId: number
 ): Promise<ReactionUpdate> => {
@@ -82,20 +76,19 @@ export const saveReaction = async (
     return {
       reactionId: newReaction.id,
     }
-  } else {
-    reaction.emojiId = emojiId
-    await reaction.save()
+  }
+  reaction.emojiId = emojiId
+  await reaction.save()
 
-    return {
-      reactionId: reaction.id,
-    }
+  return {
+    reactionId: reaction.id,
   }
 }
 
-export const deleteReaction = async (userEmail: string, messageId: number) => {
+export const deleteReaction = async (userId: number, messageId: number) => {
   const existingUser = await User.findOne({
     where: {
-      email: userEmail,
+      id: userId,
     },
   })
 

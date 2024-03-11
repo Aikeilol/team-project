@@ -15,14 +15,15 @@ const getMessagesReactions = async (
         message: 'messageIds should be an array of numbers',
         code: 400,
       })
-    } else {
-      const parsedMessageIds = messageIds.map(id => parseInt(id as string))
-      const reactions = await reactionService.getMessagesReactions(
-        parsedMessageIds
-      )
-
-      res.send(reactions)
+      return
     }
+
+    const parsedMessageIds = messageIds.map(id => parseInt(id as string))
+    const reactions = await reactionService.getMessagesReactions(
+      parsedMessageIds
+    )
+
+    res.send(reactions)
   } catch (error) {
     next(error)
   }
@@ -44,7 +45,7 @@ const saveReaction = async (
       return
     }
 
-    const { email, displayName, avatar } = user || {}
+    const { id, email, displayName, avatar } = user || {}
     if (!email || !displayName) {
       errorHandler(res, null, {
         message: 'user should contain email and displayName',
@@ -53,8 +54,16 @@ const saveReaction = async (
       return
     }
 
+    if (!id || !checkNumber(id)) {
+      errorHandler(res, null, {
+        message: `user's id should be number`,
+        code: 400,
+      })
+      return
+    }
+
     const result = await reactionService.saveReaction(
-      { email, displayName, avatar },
+      { id: parseInt(id), email, display_name: displayName, avatar },
       parseInt(messageId),
       parseInt(emojiId)
     )
@@ -71,9 +80,9 @@ const deleteReaction = async (
   next: NextFunction
 ) => {
   try {
-    const { userEmail, messageId } = req.body || {}
+    const { userId, messageId } = req.body || {}
 
-    if (!checkNumber(messageId) || !userEmail) {
+    if (!checkNumber(messageId)) {
       errorHandler(res, null, {
         message:
           ' messageId should be numbers and userEmail should be a not empty string',
@@ -82,7 +91,15 @@ const deleteReaction = async (
       return
     }
 
-    await reactionService.deleteReaction(userEmail, parseInt(messageId))
+    if (!userId || !checkNumber(userId)) {
+      errorHandler(res, null, {
+        message: `userId should be number`,
+        code: 400,
+      })
+      return
+    }
+
+    await reactionService.deleteReaction(parseInt(userId), parseInt(messageId))
 
     res.status(200).send()
   } catch (error) {

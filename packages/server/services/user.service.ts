@@ -15,10 +15,12 @@ export const createOrUpdateUser = async (userObj: UserAttributes) => {
   } else {
     if (
       user.display_name !== userObj.display_name ||
-      user.avatar !== userObj.avatar
+      user.avatar !== userObj.avatar ||
+      user.email !== userObj.email
     ) {
       user.display_name = userObj.display_name
       user.avatar = userObj.avatar
+      user.email = userObj.email
       await user.save()
     }
   }
