@@ -32,8 +32,9 @@ export const saveReaction = async (
 ) => {
   try {
     const userData = {
+      id: user!.id,
       email: user!.email,
-      displayName: user!.display_name,
+      display_name: user!.display_name,
       avatar: user!.avatar,
     }
 
@@ -56,16 +57,10 @@ export const saveReaction = async (
 
 export const deleteReaction = async (user: User, messageId: number) => {
   try {
-    const userData = {
-      email: user!.email,
-      displayName: user!.display_name,
-      avatar: user!.avatar,
-    }
-
     return (await slytherinApi.delete('/forum/reactions', {
       ...config,
       data: {
-        user: userData,
+        userId: user!.id,
         messageId,
       },
     })) as AxiosResponse
