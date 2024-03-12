@@ -7,9 +7,10 @@ import AuthFooter from './AuthFooter'
 
 interface IProps {
   data: IAuthData
+  children?: string | JSX.Element | JSX.Element[] | (() => JSX.Element)
 }
 
-const Auth: FC<IProps> = ({ data }) => {
+const Auth: FC<IProps> = ({ data, children }) => {
   const { title, formData, footerInfo } = data
 
   return (
@@ -23,7 +24,7 @@ const Auth: FC<IProps> = ({ data }) => {
       }}>
       <AuthHeader title={title} />
 
-      <AuthForm formData={formData} />
+      <AuthForm formData={formData} children={children} />
 
       {footerInfo && <AuthFooter footerInfo={footerInfo} />}
     </Paper>

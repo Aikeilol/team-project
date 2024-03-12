@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
 import { buildSync } from 'esbuild'
 import { join } from 'node:path'
+import { splitVendorChunkPlugin } from 'vite'
+import EnvironmentPlugin from 'vite-plugin-environment'
+
 dotenv.config()
 
 // https://vitejs.dev/config/
@@ -15,9 +18,13 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    splitVendorChunkPlugin(),
     {
       name: 'build-sw',
-      apply: 'build', // вызывать плагин только при сборке
+      apply(config, { command }) {
+        // apply only on build but not for SSR
+        return command === 'build' && !config.build.ssr
+      },
       enforce: 'post', // вызывать после Vite core plugins
       transformIndexHtml() {
         buildSync({
@@ -28,5 +35,27 @@ export default defineConfig({
         })
       },
     },
+    EnvironmentPlugin('all'),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id: string) {
+          // Reducing chunk size
+          if (id.includes('@open-ish') || id.includes('tslib')) {
+            return '@open-ish'
+          }
+          if (id.indexOf('node_modules') !== -1) {
+            const basic = id.toString().split('node_modules/')[1]
+            const sub1 = basic.split('/')[0]
+            if (sub1 !== '.pnpm') {
+              return sub1.toString()
+            }
+            const name2 = basic.split('/')[1]
+            return name2.split('@')[name2[0] === '@' ? 1 : 0].toString()
+          }
+        },
+      },
+    },
+  },
 })

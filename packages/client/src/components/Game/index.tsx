@@ -1,13 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import FullScreenButton from '../FullScreenButton'
 import GameEndDialog from '../GameEndDialog'
 import { Snake } from './Snake'
 import { Apple } from './Apple'
-import { sprites, GRID_SIZE } from './constants'
+import { GRID_SIZE, getSounds, getSprites } from './constants'
+import { useAppContext } from '../../context/AppContext'
+
+import { getUser } from '../../utils/scripts/api/yandexApi'
+import { addUserToLeaderBoard } from '../../utils/scripts/api/leaderBoardApi'
+import { IUser } from '../../utils/scripts/api/types'
+import { RATING_FIELD_NAME, TEAM_NAME } from '../../utils/scripts/constants'
 
 import './style.css'
 
+// количество кадров в секунду
+const fps = 15
+const msPerFrame = 1000 / fps
+
 function Game() {
+  const appContext = useAppContext()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -20,7 +31,16 @@ function Game() {
   const [record, setRecord] = useState(0)
   const [score, setScore] = useState(0)
 
+  const [userData, setUserData] = useState<IUser>()
+
   const requestRef = useRef(0)
+  const firstFrameTime = useRef(performance.now())
+
+  const showNotificationWithResult = useCallback(() => {
+    appContext.notifications?.sendNotification(
+      `Набрано очков: ${score}. Рекорд: ${record}.`
+    )
+  }, [score, record])
 
   useEffect(() => {
     window.addEventListener('keydown', snakeRef.current.setSnakeControllers)
@@ -32,33 +52,67 @@ function Game() {
       )
     }
   }, [])
-
   useEffect(() => {
-    let frameCount = 0
-
-    const animate = () => {
-      requestRef.current = requestAnimationFrame(animate)
-
-      // Игровой код выполнится только один раз из четырёх, в этом и суть замедления кадров, а пока переменная count меньше четырёх, код выполняться не будет.
-      if (++frameCount < 8 || isStopped) {
-        return
+    getUser().then(response => {
+      if (response?.data) {
+        setUserData(response.data)
       }
-      // Обнуляем переменную скорости
-      frameCount = 0
+    })
+  }, [])
+  useEffect(() => {
+    if (!userData) {
+      return
+    }
+    const postData = {
+      data: {
+        id: userData.id,
+        userFirstName: userData.first_name,
+        userDisplayName: userData.display_name,
+        userAvatar: userData.avatar,
+        ratingSlytherinTeam: score,
+      },
+      ratingFieldName: RATING_FIELD_NAME,
+      teamName: TEAM_NAME,
+    }
+    if (openEndGameModal && score > 0) {
+      addUserToLeaderBoard(postData).then()
+    }
+  }, [openEndGameModal, score, userData])
 
-      gameLoop()
+  const animate = (now: number) => {
+    requestRef.current = requestAnimationFrame(animate)
+
+    const msPassed = now - firstFrameTime.current
+    if (msPassed < msPerFrame) {
+      return
     }
 
-    animate()
+    const excessTime = msPassed % msPerFrame
+
+    firstFrameTime.current = now - excessTime
+
+    gameLoop()
+  }
+
+  useEffect(() => {
+    if (!isStopped) {
+      requestRef.current = requestAnimationFrame(animate)
+    } else {
+      cancelAnimationFrame(requestRef.current)
+    }
 
     return () => {
       cancelAnimationFrame(requestRef.current)
     }
-  }, [isStopped])
+  }, [isStopped, showNotificationWithResult])
 
   function gameLoop() {
     const canvas = canvasRef.current
     const context = canvas?.getContext('2d') as CanvasRenderingContext2D
+
+    const { gameSprites, sandSprite } = getSprites()
+
+    const { eatingSound, loseSound } = getSounds()
 
     if (!canvas || !context) {
       return
@@ -68,7 +122,7 @@ function Game() {
 
     // Очищаем поле
     context.clearRect(0, 0, canvas.width, canvas.height)
-    context.drawImage(sprites.sandSprite, 0, 0, canvas.width, canvas.height)
+    context.drawImage(sandSprite, 0, 0, canvas.width, canvas.height)
 
     const snake = snakeRef.current
     const apple = appleRef.current
@@ -77,8 +131,13 @@ function Game() {
 
     if (snake.snakeIsOutTheField(context) || snake.hasCollisions()) {
       snake.reInit()
+
       setIsStopped(true)
       setOpenEndGameModal(true)
+
+      loseSound.play()
+
+      showNotificationWithResult()
     }
 
     if (snake.appleWasEaten(apple)) {
@@ -88,10 +147,12 @@ function Game() {
       apple.move(canvas)
 
       updateScore()
+
+      eatingSound.play()
     }
 
-    snake.draw(context, sprites.gameSprites)
-    apple.draw(context, sprites.gameSprites)
+    snake.draw(context, gameSprites)
+    apple.draw(context, gameSprites)
   }
 
   function updateScore() {

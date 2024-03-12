@@ -1,19 +1,28 @@
-import { StrictMode } from 'react'
-import { ThemeProvider, CssBaseline } from '@mui/material'
+import React, { FC } from 'react'
+import { ThemeProvider as CustomThemeProvider, CssBaseline } from '@mui/material'
+import { ThemeProvider as SlytherinThemeProvider , useTheme } from './context/ThemeContext/ThemeContext'
 import { store } from './store/store'
 import { Provider } from 'react-redux'
-import theme from './utils/scripts/theme'
-import Router from './router'
+import { ClientRouter } from './router'
+import generateTheme from './utils/scripts/theme'
 
-export const App = () => {
+const ThemedApp: FC = () => {
+  const { darkMode } = useTheme()
+  const theme = generateTheme(darkMode)
+
   return (
-    <StrictMode>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Router />
-        </ThemeProvider>
-      </Provider>
-    </StrictMode>
+    <CustomThemeProvider theme={theme}>
+      <CssBaseline />
+      <ClientRouter />
+    </CustomThemeProvider>
+  )
+}
+export const App: FC = () => {
+  return (
+    <Provider store={store}>
+      <SlytherinThemeProvider>
+        <ThemedApp />
+      </SlytherinThemeProvider>
+    </Provider>
   )
 }

@@ -1,4 +1,4 @@
-import { API_URL } from '../constants'
+import { API_URL, config } from '../constants'
 import showAlert from '../showAlert'
 import { SignInRequest, SignUpRequest, YandexApiError } from './types'
 import axios, {
@@ -11,13 +11,6 @@ import axios, {
 export const yandexApi: AxiosInstance = axios.create({
   baseURL: API_URL,
 })
-
-export const config: AxiosRequestConfig = {
-  headers: {
-    Accept: 'application/json',
-  } as RawAxiosRequestHeaders,
-  withCredentials: true,
-}
 
 const showError = (err: unknown) => {
   const error = err as AxiosError<YandexApiError>
@@ -46,5 +39,29 @@ export const getUser = async () => {
     return await yandexApi.get('/auth/user', config).then(res => res)
   } catch (error) {
     return console.error(error)
+  }
+}
+
+export const getServiceId = async (redirectUri: string) => {
+  try {
+    return await yandexApi
+      .get('/oauth/yandex/service-id', {
+        headers: {
+          Accept: 'application/json',
+        } as RawAxiosRequestHeaders,
+        withCredentials: true,
+        params: { redirectUri },
+      })
+      .then(res => res)
+  } catch (err) {
+    return console.error(err)
+  }
+}
+
+export const signInYandexPassport = async (code: string) => {
+  try {
+    return await yandexApi.post('/oauth/yandex', { code: code }, config)
+  } catch (err) {
+    return showError(err)
   }
 }

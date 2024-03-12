@@ -19,6 +19,7 @@ type FormValues = {
 
 interface IProps {
   formData: IFormData
+  children?: string | JSX.Element | JSX.Element[] | (() => JSX.Element)
 }
 
 export const Form: FC<IProps> = props => {
@@ -34,28 +35,31 @@ export const Form: FC<IProps> = props => {
 
   return (
     <CustomForm>
-      {dataInputs &&
-        Array.isArray(dataInputs) &&
-        dataInputs.map(({ id, name, rules, ...props }, index) => {
-          return (
-            <CustomInput
-              key={id}
-              autoFocus={index === 0}
-              error={!!errors[name]}
-              helperText={errors[name]?.message}
-              {...props}
-              {...(register && register(name, rules))}
-            />
-          )
-        })}
-      <Button
-        type="submit"
-        disabled={!isValid}
-        fullWidth
-        variant="contained"
-        sx={{ mt: 23, mb: 2, maxWidth: '320px', width: '100%' }}>
-        {buttonText}
-      </Button>
+      <>
+        {dataInputs &&
+          Array.isArray(dataInputs) &&
+          dataInputs.map(({ id, name, rules, ...props }, index) => {
+            return (
+              <CustomInput
+                key={id}
+                autoFocus={index === 0}
+                error={!!errors[name]}
+                helperText={errors[name]?.message}
+                {...props}
+                {...(register && register(name, rules))}
+              />
+            )
+          })}
+        <Button
+          type="submit"
+          disabled={!isValid}
+          fullWidth
+          variant="contained"
+          sx={{ mt: 23, mb: 2, maxWidth: '320px', width: '100%' }}>
+          {buttonText}
+        </Button>
+        {props.children && props.children}
+      </>
     </CustomForm>
   )
 }

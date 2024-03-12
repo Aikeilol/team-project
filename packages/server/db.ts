@@ -1,28 +1,26 @@
-import { Client } from 'pg'
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
+import dotenv from 'dotenv'
+import path from 'path'
+dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
-  process.env
+const sequelizeOptions: SequelizeOptions = {
+  host: 'localhost',
+  port: +(process.env.POSTGRES_PORT || 5432),
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
+  dialect: 'postgres', // 'mysql', 'sqlite', 'mariadb', 'mssql'
+}
 
-export const createClientAndConnect = async (): Promise<Client | null> => {
+// Создаем инстанс Sequelize
+export const sequelize = new Sequelize(sequelizeOptions)
+
+export async function dbConnect() {
   try {
-    const client = new Client({
-      user: POSTGRES_USER,
-      host: 'localhost',
-      database: POSTGRES_DB,
-      password: POSTGRES_PASSWORD,
-      port: Number(POSTGRES_PORT),
-    })
-
-    await client.connect()
-
-    const res = await client.query('SELECT NOW()')
-    console.log('  ➜ 🎸 Connected to the database at:', res?.rows?.[0].now)
-    client.end()
-
-    return client
-  } catch (e) {
-    console.error(e)
+    await sequelize.authenticate() // Проверка аутентификации в БД
+    await sequelize.sync() // Синхронизация базы данных
+    console.log('Connection has been established successfully.')
+  } catch (error) {
+    console.error('Unable to connect to the database:', error)
   }
-
-  return null
 }
