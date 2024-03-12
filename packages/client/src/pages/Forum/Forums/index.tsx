@@ -13,13 +13,7 @@ const Forums: FC<object> = () => {
   const user = useAppSelector(state => selectUser(state))
 
   const createTopicDialogConfirm = async (data: Request) => {
-    const author = {
-      id: user!.id,
-      display_name: user!.first_name,
-      avatar: user!.avatar,
-    }
-
-    await createTopic(data, author)
+    await createTopic(data, user!)
     await handlerGetForums()
   }
 

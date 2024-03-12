@@ -131,6 +131,33 @@ const ForumMessageItem: FC<IProps> = ({
                   <EmojiControl onClick={handleClick} />
                 </Grid>
               </Grid>
+              <Grid
+                item
+                container
+                spacing={2}
+                alignItems="center"
+                justifyContent="end">
+                <Grid item>
+                  <DialogWithInput
+                    {...updateMessageDialogData(id, message)}
+                    disabled={false}
+                    flagBtn={'edit'}
+                    showBtn={user!.id === author.id}
+                    onConfirm={updateMessageDialogConfirm}
+                    tooltip={'Редактировать сообщение'}
+                  />
+                </Grid>
+                <Grid item>
+                  <DialogWithInput
+                    {...deleteMessageDialogData(id, message)}
+                    disabled={true}
+                    flagBtn={'delete'}
+                    showBtn={user!.id === author.id}
+                    onConfirm={deleteMessageDialogConfirm}
+                    tooltip={'Удалить сообщение'}
+                  />
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </CardContent>

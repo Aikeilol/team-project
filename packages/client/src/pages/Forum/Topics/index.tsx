@@ -30,24 +30,12 @@ const Topics: FC<object> = () => {
   const { forumId } = useParams()
 
   const topicDialogConfirm = async (data: Request) => {
-    const author = {
-      id: user!.id,
-      display_name: user!.first_name,
-      avatar: user!.avatar,
-    }
-
-    await createTopic(data, author)
+    await createTopic(data, user!)
     await handlerGetTopics()
   }
 
   const messageDialogConfirm = async (data: Request) => {
-    const author = {
-      id: user!.id,
-      display_name: user!.first_name,
-      avatar: user!.avatar,
-    }
-
-    await createMessage(Number(data.id), data.title, author)
+    await createMessage(Number(data.id), data.title, user!)
     await handlerGetTopics()
   }
 

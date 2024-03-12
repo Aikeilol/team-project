@@ -18,7 +18,7 @@ export const RATING_FIELD_NAME = 'ratingSlytherinTeam'
 export const TEAM_NAME = 'slytherin'
 
 export const SlytherinApiUrl =
-  process.env.SERVER_URL || 'http://localhost:4000/api'
+  process.env.SERVER_URL || 'http://localhost:3001/api'
 
 export const slytherinApi: AxiosInstance = axios.create({
   baseURL: SlytherinApiUrl,

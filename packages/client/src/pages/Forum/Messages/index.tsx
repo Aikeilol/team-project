@@ -25,13 +25,7 @@ const Messages: FC<object> = () => {
   const { topicId } = useParams()
 
   const messageDialogConfirm = async (data: Request) => {
-    const author = {
-      id: user!.id,
-      display_name: user!.first_name,
-      avatar: user!.avatar,
-    }
-
-    await createMessage(Number(data.id), data.title, author)
+    await createMessage(Number(data.id), data.title, user!)
     await handlerGetMessages()
   }
 
