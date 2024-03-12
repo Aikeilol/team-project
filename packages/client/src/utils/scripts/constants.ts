@@ -5,6 +5,7 @@ import axios, {
 } from 'axios'
 
 export const API_URL = 'https://ya-praktikum.tech/api/v2'
+export const FORUM_API_URL = `http://localhost:3001/api/forum`
 export const getOauthUrl = (clientId: string, redirectUri: string) =>
   `https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`
 

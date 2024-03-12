@@ -6,6 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
+  Box,
 } from '@mui/material'
 import DialogWithInput, { DialogProps } from '../ForumDialogWithInput'
 import CommentIcon from '@mui/icons-material/Comment'
@@ -13,21 +14,21 @@ import CommentIcon from '@mui/icons-material/Comment'
 interface IProps<T> {
   to: string
   title: string
-  messageCount: number
-  topicCount?: number
-  dialogData: DialogProps<T>
+  message_count: number
+  topic_count?: number
+  dialogData: Array<DialogProps<T>>
 }
 
 const ForumItem = <T extends object>({
   to,
   title,
-  messageCount,
-  topicCount,
+  message_count,
+  topic_count,
   dialogData,
 }: IProps<T>) => {
-  const secondaryText = topicCount
-    ? `Темы: ${topicCount}, Сообщения: ${messageCount}`
-    : `Сообщения: ${messageCount}`
+  const secondaryText = topic_count
+    ? `Темы: ${topic_count}, Сообщения: ${message_count}`
+    : `Сообщения: ${message_count}`
 
   return (
     <ListItem
@@ -36,7 +37,21 @@ const ForumItem = <T extends object>({
         paddingRight: 0,
       }}
       secondaryAction={
-        <DialogWithInput {...dialogData} onConfirm={dialogData.onConfirm} />
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '15px',
+          }}>
+          {dialogData.map(el => {
+            return (
+              <DialogWithInput
+                key={el.flagBtn}
+                {...el}
+                onConfirm={el.onConfirm}
+              />
+            )
+          })}
+        </Box>
       }>
       <ListItemButton
         sx={{

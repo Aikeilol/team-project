@@ -1,6 +1,5 @@
 import React, { FC, useState, useEffect, useMemo, useCallback } from 'react'
-import { Message } from '../types'
-import { forumService } from '../../../services/forum.service'
+import { Message, Request } from '../types'
 import { Box } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import DialogWithInput from '../../../components/Forum/ForumDialogWithInput'
@@ -8,25 +7,40 @@ import { messageDialogData } from '../constants'
 import ForumList from '../../../components/Forum/ForumList'
 import ForumMessageItem from '../../../components/Forum/ForumMessageItem'
 import ForumHeader from '../../../components/Forum/ForumHeader'
+import { createMessage, getMessages } from '../../../utils/scripts/api/forumApi'
+import { useAppSelector } from '../../../store/hooks'
+import { selectUser } from '../../../store/slices/userSlice'
 import {
   getMessagesReactions,
   saveReaction,
   deleteReaction,
 } from '../../../utils/scripts/api/reactionsApi'
-import { useAppSelector } from '../../../store/hooks'
-import { selectUser } from '../../../store/slices/userSlice'
 import { MessagesReaction } from '../../../utils/scripts/api/types'
 
 const Messages: FC<object> = () => {
   const user = useAppSelector(state => selectUser(state))
   const [messages, setMessages] = useState<Message[]>([])
   const [reactions, setReactions] = useState<MessagesReaction[]>([])
-  const [title, setTitle] = useState('')
 
   const { topicId } = useParams()
 
-  const messageDialogConfirm = (item: Message) => {
-    setMessages([...messages, item])
+  const messageDialogConfirm = async (data: Request) => {
+    const author = {
+      id: user!.id,
+      display_name: user!.first_name,
+      avatar: user!.avatar,
+    }
+
+    await createMessage(Number(data.id), data.title, author)
+    await handlerGetMessages()
+  }
+
+  const handlerGetMessages = async () => {
+    const updatedMessages = await getMessages(Number(topicId))
+
+    if (updatedMessages?.data) {
+      setMessages(updatedMessages?.data)
+    }
   }
 
   const onEmojiClick = async (
@@ -65,24 +79,12 @@ const Messages: FC<object> = () => {
   }, [messages])
 
   useEffect(() => {
-    async function getMessages() {
-      try {
-        const data = !!topicId && (await forumService.getMessages(+topicId))
-        if (data && data?.items) {
-          setTitle(data.title)
-          setMessages(data.items)
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    }
-
-    getMessages()
+    handlerGetMessages()
   }, [])
 
   return (
     <>
-      <ForumHeader>Тема: {title}</ForumHeader>
+      <ForumHeader>Сообщения</ForumHeader>
       <ForumList
         data={messagesWithReactions}
         template={(data, key) => (
@@ -91,6 +93,7 @@ const Messages: FC<object> = () => {
             data={data}
             userEmail={user?.email}
             onEmojiClick={onEmojiClick}
+            handlerGetMessages={handlerGetMessages}
           />
         )}
       />

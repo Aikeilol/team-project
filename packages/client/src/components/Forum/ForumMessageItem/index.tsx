@@ -5,7 +5,20 @@ import Avatar from '@mui/material/Avatar'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { red } from '@mui/material/colors'
-import { ListItem } from '@mui/material'
+import { Box, ListItem } from '@mui/material'
+import { Message, Request } from '../../../pages/Forum/types'
+import getImageSrc from '../../../utils/scripts/getPath'
+import DialogWithInput from '../ForumDialogWithInput'
+import {
+  deleteMessageDialogData,
+  updateMessageDialogData,
+} from '../../../pages/Forum/constants'
+import {
+  deleteMessage,
+  updateMessage,
+} from '../../../utils/scripts/api/forumApi'
+import { useAppSelector } from '../../../store/hooks'
+import { selectUser } from '../../../store/slices/userSlice'
 import { MessageWithReaction } from '../../../pages/Forum/types'
 import { EmojiControl } from '../../EmojiControl'
 import { EmojiCounter } from '../../EmojiCounter'
@@ -14,15 +27,28 @@ interface IProps {
   data: MessageWithReaction
   userEmail?: string
   onEmojiClick: (emojiId: number, messageId: number, shouldAdd: boolean) => void
+  handlerGetMessages(): void
 }
 
 const ForumMessageItem: FC<IProps> = ({
   data,
   onEmojiClick,
   userEmail = '',
+  handlerGetMessages,
 }) => {
-  const { author, message, createDateTime, reactions } = data
-  const date = new Date(createDateTime).toLocaleDateString()
+  const user = useAppSelector(state => selectUser(state))
+  const { author, message, createdAt, id, reactions } = data
+  const date = new Date(createdAt).toLocaleDateString()
+
+  const deleteMessageDialogConfirm = async (data: Request) => {
+    await deleteMessage(data)
+    await handlerGetMessages()
+  }
+
+  const updateMessageDialogConfirm = async (data: Request) => {
+    await updateMessage(data)
+    await handlerGetMessages()
+  }
 
   const messageReactions = reactions
     .map(reaction => {
@@ -60,6 +86,7 @@ const ForumMessageItem: FC<IProps> = ({
                     height: 56,
                     bgcolor: red[500],
                   }}
+                  src={author?.avatar ? getImageSrc(author?.avatar) : ''}
                   aria-label="recipe">
                   R
                 </Avatar>
@@ -70,7 +97,7 @@ const ForumMessageItem: FC<IProps> = ({
                   minWidth: '150px',
                 }}>
                 <Typography gutterBottom variant="body1" component="div">
-                  {author}
+                  {author.display_name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   {date}
