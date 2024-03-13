@@ -42,10 +42,10 @@ const ForumItem = <T extends object>({
             display: 'flex',
             gap: '15px',
           }}>
-          {dialogData.map(el => {
+          {dialogData.map((el, i) => {
             return (
               <DialogWithInput
-                key={el.flagBtn}
+                key={`${i}.${el.flagBtn}`}
                 {...el}
                 onConfirm={el.onConfirm}
               />
