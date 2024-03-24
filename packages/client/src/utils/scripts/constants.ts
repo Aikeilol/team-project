@@ -17,7 +17,7 @@ export const isServer = !(
 export const RATING_FIELD_NAME = 'ratingSlytherinTeam'
 export const TEAM_NAME = 'slytherin'
 
-export const SlytherinApiUrl = '/api/forum'
+export const SlytherinApiUrl = (process.env.SERVER_URL || '') + '/api/forum'
 
 export const slytherinApi: AxiosInstance = axios.create({
   baseURL: SlytherinApiUrl,

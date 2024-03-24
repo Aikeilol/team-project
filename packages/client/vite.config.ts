@@ -15,6 +15,7 @@ export default defineConfig({
   },
   define: {
     __SERVER_PORT__: Number(process.env.SERVER_PORT) || 3001,
+    'process.env': {},
   },
   plugins: [
     react(),
