@@ -18,8 +18,9 @@ export async function render(remixRequest: Request) {
   const { query, dataRoutes } = createStaticHandler(ServerRouter)
   const context = await query(remixRequest)
 
-  const { darkMode } = useTheme()
-  const theme = generateTheme(darkMode)
+  // TO DO
+  // const { darkMode } = useTheme()
+  const theme = generateTheme(true)
 
   if (context instanceof Response) {
     throw context
