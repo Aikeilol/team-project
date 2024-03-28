@@ -9,7 +9,6 @@ import { store } from './src/store/store.js'
 import { Provider } from 'react-redux'
 import { StrictMode } from 'react'
 import { ThemeProvider, CssBaseline } from '@mui/material'
-import { useTheme } from './src/context/ThemeContext/ThemeContext'
 import generateTheme from './src/utils/scripts/theme.js'
 import { ServerRouter } from './src/router/index.js'
 import { AppContext } from './src/context/AppContext/index.js'
@@ -18,8 +17,6 @@ export async function render(remixRequest: Request) {
   const { query, dataRoutes } = createStaticHandler(ServerRouter)
   const context = await query(remixRequest)
 
-  // TO DO
-  // const { darkMode } = useTheme()
   const theme = generateTheme(true)
 
   if (context instanceof Response) {
