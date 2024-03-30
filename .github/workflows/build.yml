@@ -1,12 +1,7 @@
 on:
   push:
-    branches:
-      - "main"
     tags:
       - "v*"
-  pull_request:
-    branches:
-      - "main"
 
 jobs:
   push_to_registry:
@@ -27,7 +22,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            cr.yandex/slytherin
+            slytherin/prakticum-server
           tags: |
             type=ref,event=branch
             type=ref,event=pr
