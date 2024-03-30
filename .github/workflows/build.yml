@@ -27,7 +27,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            cr.yandex/slizeryn
+            cr.yandex/slytherin
           tags: |
             type=ref,event=branch
             type=ref,event=pr
