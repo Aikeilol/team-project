@@ -22,7 +22,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            crpgh2ol253ukr39r3c9/prakticum-server
+            cr.yandex/crpgh2ol253ukr39r3c9/prakticum-server
           tags: |
             type=ref,event=branch
             type=ref,event=pr
