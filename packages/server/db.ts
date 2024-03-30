@@ -1,10 +1,9 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import dotenv from 'dotenv'
-import path from 'path'
-dotenv.config({ path: path.resolve(__dirname, '../../.env') })
+dotenv.config()
 
 const sequelizeOptions: SequelizeOptions = {
-  host: 'localhost',
+  host: process.env.POSTGRES_HOST || 'localhost',
   port: +(process.env.POSTGRES_PORT || 5432),
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,

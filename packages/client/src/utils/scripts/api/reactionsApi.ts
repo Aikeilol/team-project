@@ -6,9 +6,7 @@ import { User } from '../../../store/slices/userSlice'
 
 export const getEmojis = async () => {
   try {
-    return (await slytherinApi.get('/forum/emojis', config)) as AxiosResponse<
-      Emoji[]
-    >
+    return (await slytherinApi.get('/emojis', config)) as AxiosResponse<Emoji[]>
   } catch (err) {
     console.error(err)
   }
@@ -16,7 +14,7 @@ export const getEmojis = async () => {
 
 export const getMessagesReactions = async (messageIds: number[]) => {
   try {
-    return (await slytherinApi.get('/forum/reactions/messages', {
+    return (await slytherinApi.get('/reactions/messages', {
       ...config,
       params: { messageIds },
     })) as AxiosResponse<MessagesReaction[]>
@@ -39,7 +37,7 @@ export const saveReaction = async (
     }
 
     return (await slytherinApi.put(
-      '/forum/reactions',
+      '/reactions',
       {
         emojiId,
         user: userData,
@@ -57,7 +55,7 @@ export const saveReaction = async (
 
 export const deleteReaction = async (user: User, messageId: number) => {
   try {
-    return (await slytherinApi.delete('/forum/reactions', {
+    return (await slytherinApi.delete('/reactions', {
       ...config,
       data: {
         userId: user!.id,

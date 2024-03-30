@@ -1,5 +1,12 @@
 node_modules/
+packages/server/node_modules/
+packages/server/dist/
+packages/client/node_modules/
+packages/client/dist/
+packages/client/dist-ssr/
 .env
+packages/server/.env
+packages/client/.env
 .idea
 .vscode
 dist

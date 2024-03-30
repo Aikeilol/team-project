@@ -46,9 +46,9 @@ const saveReaction = async (
     }
 
     const { id, email, display_name, avatar } = user || {}
-    if (!email || !display_name) {
+    if (!email) {
       errorHandler(res, null, {
-        message: 'user should contain email and display_name',
+        message: 'user should contain email',
         code: 400,
       })
       return

@@ -1,47 +1,74 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Message, Topic } from '../types'
-import { forumService } from '../../../services/forum.service'
+import { Request, Topic } from '../types'
 import { Box } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import DialogWithInput from '../../../components/Forum/ForumDialogWithInput'
-import { messageDialogData, topicDialogData } from '../constants'
+import {
+  deleteTopicDialogData,
+  messageDialogData,
+  topicDialogData,
+  updateTopicDialogData,
+} from '../constants'
 import ForumItem from '../../../components/Forum/ForumItem'
 import ForumList from '../../../components/Forum/ForumList'
 import ForumHeader from '../../../components/Forum/ForumHeader'
+import {
+  createMessage,
+  createTopic,
+  deleteTopic,
+  getTopics,
+  updateTopic,
+} from '../../../utils/scripts/api/forumApi'
+import { useAppSelector } from '../../../store/hooks'
+import { selectUser } from '../../../store/slices/userSlice'
 
 const Topics: FC<object> = () => {
-  const [title, setTitle] = useState('')
+  const user = useAppSelector(state => selectUser(state))
+
   const [topics, setTopics] = useState<Topic[]>([])
 
   const { forumId } = useParams()
 
-  const topicDialogConfirm = (item: Topic) => {
-    setTopics([...topics, item])
+  const topicDialogConfirm = async (data: Request) => {
+    await createTopic(data, user!)
+    await handlerGetTopics()
   }
 
-  const messageDialogConfirm = (item: Message) => {
-    console.log(item)
+  const messageDialogConfirm = async (data: Request) => {
+    await createMessage(Number(data.id), data.title, user!)
+    await handlerGetTopics()
+  }
+
+  const deleteTopicDialogConfirm = async (data: Request) => {
+    const { id } = data
+    await deleteTopic(id)
+    await handlerGetTopics()
+  }
+
+  const editTopicDialogConfirm = async (data: Request) => {
+    await updateTopic(data)
+    await handlerGetTopics()
+  }
+
+  const handlerGetTopics = async () => {
+    const updatedTopics = await getTopics(Number(forumId))
+
+    if (updatedTopics?.data) {
+      setTopics(updatedTopics?.data)
+    }
   }
 
   useEffect(() => {
-    async function getTopics() {
-      try {
-        const data = !!forumId && (await forumService.getTopics(+forumId))
-        if (data && data?.items) {
-          setTitle(data.title)
-          setTopics(data.items)
-        }
-      } catch (err) {
-        console.log(err)
+    getTopics(Number(forumId)).then(res => {
+      if (res?.data) {
+        setTopics(res?.data)
       }
-    }
-
-    getTopics()
+    })
   }, [])
 
   return (
     <>
-      <ForumHeader>Форум: {title}</ForumHeader>
+      <ForumHeader>Темы</ForumHeader>
 
       {forumId && (
         <ForumList
@@ -49,13 +76,30 @@ const Topics: FC<object> = () => {
           template={(data, key) => (
             <ForumItem
               key={key}
-              to={`/forum/${data.forumId}/topics/${data.id}/messages`}
+              to={`/forum/${data.forum_id}/topics/${data.id}/messages`}
               {...data}
-              dialogData={{
-                ...messageDialogData(data.id),
-                onConfirm: messageDialogConfirm,
-                tooltip: 'Добавить сообщение',
-              }}
+              dialogData={[
+                {
+                  ...messageDialogData(data.id),
+                  onConfirm: messageDialogConfirm,
+                  tooltip: 'Добавить сообщение',
+                },
+                {
+                  ...updateTopicDialogData(data.id, data.title),
+                  flagBtn: 'edit',
+                  showBtn: user!.id === data.author.id,
+                  onConfirm: editTopicDialogConfirm,
+                  tooltip: 'Редактировать тему',
+                },
+                {
+                  ...deleteTopicDialogData(data.id, data.title),
+                  disabled: true,
+                  flagBtn: 'delete',
+                  showBtn: user!.id === data.author.id,
+                  onConfirm: deleteTopicDialogConfirm,
+                  tooltip: 'Удалить тему',
+                },
+              ]}
             />
           )}
         />
