@@ -1,0 +1,12 @@
+jobs:
+  deploy:
+    needs: push_to_registry
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: add sshkey
+        with:
+          key: ${{ secrets.KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+        run: |
+          eval $(ssh-agent -s)
