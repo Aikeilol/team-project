@@ -45,7 +45,7 @@ jobs:
       - name: add sshkey
         run: |
           eval $(ssh-agent -s)
-          echo "$SSH_KEY" | tr -d '\r' | ssh-add -
+          echo "${{ secrets.SSHKEY }}" | tr -d '\r' | ssh-add -
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           echo "" > ~/.ssh/known_hosts
