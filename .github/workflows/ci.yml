@@ -53,6 +53,5 @@ jobs:
           echo "" > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
           echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-          ssh root@158.160.31.116 date
           rsync -avz -e ssh ./deploy/ root@158.160.31.116:/opt
-          ssh root@158.160.31.116 "cd /opt/ && docker compose up -d"
+          ssh root@158.160.31.116 "docker network create frontend || echo exist && docker network create backend || echo exist && cd /opt/ && docker compose up -d"
