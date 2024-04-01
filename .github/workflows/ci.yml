@@ -55,6 +55,6 @@ jobs:
         uses: actions/checkout@v4
       - name: deploy project files
         run: |
-          ssh user1@158.160.31.116 date
+          ssh root@158.160.31.116 date
           rsync -avz -e ssh ./deploy/ root@158.160.31.116:/opt
           ssh root@158.160.31.116 "cd /opt/ && docker compose up -d"
