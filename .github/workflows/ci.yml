@@ -42,6 +42,8 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
       - name: add sshkey
         run: |
           eval $(ssh-agent -s)
@@ -51,10 +53,6 @@ jobs:
           echo "" > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
           echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-      - name: Check out the repo
-        uses: actions/checkout@v4
-      - name: deploy project files
-        run: |
           ssh root@158.160.31.116 date
           rsync -avz -e ssh ./deploy/ root@158.160.31.116:/opt
           ssh root@158.160.31.116 "cd /opt/ && docker compose up -d"
